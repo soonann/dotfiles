@@ -21,11 +21,16 @@ return require('packer').startup(function(use)
 		end
 	})
 
+    -- language server 
 	use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
 	use('nvim-treesitter/playground')
+
+    -- git related plugins
+	use('tpope/vim-fugitive')
+    
+    -- File navigation related 
 	use('theprimeagen/harpoon')
 	use('mbbill/undotree')
-	use('tpope/vim-fugitive')
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		requires = {
@@ -48,4 +53,24 @@ return require('packer').startup(function(use)
 			{'rafamadriz/friendly-snippets'},
 		}
 	}	
+    
+    -- nvim-tree
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional, for file icons
+        },
+        tag = 'nightly' -- optional, updated every week. (see issue #1193)
+    }
+
+    -- Commenting  
+    use('scrooloose/nerdcommenter')
+
+    -- Brackets 
+    use('tpope/vim-surround')
+
+    -- Documenting my bindings
+    use('liuchengxu/vim-which-key')
+
+
 end)
