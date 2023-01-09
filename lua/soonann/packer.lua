@@ -7,12 +7,7 @@ return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
 
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.0',
-		-- or                            , branch = '0.1.x',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-
+    -- Themes
 	use({
 		'rose-pine/neovim',
 		as = 'rose-pine',
@@ -21,16 +16,36 @@ return require('packer').startup(function(use)
 		end
 	})
 
-    -- language server 
-	use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
-	use('nvim-treesitter/playground')
-
-    -- git related plugins
-	use('tpope/vim-fugitive')
-    
-    -- File navigation related 
+    -- File navigation plugins
+	use {
+		'nvim-telescope/telescope.nvim', tag = '0.1.0',
+		-- or                            , branch = '0.1.x',
+		requires = { {'nvim-lua/plenary.nvim'} }
+	}
 	use('theprimeagen/harpoon')
+
+    -- Git/Versioning related plugins
 	use('mbbill/undotree')
+	use('tpope/vim-fugitive')
+
+    -- Misc/Utilities related plugins  
+    use('scrooloose/nerdcommenter')
+    use('tpope/vim-surround')
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            vim.o.timeoutlen = 300
+            require("which-key").setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end
+    }
+
+    -- Language server 
+	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+	use('nvim-treesitter/playground')
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		requires = {
@@ -52,33 +67,6 @@ return require('packer').startup(function(use)
 			-- Snippet Collection (Optional)
 			{'rafamadriz/friendly-snippets'},
 		}
-	}	
-    
-    -- nvim-tree
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional, for file icons
-        },
-        tag = 'nightly' -- optional, updated every week. (see issue #1193)
-    }
-
-    -- Commenting  
-    use('scrooloose/nerdcommenter')
-
-    -- Brackets 
-    use('tpope/vim-surround')
-
-    use {
-        "folke/which-key.nvim",
-        config = function()
-            vim.o.timeoutlen = 300
-            require("which-key").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end
     }
 
 end)
