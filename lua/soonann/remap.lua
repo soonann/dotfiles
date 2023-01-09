@@ -46,3 +46,7 @@ vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 -- jump to a new tmux session
 vim.keymap.set("n", "<C-t>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
+
+
+-- open netrw
+vim.keymap.set("n", "<C-n>", vim.cmd.Lexplore)

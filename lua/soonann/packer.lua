@@ -8,13 +8,7 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
     -- Themes
-	use({
-		'rose-pine/neovim',
-		as = 'rose-pine',
-		config = function()
-			vim.cmd('colorscheme rose-pine')
-		end
-	})
+    use 'Mofiqul/vscode.nvim'
 
     -- File navigation plugins
 	use {
@@ -32,6 +26,10 @@ return require('packer').startup(function(use)
     use('scrooloose/nerdcommenter')
     use('tpope/vim-surround')
     use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    }
+    use {
         "folke/which-key.nvim",
         config = function()
             vim.o.timeoutlen = 300
@@ -41,32 +39,35 @@ return require('packer').startup(function(use)
                 -- refer to the configuration section below
             }
         end
-    }
+   }
 
-    -- Language server 
-	use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-	use('nvim-treesitter/playground')
-	use {
-		'VonHeikemen/lsp-zero.nvim',
-		requires = {
-			-- LSP Support
-			{'neovim/nvim-lspconfig'},
-			{'williamboman/mason.nvim'},
-			{'williamboman/mason-lspconfig.nvim'},
+    ---- Language server 
+    use {'neoclide/coc.nvim', branch = 'release'}
 
-			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},
-			{'hrsh7th/cmp-buffer'},
-			{'hrsh7th/cmp-path'},
-			{'saadparwaiz1/cmp_luasnip'},
-			{'hrsh7th/cmp-nvim-lsp'},
-			{'hrsh7th/cmp-nvim-lua'},
+    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+	--use('nvim-treesitter/playground')
+	--use {
+		--'VonHeikemen/lsp-zero.nvim',
+		--requires = {
+			---- LSP Support
+			--{'neovim/nvim-lspconfig'},
+			--{'williamboman/mason.nvim'},
+			--{'williamboman/mason-lspconfig.nvim'},
 
-			-- Snippets
-			{'L3MON4D3/LuaSnip'},
-			-- Snippet Collection (Optional)
-			{'rafamadriz/friendly-snippets'},
-		}
-    }
+			---- Autocompletion
+			--{'hrsh7th/nvim-cmp'},
+			--{'hrsh7th/cmp-buffer'},
+			--{'hrsh7th/cmp-path'},
+			--{'saadparwaiz1/cmp_luasnip'},
+			--{'hrsh7th/cmp-nvim-lsp'},
+			--{'hrsh7th/cmp-nvim-lua'},
+
+			---- Snippets
+			--{'L3MON4D3/LuaSnip'},
+			---- Snippet Collection (Optional)
+			--{'rafamadriz/friendly-snippets'},
+		--}
+    --}
+
 
 end)

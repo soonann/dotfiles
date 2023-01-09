@@ -38,6 +38,7 @@ wk.register({
     j = "prev location",
     y = "yank to system clipboard",
     r = "replace word globally in file with regex",
+    n = "open netrw",
 
 }, { prefix = "<leader>" })
 
