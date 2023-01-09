@@ -44,9 +44,15 @@ vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -- jump to a new tmux session
-vim.keymap.set("n", "<C-t>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+vim.keymap.set("n", "<leader>ts", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
+-- netrw open side panel
+vim.keymap.set("n", "<C-n>", ":Lexplore<cr>")
 
--- open netrw
-vim.keymap.set("n", "<C-n>", vim.cmd.Lexplore)
+-- tabs mapping
+vim.keymap.set("n", "<C-h>", ":tabp<cr>")
+vim.keymap.set("n", "<C-l>", ":tabn<cr>")
+vim.keymap.set("n", "<C-t>", ":tabnew<cr>")
+vim.keymap.set("n", "<C-x>", ":tabc<cr>")
+
