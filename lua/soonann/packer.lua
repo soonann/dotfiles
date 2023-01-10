@@ -4,31 +4,34 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
     -- Themes
-    use 'Mofiqul/vscode.nvim'
+    use { "catppuccin/nvim", as = "catppuccin" }
+    use('vim-airline/vim-airline')
 
     -- File navigation plugins
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.0',
-		-- or                            , branch = '0.1.x',
-		requires = { {'nvim-lua/plenary.nvim'} }
-	}
-	use('theprimeagen/harpoon')
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.0',
+        -- or                            , branch = '0.1.x',
+        requires = { { 'nvim-lua/plenary.nvim' } }
+    }
+    use('theprimeagen/harpoon')
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional, for file icons
+        },
+    }
 
     -- Git/Versioning related plugins
-	use('mbbill/undotree')
-	--use('tpope/vim-fugitive')
+    use('mbbill/undotree')
+    use('airblade/vim-gitgutter')
 
-    -- Misc/Utilities related plugins  
+    -- Misc/Utilities related plugins
     use('scrooloose/nerdcommenter')
     use('tpope/vim-surround')
-    use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    }
     use {
         "folke/which-key.nvim",
         config = function()
@@ -39,35 +42,11 @@ return require('packer').startup(function(use)
                 -- refer to the configuration section below
             }
         end
-   }
+    }
 
-    ---- Language server 
-    use {'neoclide/coc.nvim', branch = 'release'}
-
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
-	--use('nvim-treesitter/playground')
-	--use {
-		--'VonHeikemen/lsp-zero.nvim',
-		--requires = {
-			---- LSP Support
-			--{'neovim/nvim-lspconfig'},
-			--{'williamboman/mason.nvim'},
-			--{'williamboman/mason-lspconfig.nvim'},
-
-			---- Autocompletion
-			--{'hrsh7th/nvim-cmp'},
-			--{'hrsh7th/cmp-buffer'},
-			--{'hrsh7th/cmp-path'},
-			--{'saadparwaiz1/cmp_luasnip'},
-			--{'hrsh7th/cmp-nvim-lsp'},
-			--{'hrsh7th/cmp-nvim-lua'},
-
-			---- Snippets
-			--{'L3MON4D3/LuaSnip'},
-			---- Snippet Collection (Optional)
-			--{'rafamadriz/friendly-snippets'},
-		--}
-    --}
-    use('vim-airline/vim-airline')
+    ---- Language server
+    use { 'neoclide/coc.nvim', branch = 'release' }
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+    use 'nvim-treesitter/nvim-treesitter-context'
 
 end)

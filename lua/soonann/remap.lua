@@ -48,7 +48,7 @@ vim.keymap.set("n", "<leader>ts", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>")
 
 -- netrw open side panel
-vim.keymap.set("n", "<C-n>", ":Lexplore<cr>")
+--vim.keymap.set("n", "<C-n>", ":Lexplore<cr>")
 
 -- tabs mapping
 vim.keymap.set("n", "<C-h>", ":tabp<cr>")
