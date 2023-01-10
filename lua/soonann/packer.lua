@@ -68,6 +68,6 @@ return require('packer').startup(function(use)
 			--{'rafamadriz/friendly-snippets'},
 		--}
     --}
-
+    use('vim-airline/vim-airline')
 
 end)
