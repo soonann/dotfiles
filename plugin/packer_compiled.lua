@@ -125,11 +125,6 @@ _G.packer_plugins = {
     path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-airline",
     url = "https://github.com/vim-airline/vim-airline"
   },
-  ["vim-fugitive"] = {
-    loaded = true,
-    path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-fugitive",
-    url = "https://github.com/tpope/vim-fugitive"
-  },
   ["vim-surround"] = {
     loaded = true,
     path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-surround",

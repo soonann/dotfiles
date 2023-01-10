@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
 
     -- Git/Versioning related plugins
 	use('mbbill/undotree')
-	use('tpope/vim-fugitive')
+	--use('tpope/vim-fugitive')
 
     -- Misc/Utilities related plugins  
     use('scrooloose/nerdcommenter')

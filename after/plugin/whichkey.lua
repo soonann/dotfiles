@@ -20,13 +20,6 @@ wk.register({
     ["0"] = "harpoon next menu",
     ["9"] = "harpoon prev menu",
 
-    -- vim fugitive bindings
-    g = {
-       i = {
-           t = "git - vim fugitive",
-       }
-    },
-
     -- undotree bindings
     u = "undotree - show undotree",
 
