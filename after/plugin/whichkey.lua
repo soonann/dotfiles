@@ -1,7 +1,7 @@
 local wk = require("which-key")
--- normal mode mappings 
+-- normal mode mappings
 wk.register({
-    -- telescope related bindings 
+    -- telescope related bindings
     p = {
         name = "project",
         f = {
@@ -23,19 +23,18 @@ wk.register({
     -- undotree bindings
     u = "undotree - show undotree",
 
-    -- misc bindings 
-    f = {
-        q = "quit",
-    },
+    -- misc bindings
+    q = "quit",
     k = "next location",
     j = "prev location",
     y = "yank to system clipboard",
     r = "replace word globally in file with regex",
-    n = "open netrw",
+
+    n = "open nvim tree",
 
 }, { prefix = "<leader>" })
 
--- visual mode mappings 
+-- visual mode mappings
 wk.register({
     p = "paste without overwriting current buffer",
     y = "yank to system clipboard",

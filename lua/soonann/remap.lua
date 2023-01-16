@@ -2,13 +2,13 @@ vim.g.mapleader = " "
 
 -- OPTIMISED KEYSTROKES HERE --------------------------------------------------------
 
--- unbind Q 
+-- unbind Q
 vim.keymap.set("n", "Q", "<nop>")
 
--- remap ctrl c to escape 
+-- remap ctrl c to escape
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
--- keep cursor at front of line after flushing bottom line up 
+-- keep cursor at front of line after flushing bottom line up
 vim.keymap.set("n", "J", "mzJ`z")
 
 -- center screen when using ctrl+d and ctrl+u
@@ -23,7 +23,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 -- REMAPS OR ADDITIONAL MAPPINGS ------------------------------------------------------
 
 -- remap leader pv to exit file
-vim.keymap.set("n", "<leader>fq", vim.cmd.Ex)
+--vim.keymap.set("n", "<leader>q", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>q", ":bp<bar>sp<bar>bn<bar>bd<CR>")
 
 -- keep whatever is copied in its buffer by deleting the highted text into the void register
 vim.keymap.set("x", "<leader>p", [["_dP]])
@@ -34,7 +35,7 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- enable you to yank into system clip board so you can paste in windows
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- bind next error and center screen
@@ -50,9 +51,7 @@ vim.keymap.set("n", "<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left>
 -- netrw open side panel
 --vim.keymap.set("n", "<C-n>", ":Lexplore<cr>")
 
--- tabs mapping
-vim.keymap.set("n", "<C-h>", ":tabp<cr>")
-vim.keymap.set("n", "<C-l>", ":tabn<cr>")
-vim.keymap.set("n", "<C-t>", ":tabnew<cr>")
-vim.keymap.set("n", "<C-x>", ":tabc<cr>")
-
+-- buffers
+vim.keymap.set("n", "<C-l>", ":bnext<cr>")
+vim.keymap.set("n", "<C-h>", ":bprev<cr>")
+vim.keymap.set("n", "<C-x>", ":bdelete!<cr>")

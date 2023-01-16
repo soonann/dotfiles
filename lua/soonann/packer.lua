@@ -18,12 +18,16 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use('theprimeagen/harpoon')
+    use 'nvim-tree/nvim-web-devicons'
+    use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
+    use 'voldikss/vim-floaterm'
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {
             'nvim-tree/nvim-web-devicons', -- optional, for file icons
         },
     }
+
 
     -- Git/Versioning related plugins
     use('mbbill/undotree')

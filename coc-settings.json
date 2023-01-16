@@ -1,4 +1,9 @@
 {
-  "Lua.telemetry.enable": false,
-  "coc.preferences.formatOnSaveFiletypes":  ["*"],
+    "Lua.telemetry.enable": false,
+    "coc.preferences.formatOnSaveFiletypes": [
+        "*"
+    ],
+    "python.venvPath": "${workspaceFolder}",
+    "python.linting.enabled": true,
+    "snippets.ultisnips.pythonPrompt": false,
 }

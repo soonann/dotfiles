@@ -13,7 +13,7 @@ vim.g.coc_global_extensions = {
     'coc-sh',
     'coc-snippets',
     'coc-pairs',
-    'coc-python',
+    'coc-pyright',
     'coc-tsserver',
     '@yaegassy/coc-tailwindcss3',
     'coc-vimlsp',

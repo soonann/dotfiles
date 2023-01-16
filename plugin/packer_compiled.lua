@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/home/ann/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
   catppuccin = {
     loaded = true,
     path = "/home/ann/.local/share/nvim/site/pack/packer/start/catppuccin",
@@ -138,6 +143,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-airline",
     url = "https://github.com/vim-airline/vim-airline"
+  },
+  ["vim-floaterm"] = {
+    loaded = true,
+    path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-floaterm",
+    url = "https://github.com/voldikss/vim-floaterm"
   },
   ["vim-gitgutter"] = {
     loaded = true,
