@@ -1,6 +1,6 @@
 local mocha = require("catppuccin.palettes").get_palette "mocha"
-vim.opt.termguicolors = true
 
+vim.opt.termguicolors = true
 
 require("bufferline").setup {
     highlights = require("catppuccin.groups.integrations.bufferline").get {
@@ -21,16 +21,16 @@ require("bufferline").setup {
         indicator = {
             style = "underline"
         },
-        close_command = ":bp|sp|bn|bd",
-        right_mouse_command = ":bp|sp|bn|bd",
-        offsets = {
-            {
-                filetype = "NvimTree",
-                text = "Explorer",
-                highlight = "Directory",
-                text_align = "left"
-            },
-        },
+        --close_command = ":bp|sp|bn|bd",
+        --right_mouse_command = ":bp|sp|bn|bd",
+        --offsets = {
+        --{
+        --filetype = "NvimTree",
+        --text = "Explorer",
+        --highlight = "Directory",
+        --text_align = "left"
+        --},
+        --},
 
     }
 }

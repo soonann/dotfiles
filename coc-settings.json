@@ -6,4 +6,5 @@
     "python.venvPath": "${workspaceFolder}",
     "python.linting.enabled": true,
     "snippets.ultisnips.pythonPrompt": false,
+    "svelte.enable-ts-plugin": true,
 }

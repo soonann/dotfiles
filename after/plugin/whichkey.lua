@@ -4,13 +4,15 @@ wk.register({
     -- telescope related bindings
     p = {
         name = "project",
-        f = {
-            f = { "project files find - find all project files" },
-        },
-        g = {
-            f = { "project git find - find only git related files" },
-        },
-        s = { "project search - finding terms" },
+        f = "project files find - find all project files",
+        g = "project git find - find only git related files",
+        s = "project search - finding terms",
+    },
+
+    -- tmux related bindings
+    t = {
+        name = "tmux bindings",
+        f = "find aka create a new session",
     },
 
     -- harpoon related bindings
@@ -24,13 +26,17 @@ wk.register({
     u = "undotree - show undotree",
 
     -- misc bindings
-    q = "quit",
+    q = "quit file",
+
+    -- no clue what this does :/
     k = "next location",
     j = "prev location",
-    y = "yank to system clipboard",
-    r = "replace word globally in file with regex",
 
-    n = "open nvim tree",
+    -- system clipboard
+    y = "yank to system clipboard",
+    Y = "yank to system clipboard",
+
+    r = "replace word globally in file with regex",
 
 }, { prefix = "<leader>" })
 

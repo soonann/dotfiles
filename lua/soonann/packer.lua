@@ -7,10 +7,6 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
-    -- Themes
-    use { "catppuccin/nvim", as = "catppuccin" }
-    use('vim-airline/vim-airline')
-
     -- File navigation plugins
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -18,16 +14,7 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use('theprimeagen/harpoon')
-    use 'nvim-tree/nvim-web-devicons'
     use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
-    use 'voldikss/vim-floaterm'
-    use {
-        'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons', -- optional, for file icons
-        },
-    }
-
 
     -- Git/Versioning related plugins
     use('mbbill/undotree')
@@ -51,6 +38,11 @@ return require('packer').startup(function(use)
     ---- Language server
     use { 'neoclide/coc.nvim', branch = 'release' }
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+    -- sticky headers for functions
     use 'nvim-treesitter/nvim-treesitter-context'
+
+    -- Themes
+    use { "catppuccin/nvim", as = "catppuccin" }
+    use('vim-airline/vim-airline')
 
 end)

@@ -12,6 +12,7 @@ vim.g.coc_global_extensions = {
     'coc-sumneko-lua',
     'coc-sh',
     'coc-snippets',
+    'coc-svelte',
     'coc-pairs',
     'coc-pyright',
     'coc-tsserver',

@@ -4,6 +4,13 @@ require("catppuccin").setup({
         dark = "mocha",
     },
     transparent_background = true,
+    highlight_overrides = {
+        mocha = function(mocha)
+            return {
+                LineNr = { fg = mocha.overlay1 },
+            }
+        end,
+    },
     integrations = {
         harpoon = true,
         nvimtree = true,
@@ -15,9 +22,10 @@ require("catppuccin").setup({
     },
 })
 
-vim.g.airline_theme = 'catppuccin'
 
 -- setup must be called before loading
+
+vim.g.airline_theme = 'catppuccin'
 vim.cmd.colorscheme "catppuccin"
 
 function ColorMyPencils(color)
