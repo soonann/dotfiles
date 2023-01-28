@@ -35,9 +35,9 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 -- enable you to yank into system clip board so you can paste in windows
 -- next greatest remap ever : asbjornHaland
---vim.keymap.set("n", "<leader>y", [["+y]])
-vim.keymap.set("v", "<leader>y", ":'<,'>w !clip.exe<CR>")
---vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set("n", "<leader>y", [["+y]])
+vim.keymap.set("v", "<leader>y", "\"+y")
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- bind next error and center screen
 vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
