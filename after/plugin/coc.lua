@@ -2,6 +2,7 @@ vim.g.coc_global_extensions = {
     'coc-css',
     'coc-cssmodules',
     'coc-docker',
+    'coc-deno',
     'coc-eslint',
     'coc-flutter',
     'coc-go',
