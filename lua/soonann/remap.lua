@@ -53,6 +53,6 @@ vim.keymap.set("n", "<leader>r", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left>
 --vim.keymap.set("n", "<C-n>", ":Lexplore<cr>")
 
 -- buffers
-vim.keymap.set("n", "<C-l>", ":bnext<cr>")
-vim.keymap.set("n", "<C-h>", ":bprev<cr>")
-vim.keymap.set("n", "<C-x>", ":bdelete!<cr>")
+-- vim.keymap.set("n", "<C-l>", ":bnext<cr>")
+-- vim.keymap.set("n", "<C-h>", ":bprev<cr>")
+-- vim.keymap.set("n", "<C-x>", ":bdelete!<cr>")

@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
     use('theprimeagen/harpoon')
-    use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
+    -- use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
 
     -- Git/Versioning related plugins
     use('mbbill/undotree')
@@ -44,5 +44,6 @@ return require('packer').startup(function(use)
     -- Themes
     use { "catppuccin/nvim", as = "catppuccin" }
     use('vim-airline/vim-airline')
+    use 'nvim-tree/nvim-web-devicons'
 
 end)
