@@ -9,7 +9,7 @@
 clear lock
 
 ! set mode to capslock as modifier
-keycode 66 = Mode_switch
+keycode 64 = Mode_switch
 
 ! hjkl + mode to arrow keys
 keycode 44 = j J Down
