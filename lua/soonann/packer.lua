@@ -17,6 +17,7 @@ return require('packer').startup(function(use)
     -- use { 'akinsho/bufferline.nvim', tag = "v3.*", requires = 'nvim-tree/nvim-web-devicons' }
 
     -- Git/Versioning related plugins
+    use('tpope/vim-fugitive')
     use('mbbill/undotree')
     use('airblade/vim-gitgutter')
 
@@ -35,15 +36,40 @@ return require('packer').startup(function(use)
         end
     }
 
-    ---- Language server
-    use { 'neoclide/coc.nvim', branch = 'release' }
+    -- Language server
+    --use { 'neoclide/coc.nvim', branch = 'release' }
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     -- sticky headers for functions
     use 'nvim-treesitter/nvim-treesitter-context'
+    use {
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v1.x',
+        requires = {
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},             -- Required
+            {'williamboman/mason.nvim'},           -- Optional
+            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+
+            -- Autocompletion
+            {'hrsh7th/nvim-cmp'},         -- Required
+            {'hrsh7th/cmp-nvim-lsp'},     -- Required
+            {'hrsh7th/cmp-buffer'},       -- Optional
+            {'hrsh7th/cmp-path'},         -- Optional
+            {'saadparwaiz1/cmp_luasnip'}, -- Optional
+            {'hrsh7th/cmp-nvim-lua'},     -- Optional
+
+            -- Snippets
+            {'L3MON4D3/LuaSnip'},             -- Required
+            {'rafamadriz/friendly-snippets'}, -- Optional
+        }
+    }
+
+    -- Other Tools
+    use { 'iamcco/markdown-preview.nvim' }
+    
 
     -- Themes
     use { "catppuccin/nvim", as = "catppuccin" }
     use('vim-airline/vim-airline')
     use 'nvim-tree/nvim-web-devicons'
-
 end)
