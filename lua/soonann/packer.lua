@@ -72,7 +72,10 @@ return require('packer').startup(function(use)
     use "lukas-reineke/lsp-format.nvim"
 
     -- Other Tools
-    use { 'iamcco/markdown-preview.nvim' }
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
 
 
     -- Themes

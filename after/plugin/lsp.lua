@@ -1,6 +1,12 @@
 local lsp = require("lsp-zero")
 local cmp = require("cmp")
 local luasnip = require('luasnip')
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set('n', '<space>fo', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '<C-j>', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<C-k>', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', '<space>fl', vim.diagnostic.setloclist, opts)
 
 -- on attach function
 local on_attach = function(client)
@@ -8,16 +14,21 @@ local on_attach = function(client)
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap = true, silent = true, buffer = bufnr }
+
+    -- goto navigations
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    vim.keymap.set('n', '<space>k', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    vim.keymap.set('n', '<space>ac', vim.lsp.buf.code_action, bufopts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+    vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, bufopts) -- when will I need this ??? :)
+
+    -- code actions
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', '<leader>k', vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set('n', '<leader>ac', vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+
+    vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
 end
 
@@ -36,7 +47,7 @@ lsp.setup_nvim_cmp({
         -- C-b (back) C-f (forward) for snippet placeholder navigation.
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
+            behavior = cmp.ConfirmBehavior.Insert,
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)

@@ -1,2 +1,2 @@
-vim.keymap.set("x", "<C-_>", "<Plug>NERDCommenterToggle");
-vim.keymap.set("n", "<C-_>", "<Plug>NERDCommenterToggle");
+vim.keymap.set("x", "<leader>cm", "<Plug>NERDCommenterToggle");
+vim.keymap.set("n", "<leader>cm", "<Plug>NERDCommenterToggle");
