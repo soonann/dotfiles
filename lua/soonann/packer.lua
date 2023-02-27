@@ -67,6 +67,7 @@ return require('packer').startup(function(use)
         }
     }
     use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' } -- flutter language support
+    use 'mfussenegger/nvim-jdtls'
 
     -- format on save
     use "lukas-reineke/lsp-format.nvim"

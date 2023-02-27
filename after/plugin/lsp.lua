@@ -47,7 +47,7 @@ lsp.setup_nvim_cmp({
         -- C-b (back) C-f (forward) for snippet placeholder navigation.
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Insert,
+            behavior = cmp.ConfirmBehavior.Replace,
             select = true,
         },
         ['<Tab>'] = cmp.mapping(function(fallback)
