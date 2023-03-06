@@ -1,5 +1,5 @@
 -- fatcursor
-vim.opt.guicursor = ""
+--vim.opt.guicursor = ""
 
 -- enable line numbers and relative line numbers
 vim.opt.nu = true
