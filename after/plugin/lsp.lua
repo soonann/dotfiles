@@ -29,20 +29,18 @@ local on_attach = function(client)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
 
     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
-
 end
 
 
-lsp.preset("recommended")
-lsp.ensure_installed({})
-lsp.setup_nvim_cmp({
+-- nvim cmp opts
+local nvim_cmp_opts = {
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
     mapping = cmp.mapping.preset.insert({
-        ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+        ['<C-u>'] = cmp.mapping.scroll_docs( -4), -- Up
         ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
         -- C-b (back) C-f (forward) for snippet placeholder navigation.
         ['<C-Space>'] = cmp.mapping.complete(),
@@ -62,13 +60,18 @@ lsp.setup_nvim_cmp({
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif luasnip.jumpable( -1) then
+                luasnip.jump( -1)
             else
                 fallback()
             end
         end, { 'i', 's' }),
     }),
-})
+}
+
+lsp.preset("recommended")
+--lsp.ensure_installed({})
+
+lsp.setup_nvim_cmp(nvim_cmp_opts)
 lsp.on_attach(on_attach)
 lsp.setup()

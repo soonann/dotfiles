@@ -27,6 +27,7 @@ return require('packer').startup(function(use)
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
     }
+    use("windwp/nvim-ts-autotag")
     use {
         "folke/which-key.nvim",
         config = function()
@@ -67,9 +68,8 @@ return require('packer').startup(function(use)
         }
     }
     use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' } -- flutter language support
-    --use 'mfussenegger/nvim-jdtls'
-    use 'fatih/vim-go'
-
+    use 'mfussenegger/nvim-jdtls' -- java language support
+    use 'fatih/vim-go' -- golang language support
 
     -- format on save
     use "lukas-reineke/lsp-format.nvim"
