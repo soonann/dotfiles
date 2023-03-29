@@ -28,17 +28,17 @@ return require('packer').startup(function(use)
         config = function() require("nvim-autopairs").setup {} end
     }
     use("windwp/nvim-ts-autotag")
-    use {
-        "folke/which-key.nvim",
-        config = function()
-            vim.o.timeoutlen = 300
-            require("which-key").setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end
-    }
+    --use {
+    --"folke/which-key.nvim",
+    --config = function()
+    --vim.o.timeoutlen = 300
+    --require("which-key").setup {
+    ---- your configuration comes here
+    ---- or leave it empty to use the default settings
+    ---- refer to the configuration section below
+    --}
+    --end
+    --}
 
     -- Language server
     --use { 'neoclide/coc.nvim', branch = 'release' }
@@ -70,6 +70,7 @@ return require('packer').startup(function(use)
     use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' } -- flutter language support
     use 'mfussenegger/nvim-jdtls' -- java language support
     use 'fatih/vim-go' -- golang language support
+    use 'hashivim/vim-terraform'
 
     -- format on save
     use "lukas-reineke/lsp-format.nvim"

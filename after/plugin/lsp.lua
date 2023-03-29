@@ -70,8 +70,16 @@ local nvim_cmp_opts = {
 }
 
 lsp.preset("recommended")
---lsp.ensure_installed({})
+lsp.ensure_installed({})
 
 lsp.setup_nvim_cmp(nvim_cmp_opts)
 lsp.on_attach(on_attach)
+
+--vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+--pattern = { "*.tf", "*.tfvars" },
+--callback = function(ev)
+--vim.lsp.buf.format()
+--end
+--})
+
 lsp.setup()

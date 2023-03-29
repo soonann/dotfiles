@@ -7,7 +7,18 @@ require('telescope').setup {
 }
 
 -- opens git_files and fallback to find_files if its not a git directory
-vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
+vim.keymap.set('n', '<leader>pf', function()
+    local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
+    if ret == 0 then
+        opts = opts or {}
+        opts.cwd = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+        builtin.find_files(opts)
+    else
+        builtin.find_files({
+        })
+    end
+end)
+
 
 vim.keymap.set('n', '<leader>pg', function()
     local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })

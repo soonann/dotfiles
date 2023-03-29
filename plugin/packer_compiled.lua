@@ -240,6 +240,11 @@ _G.packer_plugins = {
     path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
+  ["vim-terraform"] = {
+    loaded = true,
+    path = "/home/ann/.local/share/nvim/site/pack/packer/start/vim-terraform",
+    url = "https://github.com/hashivim/vim-terraform"
+  },
   ["which-key.nvim"] = {
     config = { "\27LJ\2\n\\\0\0\3\0\6\0\v6\0\0\0009\0\1\0)\1,\1=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0004\2\0\0B\0\2\1K\0\1\0\nsetup\14which-key\frequire\15timeoutlen\6o\bvim\0" },
     loaded = true,
