@@ -4,47 +4,33 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-    -- Packer can manage itself
+    -- PACKER (self managed)
     use 'wbthomason/packer.nvim'
 
-    -- File navigation plugins
+    -- NAVIGATION
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
-        -- or                            , branch = '0.1.x',
         requires = { { 'nvim-lua/plenary.nvim' } }
-    }
-    use('theprimeagen/harpoon')
+    } -- telescope navigation
+    use('theprimeagen/harpoon') -- harpoon
 
-    -- Git/Versioning related plugins
-    use('tpope/vim-fugitive')
-    use('mbbill/undotree')
-    use('airblade/vim-gitgutter')
+    -- GIT/VERSIONING
+    use('tpope/vim-fugitive') -- git wrapper
+    use('mbbill/undotree') -- undo to specific changes
+    use('airblade/vim-gitgutter') -- git changes in the gutter
 
-    -- Misc/Utilities related plugins
-    use('scrooloose/nerdcommenter')
+    -- QOL
+    use('scrooloose/nerdcommenter') -- comments with nerd commenter
     use('tpope/vim-surround')
     use {
         "windwp/nvim-autopairs",
         config = function() require("nvim-autopairs").setup {} end
-    }
-    use("windwp/nvim-ts-autotag")
-    --use {
-    --"folke/which-key.nvim",
-    --config = function()
-    --vim.o.timeoutlen = 300
-    --require("which-key").setup {
-    ---- your configuration comes here
-    ---- or leave it empty to use the default settings
-    ---- refer to the configuration section below
-    --}
-    --end
-    --}
+    } -- auto create pairs [{()}]
+    use("windwp/nvim-ts-autotag") -- auto rename html tags pairs
 
-    -- Language server
-    --use { 'neoclide/coc.nvim', branch = 'release' }
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-    -- sticky headers for functions
-    use 'nvim-treesitter/nvim-treesitter-context'
+    -- LSP
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' }) -- Treesitter
+    use 'nvim-treesitter/nvim-treesitter-context' -- Sticky headers
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
@@ -66,21 +52,22 @@ return require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' }, -- Required
             { 'rafamadriz/friendly-snippets' }, -- Optional
         }
-    }
-    use { 'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim' } -- flutter language support
+    } -- lsp zero
+    use {
+        'akinsho/flutter-tools.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+    } -- flutter language support
     use 'mfussenegger/nvim-jdtls' -- java language support
     use 'fatih/vim-go' -- golang language support
-    use 'hashivim/vim-terraform'
-
-    -- format on save
-    use "lukas-reineke/lsp-format.nvim"
-
-    -- Other Tools
+    use 'hashivim/vim-terraform' -- terraform language support
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
-    })
-
+    }) -- markdown preview support
+    use "lukas-reineke/lsp-format.nvim" -- format on save
 
     -- Themes
     use { "catppuccin/nvim", as = "catppuccin" }

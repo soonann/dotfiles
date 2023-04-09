@@ -2,19 +2,23 @@ local mark = require("harpoon.mark")
 local ui = require("harpoon.ui")
 
 require("harpoon").setup({
-    mark_branch = false,
-    projects = {
-    },
     global_settings = {
         save_on_toggle = false,
-        mark_branch = true,
-        excluded_filetypes = {
-            "harpoon"
-        },
-        enter_on_sendcmd = false,
         save_on_change = true,
-        tmux_autoclose_windows = false
-    }
+    },
+    --mark_branch = false,
+    --projects = {
+    --},
+    --global_settings = {
+    --save_on_toggle = false,
+    --mark_branch = true,
+    --excluded_filetypes = {
+    --"harpoon"
+    --},
+    --enter_on_sendcmd = false,
+    --save_on_change = true,
+    --tmux_autoclose_windows = false
+    --}
 })
 
 vim.keymap.set("n", "<leader>a", mark.add_file)

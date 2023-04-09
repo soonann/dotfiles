@@ -20,20 +20,8 @@ vim.keymap.set('n', '<leader>pf', function()
 end)
 
 
-vim.keymap.set('n', '<leader>pg', function()
-    local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
-    if ret == 0 then
-        builtin.git_files({
-        })
-    else
-        builtin.find_files({
-        })
-    end
-end)
-
---vim.keymap.set('n', '<leader>ps', function()
---builtin.grep_string({ search = vim.fn.input("Grep > ") });
---end)
+vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>pgs', builtin.git_status, {})
-vim.keymap.set('n', '<leader>c', builtin.commands, {})
+vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
+vim.keymap.set('n', '<leader>co', builtin.commands, {})
