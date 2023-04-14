@@ -18,8 +18,6 @@ vim.keymap.set('n', '<leader>pf', function()
         })
     end
 end)
-
-
 vim.keymap.set('n', '<leader>pg', builtin.git_files, {})
 vim.keymap.set('n', '<leader>ps', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>pb', builtin.buffers, {})
