@@ -1,7 +1,7 @@
 # uses current working directory
 CURR=$(pwd)
 
-# -- create sym link for
+# -- create sym link for:
 # bash aliases
 ln -s $CURR/bash/.bash_aliases ~/.bash_aliases
 
