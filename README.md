@@ -12,7 +12,7 @@ git clone --recurse-submodules git@github.com:soonann/dotfiles.git
 6. tree-sitter - `sudo npm install tree-sitter` 
 7. tmux - `sudo apt install tmux`
 8. [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
-8. ranger - `sudo apt install ranger`
+9. ranger - `sudo apt install ranger`
 
 
 ## Scripts
