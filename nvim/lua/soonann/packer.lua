@@ -28,6 +28,9 @@ return require('packer').startup(function(use)
     } -- auto create pairs [{()}]
     use("windwp/nvim-ts-autotag") -- auto rename html tags pairs
 
+    -- VIM BE GOOD
+    use('ThePrimeagen/vim-be-good')
+
     -- LSP
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' }) -- Treesitter
     use 'nvim-treesitter/nvim-treesitter-context' -- Sticky headers
@@ -69,7 +72,7 @@ return require('packer').startup(function(use)
     }) -- markdown preview support
     use "lukas-reineke/lsp-format.nvim" -- format on save
 
-    -- Themes
+    -- THEMES
     use { "catppuccin/nvim", as = "catppuccin" }
     use('vim-airline/vim-airline')
     use 'nvim-tree/nvim-web-devicons'
