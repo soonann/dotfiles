@@ -3,7 +3,7 @@ CURR=$(pwd)
 
 # -- create sym link for:
 # bash aliases
-# ln -s $CURR/bash/.bash_aliases ~/.bash_aliases
+ln -s $CURR/.bashrc.d ~/
 
 # nvim dotfiles
 ln -s $CURR/nvim ~/.config/
