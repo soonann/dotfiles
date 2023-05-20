@@ -10,15 +10,22 @@
 # 
 # unset rc
 
-# install nvim 
+# install nvim https://github.com/neovim/neovim
 
 # install packer
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-
 # install tpm https://github.com/tmux-plugins/tpm
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
-# install cargo before running this script
-cargo install tree-sitter
+# install the following 
+# gcc g++ cmake 
+
+# install cargo before running this script - tree-sitter and ripgrep
+cargo install tree-sitter-cli
 cargo install ripgrep
+
+# install fzf https://github.com/junegunn/fzf
+
+# install fd https://github.com/sharkdp/fd
+

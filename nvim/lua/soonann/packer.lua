@@ -19,15 +19,6 @@ return require('packer').startup(function(use)
     use('mbbill/undotree') -- undo to specific changes
     use('airblade/vim-gitgutter') -- git changes in the gutter
 
-    -- QOL
-    use('scrooloose/nerdcommenter') -- comments with nerd commenter
-    use('tpope/vim-surround')
-    use {
-        "windwp/nvim-autopairs",
-        config = function() require("nvim-autopairs").setup {} end
-    } -- auto create pairs [{()}]
-    use("windwp/nvim-ts-autotag") -- auto rename html tags pairs
-
     -- VIM BE GOOD
     use('ThePrimeagen/vim-be-good')
 
@@ -72,6 +63,15 @@ return require('packer').startup(function(use)
     }) -- markdown preview support
     use "lukas-reineke/lsp-format.nvim" -- format on save
 
+    -- QOL
+    use('scrooloose/nerdcommenter') -- comments with nerd commenter
+    use('tpope/vim-surround')
+    use {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    } -- auto create pairs [{()}]
+
+    use("windwp/nvim-ts-autotag") -- auto rename html tags pairs
     -- THEMES
     use { "catppuccin/nvim", as = "catppuccin" }
     use('vim-airline/vim-airline')
