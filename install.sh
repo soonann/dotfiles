@@ -36,8 +36,11 @@ cargo install ripgrep
       i3status \ # status bar for i3
       i3lock \ # sleep and lock with - supports xss-lock
       xbacklight \ # adjust backlight with xrandr
-      xinput # set trackpad settings
+      xinput \ # set trackpad settings
+      xrandr \ # screen projection
+
       dmenu \ # app launcher
-      feh \ 
-      conky \ 
+      light \ # adjust screen backlight
+      feh \ # image viewer
+      conky \ # system stats
 
