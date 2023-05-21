@@ -191,6 +191,9 @@ bar {
         status_command i3status
 }
 
+# bind capslock to ctrl 
+exec setxkbmap -option "ctrl:nocaps"
+
 # startup windows
 #exec --no-startup-id i3-msg 'workspace 1:cli; exec /usr/bin/alacritty'
 #exec --no-startup-id i3-msg 'workspace 2:browser; exec /opt/brave.com/brave/brave-browser'
