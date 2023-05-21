@@ -2,15 +2,20 @@
 CURR=$(pwd)
 
 # -- create sym link for:
-# bash aliases
+# bashrc
 ln -s $CURR/.bashrc.d ~/
 
-# nvim dotfiles
+# nvim 
 ln -s $CURR/nvim ~/.config/
 
-# alacritty dotfiles
+# alacritty 
 ln -s $CURR/alacritty ~/.config/
 
-# tmux config dotfiles
+# tmux config 
 ln -s $CURR/tmux/.tmux.conf ~/
 ln -s $CURR/tmux/tmux-sessionizer ~/.local/bin/
+
+# i3 config
+ln -s $CURR/i3 ~/.config/
+
+
