@@ -11,6 +11,13 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 -- keep cursor at front of line after flushing bottom line up
 vim.keymap.set("n", "J", "mzJ`z")
 
+-- break after cursor to next line
+vim.keymap.set("n", "H", "a<CR><Esc>")
+
+-- center screen when using * and #
+vim.keymap.set("n", "*", "*zz")
+vim.keymap.set("n", "#", "#zz")
+
 -- center screen when using ctrl+d and ctrl+u
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
