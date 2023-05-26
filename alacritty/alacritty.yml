@@ -3,8 +3,7 @@
 # Import additional configuration files
 #
 # Imports are loaded in order, skipping all missing files, with the importing
-# file being loaded last. If a field is already present in a previous import, it
-# will be replaced.
+# file being loaded last. If a field is already present in a previous import, it will be replaced.
 #
 # All imports must either be absolute paths starting with `/`, or paths relative
 # to the user's home directory starting with `~/`.
@@ -85,7 +84,7 @@ window:
   #
   # Values for `startup_mode` (macOS only):
   #   - SimpleFullscreen
-  startup_mode: Fullscreen
+  startup_mode: Maximized
 
   # Window title
   #title: Alacritty
@@ -116,7 +115,7 @@ window:
   #multiplier: 3
 
 # Font configuration
-#font:
+font:
   # Normal (roman) font face
   #normal:
     # Font family
@@ -164,7 +163,7 @@ window:
     #style: Bold Italic
 
   # Point size
-  #size: 11.0
+  size: 16.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -444,17 +443,17 @@ window:
 # Default:
 #   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
+shell:
+  program: /bin/zsh
 #  args:
 #    - --login
 
-shell:
-  program: /bin/bash
-  args:
-    - -l
-    - -c
-    - "tmux attach || tmux"
+#shell:
+  #program: /bin/zsh
+  #args:
+    #- -l
+    #- -c
+    #- "tmux attach || tmux"
 
 # Startup directory
 #
