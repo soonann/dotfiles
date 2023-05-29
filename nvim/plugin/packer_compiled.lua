@@ -124,10 +124,10 @@ _G.packer_plugins = {
     path = "/Users/ann/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
-  harpoon = {
+  ["grapple.nvim"] = {
     loaded = true,
-    path = "/Users/ann/.local/share/nvim/site/pack/packer/start/harpoon",
-    url = "https://github.com/theprimeagen/harpoon"
+    path = "/Users/ann/.local/share/nvim/site/pack/packer/start/grapple.nvim",
+    url = "https://github.com/cbochs/grapple.nvim"
   },
   ["lsp-format.nvim"] = {
     loaded = true,
