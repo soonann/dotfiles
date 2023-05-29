@@ -12,7 +12,6 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         requires = { { 'nvim-lua/plenary.nvim' } }
     } -- telescope navigation
-    --use('theprimeagen/harpoon') -- harpoon
     use {
         "cbochs/grapple.nvim",
         requires = { "nvim-lua/plenary.nvim" },
