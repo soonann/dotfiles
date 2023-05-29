@@ -26,6 +26,7 @@ alias tf='terraform'
 
 # python
 alias venv='python3 -m venv'
+alias ansible='python3 -m ansible'
 
 # java
 alias gradle='./gradlew'
