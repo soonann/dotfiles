@@ -5,8 +5,8 @@ require("harpoon").setup({
     global_settings = {
         save_on_toggle = false,
         save_on_change = true,
+        mark_branch = true,
     },
-    --mark_branch = false,
     --projects = {
     --},
     --global_settings = {
