@@ -3,29 +3,6 @@
   hosts: localhost
   connection: local
 
-  # check if homebrew is installed
-  pre_tasks:
-    - name: Ensuring Homebrew Is Installed
-      stat:
-        path: /opt/homebrew/bin/brew
-      register: homebrew_check
-
-    - name: Fail If Homebrew Is Not Installed and install_homebrew_if_missing Is False
-      fail:
-        msg: Homebrew is missing, install from http://brew.sh
-      when:
-        - not homebrew_check.stat.exists
-        - not install_homebrew_if_missing
-
-    - name: Installing Homebrew
-      shell: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      when:
-        - not homebrew_check.stat.exists
-        - install_homebrew_if_missing
-
-    - name: Create $HOME/.local/bin if it doesn't exist
-      shell: mkdir -p $HOME/.local/bin
-
   # set where you've cloned the dotfiles to
   vars_prompt:
     - name: dotfiles_path
@@ -34,23 +11,27 @@
       private: no
 
   tasks:
-
-  # install dependnecies using homebrew
   - name: Install nvim
-    shell: brew install neovim
+    shell: sudo dnf install neovim -y
 
   - name: Install tmux
-    shell: brew install tmux
+    shell: sudo dnf install tmux -y
 
   - name: Install alacritty
-    shell: brew install alacritty
+    shell: sudo dnf install alacritty -y
 
   - name: Install docker
-    shell: brew install docker docker-compose
+    shell: sudo dnf install docker docker-compose -y
 
-  - name: Install common cli tools
-    shell: brew install fzf rg fd tmux htop curl wget 
+  - name: Install file navigation tools
+    shell: sudo dnf install fzf ripgrep fd-find ranger -y
 
+  - name: Install common cli utilities
+    shell: sudo dnf install htop curl wget -y
+
+  # https://docs.rancherdesktop.io/getting-started/installation/
+  - name: Install rancher dependencies
+    shell: sudo dnf install pass gnupg2 -y
 
   # link tmux dotfiles
   - name: Create symlink for tmux

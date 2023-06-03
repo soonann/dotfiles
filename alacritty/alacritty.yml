@@ -163,7 +163,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 16.0
+  size: 12.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -444,16 +444,16 @@ font:
 #   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
 #   - (Windows) powershell
 shell:
-  program: /bin/zsh
+# program: /bin/zsh
 #  args:
 #    - --login
 
 #shell:
-  #program: /bin/zsh
-  #args:
-    #- -l
-    #- -c
-    #- "tmux attach || tmux"
+  program: /bin/bash
+  args:
+    - -l
+    - -c
+    - "tmux attach || tmux"
 
 # Startup directory
 #
