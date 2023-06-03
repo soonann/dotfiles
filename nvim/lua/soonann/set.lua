@@ -6,7 +6,7 @@ vim.opt.nu = true
 vim.opt.relativenumber = true
 
 -- 4 space tab
-spaces = 4
+spaces = 2
 vim.opt.tabstop = spaces
 vim.opt.softtabstop = spaces
 vim.opt.shiftwidth = spaces
