@@ -23,11 +23,6 @@ export PATH="$PATH:/opt/Discord" # discord
 export PATH="$PATH:/opt/Telegram" # telegram
 export PATH="$PATH:/opt/thunderbird" # thunderbird
 
-export PATH="$PATH:/opt/fzf" # fzf
-export PATH="$PATH:/opt/fd-v8.7.0-x86_64-unknown-linux-gnu" # fd
-export PATH="$PATH:/opt/node-v19.5.0-linux-x64/bin" # node
-
-export PATH="$PATH:/opt/nvim-linux64/bin" # nvim
 export PATH="$PATH:/opt/jdtls/bin" # jdtls
 export PATH="$PATH:/opt/flutter/bin" # flutter
 export CHROME_EXECUTABLE="/opt/brave.com/brave/brave-browser" 
