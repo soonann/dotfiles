@@ -116,6 +116,8 @@ window:
 
 # Font configuration
 font:
+  normal:
+    family: Hack Nerd Font
   # Normal (roman) font face
   #normal:
     # Font family
