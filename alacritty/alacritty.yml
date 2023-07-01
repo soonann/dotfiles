@@ -444,16 +444,16 @@ font:
 #   - (Linux/BSD/macOS) `$SHELL` or the user's login shell, if `$SHELL` is unset
 #   - (Windows) powershell
 shell:
-  #program: $SHELL
+  program: $SHELL
 #  args:
 #    - --login
 
 #shell:
-  program: /bin/bash
-  args:
-    - -l
-    - -c
-    - "tmux attach || tmux"
+  #program: /bin/bash
+  #args:
+    #- -l
+    #- -c
+    #- "tmux attach || tmux"
 
 # Startup directory
 #
