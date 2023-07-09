@@ -12,6 +12,18 @@
   
   tasks:
 
+  # ensure $HOME/.local/bin dir exists
+  - name: check if the $HOME/.local/bin dir exists
+    stat:
+      path: $HOME/.local/bin
+    register: home_local_bin
+
+  - name: create $HOME/.local/bin
+    file:
+      path: $HOME/.local/bin
+      state: directory
+    when: not home_local_bin.stat.exists
+
   # enable all the non-free repositories: 
   # search for software and updates and enable all the repositories
   # install system drivers
@@ -38,6 +50,7 @@
       - wget
       - zip
       - unzip
+      - neofetch
 
   # install neovim manually - latest version
   - name: check if /opt/nvim-linux64 exists
@@ -55,16 +68,15 @@
       tar -xf /tmp/nvim-linux64.tar.gz -C /opt/
     when: not opt_nvim.stat.exists
 
-  # checks if tpm exists
+  # install tmux package manager 
   - name: check if tpm already exists
     stat:
       path: $HOME/.tmux/plugins/tpm
-    register: tpm
+    register: home_tpm
 
-  # install tpm when it does not exist
-  - name: Create $HOME/.local/bin
-    shell: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    when: not tpm.stat.exists
+  - name: install tpm to $HOME/.tmux/plugins/tpm dir
+    shell: git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+    when: not home_tpm.stat.exists
 
   - name: install python
     become: true
@@ -79,13 +91,6 @@
       pkg:
       - docker
 
-  - name: install rancher dependencies
-    become: true
-    ansible.builtin.apt:
-      pkg: 
-      - pass 
-      - gnupg2
-
   - name: install c/c++
     become: true
     ansible.builtin.apt:
@@ -94,30 +99,62 @@
       - g++
       - cmake
 
-  # check if the local bin dir exists
-  - name: check if $HOME/.local/bin exists
+  # install rancher - https://docs.rancherdesktop.io/getting-started/installation/#linux
+  - name: install rancher dependencies
+    become: true
+    ansible.builtin.apt:
+      pkg: 
+      - pass 
+      - gnupg2
+
+  - name: check if .rd dir exists
     stat:
-      path: $HOME/.local/bin
-    register: local_bin
+      path: $HOME/.rd
+    register: home_rd
 
-  # create the dir if it does not exist
-  - name: create $HOME/.local/bin
-    file:
-      path: $HOME/.local/bin
-      state: directory
-    when: not local_bin.stat.exists
+  - name: install rancher desktop if it does not exist 
+    shell: |
+      curl -s https://download.opensuse.org/repositories/isv:/Rancher:/stable/deb/Release.key | gpg --dearmor | sudo dd status=none of=/usr/share/keyrings/isv-rancher-stable-archive-keyring.gpg
+      echo 'deb [signed-by=/usr/share/keyrings/isv-rancher-stable-archive-keyring.gpg] https://download.opensuse.org/repositories/isv:/Rancher:/stable/deb/ ./' | sudo dd status=none of=/etc/apt/sources.list.d/isv-rancher-stable.list
+      sudo apt update
+      sudo apt install rancher-desktop
+    when: not home_rd.stat.exists
 
-      # TODO: programatically add these lines into the .bashrc/.zshrc file
-      ## User specific aliases and functions
-      #if [ -d ~/.rc.d ]; then
-      # for rc in ~/.rc.d/*; do
-      #	 if [ -f "$rc" ]; then
-      #		 . "$rc"
-      #	 fi
-      # done
-      #fi
-      #
-      #unset rc
+  # install docker
+  - name: check if docker exists
+    stat:
+      path: /usr/bin/docker  
+    register: bin_docker
+
+  # https://docs.docker.com/engine/install/debian/#set-up-the-repository
+  # https://docs.docker.com/desktop/install/debian/
+  - name: setup docker repository
+    become: true
+    shell: |
+      sudo apt update
+      sudo apt install ca-certificates curl gnupg
+      sudo install -m 0755 -d /etc/apt/keyrings
+      curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      sudo chmod a+r /etc/apt/keyrings/docker.gpg
+      echo \
+      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+      "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      sudo apt install docker-ce-cli docker-buildx-plugin docker-compose-plugin
+    when: not bin_docker.stat.exists
+
+  # install kubectl
+  - name: check if kubectl exists
+    stat:
+      path: $HOME/.local/bin/kubectl
+    register: local_bin_kubectl
+
+  - name: install kubectl
+    shell: |
+      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
+      sudo install -o root -g root -m 0755 kubectl $HOME/.local/bin/kubectl
+      rm ./kubectl
+    when: not local_bin_kubectl.stat.exists
 
   # link bashrc
   - name: Create symlink for bashrc

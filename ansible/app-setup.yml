@@ -1,0 +1,38 @@
+---
+- name: installing dependencies and make symlinks
+  hosts: localhost
+  connection: local
+
+  # set where you've cloned the dotfiles to
+  vars_prompt:
+    - name: dotfiles_path
+      prompt: Enter the full path of the dotfiles
+      default: $HOME/dotfiles
+      private: no
+  
+  tasks:
+
+  # other apps not included:
+  # brave-browser - https://brave.com/linux/
+  # thunderbird - https://www.thunderbird.net/en-US/ 
+
+  # install tailscale
+  - name: check if tailscale bin exists
+    stat:
+      path: /usr/bin/tailscale
+    register: tailscale_bin
+
+  - name: install tailscale if the bin does not exist
+    become: true
+    shell: |
+      curl -fsSL https://tailscale.com/install.sh | sh
+      # download the latest stable release to /tmp
+    when: not tailscale_bin.stat.exists
+
+  # install vlc - prefer a more stable version 
+  - name: install vlc
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - vlc
+
