@@ -1,5 +1,5 @@
 ---
-- name: Installing dependencies and make symlinks
+- name: installing dependencies and make symlinks
   hosts: localhost
   connection: local
 
@@ -9,41 +9,91 @@
       prompt: Enter the full path of the dotfiles
       default: $HOME/dotfiles
       private: no
-
+  
   tasks:
-  - name: Install nvim
-    shell: sudo dnf install neovim -y
 
-  - name: Install tmux
-    shell: sudo dnf install tmux -y
+  # install generic dev tools
+  - name: install dev tools 
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - neovim
+      - tmux
+      - alacritty
 
-  - name: Install alacritty
-    shell: sudo dnf install alacritty -y
+      - fzf
+      - ripgrep
+      - fd-find
+      - htop
 
-  - name: Install docker
-    shell: sudo dnf install docker docker-compose -y
+      - curl
+      - wget
+      - zip
+      - unzip
 
-  - name: Install file navigation tools
-    shell: sudo dnf install fzf ripgrep fd-find ranger -y
+  # checks if tpm exists
+  - name: check if tpm already exists
+    stat:
+      path: $HOME/.tmux/plugins/tpm
+    register: tpm
 
-  - name: Install common cli utilities
-    shell: sudo dnf install htop curl wget -y
+  # install tpm when it does not exist
+  - name: Create $HOME/.local/bin
+    shell: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    when: not tpm.stat.exists
 
-  # https://docs.rancherdesktop.io/getting-started/installation/
-  - name: Install rancher dependencies
-    shell: sudo dnf install pass gnupg2 -y
+  - name: install python
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - python3-pip
+      - python3-venv
 
-      #  - name: Install packer
-      #shell: git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+  - name: install docker
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - docker
 
-      #- name: Install tpm
-      #shell: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  - name: install rancher dependencies
+    become: true
+    ansible.builtin.apt:
+      pkg: 
+      - pass 
+      - gnupg2
 
-  - name: Install build tools
-    shell: sudo dnf install gcc g++ cmake -y
+  - name: install c/c++
+    become: true
+    ansible.builtin.apt:
+      pkg: 
+      - gcc 
+      - g++
+      - cmake
 
-  - name: Install treesitter 
-    shell: cargo install tree-sitter-cli
+  # check if the local bin dir exists
+  - name: check if $HOME/.local/bin exists
+    stat:
+      path: $HOME/.local/bin
+    register: local_bin
+
+  # create the dir if it does not exist
+  - name: create $HOME/.local/bin
+    file:
+      path: $HOME/.local/bin
+      state: directory
+    when: not local_bin.stat.exists
+
+      # TODO: programatically add these lines into the .bashrc/.zshrc file
+      ## User specific aliases and functions
+      #if [ -d ~/.rc.d ]; then
+      # for rc in ~/.rc.d/*; do
+      #	 if [ -f "$rc" ]; then
+      #		 . "$rc"
+      #	 fi
+      # done
+      #fi
+      #
+      #unset rc
 
   # link bashrc
   - name: Create symlink for bashrc
@@ -80,26 +130,8 @@
       dest: $HOME/.config/alacritty
       state: link
 
-# add the following to your .bashrc
-# # # User specific aliases and functions
-# # if [ -d ~/.bashrc.d ]; then
-# #         for rc in ~/.bashrc.d/*; do
-# #                 if [ -f "$rc" ]; then
-# #                         . "$rc"
-# #                 fi
-# #         done
-# # fi
-# #
-# # unset rc
-#
-# # install nvim https://github.com/neovim/neovim
-#
-# # install packer
-# git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-#
-# # install tpm https://github.com/tmux-plugins/tpm
-# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-#
-# # install the following
-# # gcc g++ cmake
-#
+
+  # setup gnome window manager bindings
+  - name: setup gsettings
+    shell: "{{ dotfiles_path }}/gnome/gsettings-bindings.sh"
+

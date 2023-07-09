@@ -29,3 +29,4 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-7 "['<Alt><Shif
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-8 "['<Alt><Shift>8']" 
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-9 "['<Alt><Shift>9']" 
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 "['<Alt><Shift>0']"
+gsettings set org.gnome.settings-daemon.plugins.media-keys search "['<Alt>D']"
