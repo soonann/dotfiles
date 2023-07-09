@@ -12,12 +12,20 @@
   
   tasks:
 
+  # enable all the non-free repositories: 
+  # search for software and updates and enable all the repositories
+  # install system drivers
+  - name: install drivers
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - nvidia-driver
+
   # install generic dev tools
   - name: install dev tools 
     become: true
     ansible.builtin.apt:
       pkg:
-      - neovim
       - tmux
       - alacritty
 
@@ -30,6 +38,22 @@
       - wget
       - zip
       - unzip
+
+  # install neovim manually - latest version
+  - name: check if /opt/nvim-linux64 exists
+    stat:
+      path: /opt/nvim-linux64
+    register: opt_nvim
+
+  # https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz
+  - name: download the latest stable release and untar to /opt
+    become: true
+    shell: |
+      # download the latest stable release to /tmp
+      wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz -qP /tmp/
+      # untar it to /opt
+      tar -xf /tmp/nvim-linux64.tar.gz -C /opt/
+    when: not opt_nvim.stat.exists
 
   # checks if tpm exists
   - name: check if tpm already exists
@@ -129,7 +153,6 @@
       src: "{{ dotfiles_path }}/alacritty"
       dest: $HOME/.config/alacritty
       state: link
-
 
   # setup gnome window manager bindings
   - name: setup gsettings
