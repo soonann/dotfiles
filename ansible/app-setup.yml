@@ -12,10 +12,6 @@
   
   tasks:
 
-  # other apps not included:
-  # brave-browser - https://brave.com/linux/
-  # thunderbird - https://www.thunderbird.net/en-US/ 
-
   # install tailscale
   - name: check if tailscale bin exists
     stat:
@@ -26,7 +22,6 @@
     become: true
     shell: |
       curl -fsSL https://tailscale.com/install.sh | sh
-      # download the latest stable release to /tmp
     when: not tailscale_bin.stat.exists
 
   # install vlc - prefer a more stable version 
@@ -35,4 +30,19 @@
     ansible.builtin.apt:
       pkg:
       - vlc
+
+  # install flatpak
+  - name: install flatpak/flathub
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - flatpak
+      - gnome-software-plugin-flatpak
+
+  - name: add flatpak remote
+    shell: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+  # install flatpak packages
+  - name: install flatpaks from flathub
+    shell: "{{ dotfiles_path }}/flatpak/flatpak-apps.sh"
 
