@@ -1,7 +1,7 @@
 # functionality
 gsettings set org.gnome.mutter dynamic-workspaces false 
 gsettings set org.gnome.desktop.interface enable-hot-corners false
-gsettings set org.gnome.shell.app-switcher current-workspace-only true
+gsettings set org.gnome.shell.app-switcher current-workspace-only false
 gsettings set org.gnome.desktop.wm.preferences num-workspaces 10 
 gsettings set org.gnome.shell.keybindings switch-to-application-1 [] 
 gsettings set org.gnome.shell.keybindings switch-to-application-2 [] 
@@ -33,6 +33,8 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-8 "['<Alt><Shif
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-9 "['<Alt><Shift>9']" 
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 "['<Alt><Shift>0']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys search "['<Alt>D']"
+gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Alt><Shift>S']"
+
 
 # aesthetics
 gsettings set org.yorba.shotwell.preferences.ui use-dark-theme true

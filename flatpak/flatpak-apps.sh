@@ -3,4 +3,6 @@ flatpak install flathub org.mozilla.Thunderbird \
 	org.telegram.desktop \
        	us.zoom.Zoom \
 	com.discordapp.Discord \
-	com.brave.Browser
+	com.brave.Browser \
+	md.obsidian.Obsidian
+

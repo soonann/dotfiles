@@ -7,14 +7,10 @@
   vars_prompt:
     - name: dotfiles_path
       prompt: Enter the full path of the dotfiles
-      default: $HOME/dotfiles
+      default: /home/soonann/dotfiles
       private: no
   
   tasks:
-
-  # set r rate
-  - name: update the repeat key rate
-    shell: xset r rate 280 40
 
   # ensure $HOME/.local/bin dir exists
   - name: check if the $HOME/.local/bin dir exists
@@ -164,6 +160,14 @@
       rm ./kubectl
     when: not local_bin_kubectl.stat.exists
 
+  # create symlink for hibernate script
+  - name: create symlink for pre_post_hibernate
+    become: true
+    ansible.builtin.file:
+      src: "{{ dotfiles_path }}/system/pre_post_hibernate"
+      dest: /lib/systemd/system-sleep/pre_post_hibernate
+      state: link
+
   # link bashrc
   - name: Create symlink for bashrc
     ansible.builtin.file:
@@ -201,5 +205,5 @@
 
   # setup gnome window manager bindings
   - name: setup gsettings
-    shell: "{{ dotfiles_path }}/gnome/gsettings-bindings.sh"
+    shell: "{{ dotfiles_path }}/wm/gnome/gsettings-bindings.sh"
 
