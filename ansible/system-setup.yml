@@ -160,14 +160,6 @@
       rm ./kubectl
     when: not local_bin_kubectl.stat.exists
 
-  # create symlink for hibernate script
-  - name: create symlink for pre_post_hibernate
-    become: true
-    ansible.builtin.file:
-      src: "{{ dotfiles_path }}/system/pre_post_hibernate"
-      dest: /lib/systemd/system-sleep/pre_post_hibernate
-      state: link
-
   # link bashrc
   - name: Create symlink for bashrc
     ansible.builtin.file:
