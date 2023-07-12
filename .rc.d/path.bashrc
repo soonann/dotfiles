@@ -26,6 +26,7 @@ export PATH="$PATH:/opt/thunderbird" # thunderbird
 export PATH="$PATH:/opt/jdtls/bin" # jdtls
 export PATH="$PATH:/opt/flutter/bin" # flutter
 export CHROME_EXECUTABLE="/opt/brave.com/brave/brave-browser" 
+export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # flags
 export COMPOSE_PROFILES=web,kafka
