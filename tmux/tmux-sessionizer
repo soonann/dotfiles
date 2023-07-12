@@ -1,10 +1,10 @@
-#!/bin/zsh
+#!/usr/bin/env bash
 # theprimeagen's tmux-sessionizer
 
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d 2>&1 | grep -v "Operation not permitted" | fzf)
+	selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
