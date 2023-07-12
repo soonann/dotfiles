@@ -196,6 +196,27 @@
       state: link
 
   # setup gnome window manager bindings
-  - name: setup gsettings
+  - name: Setup gsettings
     shell: "{{ dotfiles_path }}/wm/gnome/gsettings-bindings.sh"
 
+  # setup fonts
+  - name: Check if fonts already exists
+    stat:
+      path: $HOME/.local/share/fonts
+    register: local_share_fonts
+
+  - name: Download Hack Nerd Font
+    shell: |
+      wget -O {{ dotfiles_path }}/fonts/Hack.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz
+      tar -xvf {{ dotfiles_path }}/fonts/Hack.tar.xz -C {{ dotfiles_path }}/fonts
+
+  - name: Create symlink for fonts
+    ansible.builtin.file:
+      src: "{{ dotfiles_path }}/fonts"
+      dest: $HOME/.local/share/fonts
+      state: link
+    when: not local_share_fonts.stat.exists
+
+  - name: Rebuild font cache
+    shell: fc-cache -f -v 
+    when: not local_share_fonts.stat.exists
