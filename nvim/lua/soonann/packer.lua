@@ -65,6 +65,7 @@ return require('packer').startup(function(use)
         run = function() vim.fn["mkdp#util#install"]() end,
     }) -- markdown preview support
     use "lukas-reineke/lsp-format.nvim" -- format on save
+    use "github/copilot.vim" -- github copilot support
 
     -- QOL
     use('scrooloose/nerdcommenter') -- comments with nerd commenter
