@@ -25,7 +25,7 @@ export PATH="$PATH:/opt/thunderbird" # thunderbird
 
 export PATH="$PATH:/opt/jdtls/bin" # jdtls
 export PATH="$PATH:/opt/flutter/bin" # flutter
-export CHROME_EXECUTABLE="/opt/brave.com/brave/brave-browser" 
+export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # flags

@@ -1,1 +1,1 @@
-require("soonann")
+require("config.lazy")

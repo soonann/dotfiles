@@ -45,6 +45,9 @@
       - fzf
       - ripgrep
       - fd-find
+      - rclone
+      - rsync
+      - parallel
       - htop
 
       - curl
@@ -53,6 +56,9 @@
       - unzip
       - neofetch
       - dconf-editor
+
+      - ffmpeg
+      - chromium
 
   # install neovim manually - latest version
   - name: check if /opt/nvim-linux64 exists
@@ -67,7 +73,7 @@
       # download the latest stable release to /tmp
       wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz -qP /tmp/
       # untar it to /opt
-      tar -xf /tmp/nvim-linux64.tar.gz -C /opt/
+      tar -xvf /tmp/nvim-linux64.tar.gz -C /opt/
     when: not opt_nvim.stat.exists
 
   # install tmux package manager 
@@ -84,6 +90,7 @@
     shell: |
       git config --global user.name soonann
       git config --global user.name sudo@soonann.dev
+      git config --global defaultBranch main
       git config --global core.editor vim
 
   # install python/python tools
@@ -102,6 +109,13 @@
       - gcc 
       - g++
       - cmake
+
+  # install java tools
+  - name: install jave 17
+    become: true
+    ansible.builtin.apt:
+      pkg: 
+        - openjdk-17-jre
 
   # install rancher - https://docs.rancherdesktop.io/getting-started/installation/#linux
   - name: install rancher dependencies
@@ -205,10 +219,12 @@
       path: $HOME/.local/share/fonts
     register: local_share_fonts
 
+  # download hack nerd font
   - name: Download Hack Nerd Font
     shell: |
-      wget -O {{ dotfiles_path }}/fonts/Hack.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz
-      tar -xvf {{ dotfiles_path }}/fonts/Hack.tar.xz -C {{ dotfiles_path }}/fonts
+      wget -qO /tmp/fonts/Hack.tar.xz https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/Hack.tar.xz
+      tar -xvf /tmp/fonts/Hack.tar.xz -C {{ dotfiles_path }}/fonts
+    when: not local_share_fonts.stat.exists
 
   - name: Create symlink for fonts
     ansible.builtin.file:
@@ -220,3 +236,68 @@
   - name: Rebuild font cache
     shell: fc-cache -f -v 
     when: not local_share_fonts.stat.exists
+
+  # setup android studio
+  - name: Check if Android Studio is installed
+    stat:
+      path: /opt/android-studio
+    register: opt_android_studio
+
+  - name: Download and install Android Studio
+    become: true
+    shell: |
+      wget -qO /tmp/android-studio.tar.gz https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.2.1.20/android-studio-2022.2.1.20-linux.tar.gz
+      tar -xvf /tmp/android-studio.tar.gz -C /opt/
+    when: not opt_android_studio.stat.exists
+
+  # setup flutter
+  - name: Check if flutter is installed
+    stat:
+      path: /opt/flutter
+    register: opt_flutter
+
+  - name: Install flutter dependencies
+    become: true
+    ansible.builtin.apt:
+      pkg: 
+        - clang
+        - cmake
+        - ninja-build
+        - pkg-config
+        - libgtk-3-dev
+        - liblzma-dev
+
+  # install flutter
+  - name: Install flutter
+    become: true
+    shell: |
+      wget -qO /tmp/flutter_linux_3.10.6-stable.tar.xz https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.6-stable.tar.xz
+      tar -xvf /tmp/flutter_linux_3.10.6-stable.tar.xz -C /opt/
+      flutter --disable-telemetry
+    when: not opt_flutter.stat.exists
+
+  # setup development folder
+  - name: Checking if development folder exists
+    stat:
+      path: $HOME/development
+    register: home_dev
+
+  # create development folder
+  - name: Create development folder
+    ansible.builtin.file:
+      path: $HOME/development
+      state: directory
+
+  # check if chrome driver exists
+  - name: install chrom driver
+  # get chrome version and install chrome driver at /opt/chromedriver/
+
+  - name: Remove dependencies that are no longer required
+    become: true
+    ansible.builtin.apt:
+      autoremove: yes
+
+  - name: Run the equivalent of "apt-get clean" as a separate step
+    become: true
+    apt:
+      clean: yes

@@ -772,8 +772,8 @@ shell:
 # in the order they were defined in.
 key_bindings:
   - { key: F11,                                       action: ToggleFullscreen  }
-  #- { key: Paste,                                       action: Paste          }
-  #- { key: Copy,                                        action: Copy           }
+  #- { key: V,           mods: Alt,                       action: Paste          }
+  #- { key: C,          mods: Alt,                        action: Copy           }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
   #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
   #- { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp   }
