@@ -124,7 +124,7 @@ return {
   { 'mfussenegger/nvim-jdtls' },
 
   -- Golang language support
-  { 'fatih/vim-go' },
+  --{ 'fatih/vim-go' },
 
   -- Terraform language support
   { 'hashivim/vim-terraform' },
