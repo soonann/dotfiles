@@ -1,3 +1,8 @@
+vim.diagnostic.config({
+  virtual_text = false,
+})
+
+
 return {
   -- LSP Zero
   {
@@ -29,7 +34,10 @@ return {
     config = function()
       local lsp = require('lsp-zero').preset({})
       local cmp = require("cmp")
-      local luasnip = require('luasnip')
+
+      local luasnip = require 'luasnip'
+      require('luasnip.loaders.from_vscode').lazy_load()
+      luasnip.config.setup {}
 
       lsp.setup_nvim_cmp({
         snippet = {

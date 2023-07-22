@@ -59,6 +59,8 @@
 
       - ffmpeg
       - chromium
+      - nodejs
+      - npm
 
   # install neovim manually - latest version
   - name: check if /opt/nvim-linux64 exists
@@ -116,6 +118,22 @@
     apt:
       pkg: 
         - openjdk-17-jre
+
+  # install golang
+  - name: install golang
+    become: true
+    stat:
+      path:
+        /usr/local/go
+    register: usr_local_go
+
+  - name: download and install golang library if it does not exist
+    become: true
+    shell: |
+      wget -qO /tmp/go.tar.gz https://go.dev/dl/go1.20.6.linux-amd64.tar.gz      
+      sudo tar -C /usr/local -xzf /tmp/go.tar.gz
+      rm /tmp/go.tar.gz
+    when: not usr_local_go.stat.exists
 
   # install rancher - https://docs.rancherdesktop.io/getting-started/installation/#linux
   - name: install rancher dependencies
