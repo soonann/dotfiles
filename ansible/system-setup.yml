@@ -29,14 +29,14 @@
   # install system drivers
   - name: install drivers
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg:
       - nvidia-driver
 
   # install generic dev tools
   - name: install dev tools 
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg:
       - tmux
       - alacritty
@@ -96,7 +96,7 @@
   # install python/python tools
   - name: install python
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg:
       - python3-pip
       - python3-venv
@@ -104,7 +104,7 @@
   # install c/c++ tools 
   - name: install c/c++ tools
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg: 
       - gcc 
       - g++
@@ -113,14 +113,14 @@
   # install java tools
   - name: install jave 17
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg: 
         - openjdk-17-jre
 
   # install rancher - https://docs.rancherdesktop.io/getting-started/installation/#linux
   - name: install rancher dependencies
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg: 
       - pass 
       - gnupg2
@@ -176,35 +176,35 @@
 
   # link bashrc
   - name: Create symlink for bashrc
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/.rc.d"
       dest: $HOME/.rc.d
       state: link
 
   # link tmux dotfiles
   - name: Create symlink for tmux
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/tmux/.tmux.conf"
       dest: $HOME/.tmux.conf
       state: link
 
   # link tmux-sessionizer
   - name: Create symlink for tmux-sessionizer
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/tmux/tmux-sessionizer"
       dest: $HOME/.local/bin/tmux-sessionizer
       state: link
 
   # link nvim dotfiles
   - name: Create symlink for nvim
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/nvim"
       dest: $HOME/.config/nvim
       state: link
 
   # link alacritty dotfiles
   - name: Create symlink for alacritty
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/alacritty"
       dest: $HOME/.config/alacritty
       state: link
@@ -227,7 +227,7 @@
     when: not local_share_fonts.stat.exists
 
   - name: Create symlink for fonts
-    ansible.builtin.file:
+    file:
       src: "{{ dotfiles_path }}/fonts"
       dest: $HOME/.local/share/fonts
       state: link
@@ -258,7 +258,7 @@
 
   - name: Install flutter dependencies
     become: true
-    ansible.builtin.apt:
+    apt:
       pkg: 
         - clang
         - cmake
@@ -284,17 +284,17 @@
 
   # create development folder
   - name: Create development folder
-    ansible.builtin.file:
+    file:
       path: $HOME/development
       state: directory
 
-  # check if chrome driver exists
-  - name: install chrom driver
+  # TODO: check if chrome driver exists
+
   # get chrome version and install chrome driver at /opt/chromedriver/
 
   - name: Remove dependencies that are no longer required
     become: true
-    ansible.builtin.apt:
+    apt:
       autoremove: yes
 
   - name: Run the equivalent of "apt-get clean" as a separate step

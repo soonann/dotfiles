@@ -19,8 +19,8 @@ return require('packer').startup(function(use)
 
     -- GIT/VERSIONING
     use('tpope/vim-fugitive') -- git wrapper
-    use('mbbill/undotree') -- undo to specific changes
     use('airblade/vim-gitgutter') -- git changes in the gutter
+    use('mbbill/undotree') -- undo to specific changes
 
     -- VIM BE GOOD
     use('ThePrimeagen/vim-be-good')
