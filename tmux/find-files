@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# local search tool
+selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
+if [ -n "$selected" ]; then
+  if [ -d "$selected" ]; then
+    cd "$selected"
+  fi
+fi
+

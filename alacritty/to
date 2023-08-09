@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+  sed "s/opacity\:\(.*\)/opacity\:\ 0\.7/g" ~/dotfiles/alacritty/alacritty.yml -i
+elif [ $1 -ge 0 -a $1 -le 9 ]; then
+  sed "s/opacity\:\ [0-9]\.[0-9]/opacity\:\ 0\.$1/g" ~/dotfiles/alacritty/alacritty.yml -i
+elif [ $1 -eq 10 ]; then
+  sed "s/opacity\:\ [0-9]\.[0-9]/opacity\:\ 1\.0/g" ~/dotfiles/alacritty/alacritty.yml -i
+fi

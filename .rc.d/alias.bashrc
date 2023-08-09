@@ -11,10 +11,9 @@ fi
 alias ll='ls -alhF --color=auto'
 
 # tmux
-alias ta='tmux a'
-alias t='tmux'
+alias t='tmux attach || tmux'
 alias pf='tmux new tmux-sessionizer'
-alias ff='cd $(find . -type d | fzf)'
+alias ff='find-files'
 
 # containers
 alias k='kubectl'
@@ -33,3 +32,5 @@ alias mvn='./mvnw'
 # xclip
 alias xclip='xclip -selection clipboard'
 
+# shutdown in 120
+alias sleepy='sudo shutdown "120"'

@@ -34,12 +34,11 @@ return {
     config = function()
       local lsp = require('lsp-zero').preset({})
       local cmp = require("cmp")
-
       local luasnip = require 'luasnip'
-      require('luasnip.loaders.from_vscode').lazy_load()
-      luasnip.config.setup {}
 
-      lsp.setup_nvim_cmp({
+      require('luasnip.loaders.from_vscode').lazy_load()
+
+      cmp.setup({
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -95,6 +94,28 @@ return {
         vim.keymap.set('v', '<leader>fm', function() vim.lsp.buf.format { async = true } end, bufopts)
       end)
 
+      lsp.ensure_installed({
+        'lua_ls',
+        'rust_analyzer',
+        'terraformls'
+      })
+
+      lsp.setup()
+
+      -- custom lsp after lsp setup
+      --local lsp_configurations = require('lspconfig.configs')
+      --if not lsp_configurations.terraform_lsp then
+      --lsp_configurations.terraform_lsp = {
+      --default_config = {
+      --name = 'terraform-lsp',
+      --cmd = { 'terraform-lsp' },
+      --filetypes = { 'terraform', 'hcl' },
+      --root_dir = require('lspconfig.util').root_pattern('.terraform', '.git')
+      --}
+      --}
+      --end
+      --require('lspconfig').terraform_lsp.setup({})
+
       -- enable format on save
       lsp.format_on_save({
         format_opts = {
@@ -103,10 +124,9 @@ return {
         },
         servers = {
           ['lua_ls'] = { 'lua' },
+          ['terraformls'] = { 'terraform' },
         }
       })
-
-      lsp.setup()
     end
   },
 
