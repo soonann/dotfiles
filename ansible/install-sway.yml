@@ -1,0 +1,16 @@
+---
+- name: install sway on machine
+  hosts: localhost
+  connection: local
+
+  tasks:
+  - name: install sway
+    become: true
+    ansible.builtin.apt:
+      pkg:
+      - sway
+      - swaylock
+      - swayidle
+      - swaybg
+      - waybar
+

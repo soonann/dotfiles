@@ -5,10 +5,11 @@
       i3status \ # status bar for i3
       i3lock \ # sleep and lock with - supports xss-lock
       xbacklight \ # adjust backlight with xrandr
-      xinput \ # set trackpad settings
-      xrandr \ # screen projection
+      xinput \ # set trackpad settings - ignore for sway
+      xrandr \ # screen projection - ignore for sway
 
-      dmenu \ # app launcher
+      rofi \ # app launcher
       light \ # adjust screen backlight
       feh \ # image viewer
       conky \ # system stats
+      

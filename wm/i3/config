@@ -204,7 +204,7 @@ exec setxkbmap -option "ctrl:nocaps"
 bindsym $mod4+b exec light -A 5
 bindsym $mod4+d exec light -U 5
 
-# trackpad
+
 # enable tap to click
 exec xinput set-prop "CUST0001:00 06CB:CDA3 Touchpad" "libinput Tapping Enabled" 1
 # enable natural scrolling

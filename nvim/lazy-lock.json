@@ -29,6 +29,7 @@
   "tabular": { "branch": "master", "commit": "339091ac4dd1f17e225fe7d57b48aff55f99b23a" },
   "telescope.nvim": { "branch": "master", "commit": "776b509f80dd49d8205b9b0d94485568236d1192" },
   "treesj": { "branch": "main", "commit": "3203aa553217921fd4dcb79245f9df07278910b2" },
+  "trouble.nvim": { "branch": "main", "commit": "40aad004f53ae1d1ba91bcc5c29d59f07c5f01d3" },
   "undotree": { "branch": "master", "commit": "0e11ba7325efbbb3f3bebe06213afa3e7ec75131" },
   "vim-airline": { "branch": "master", "commit": "e6bb8427dc2d2dc3583ed1bf5ff6a9682c854d32" },
   "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },

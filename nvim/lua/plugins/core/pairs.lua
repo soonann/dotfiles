@@ -19,14 +19,14 @@ return {
     "windwp/nvim-ts-autotag"
   },
 
-  -- toggling multi line codes
+  -- toggling multi line brackets
   {
     "Wansmer/treesj",
     keys = {
       {
         "<leader>J",
         "<CMD>TSJToggle<CR>",
-        desc = "Toggle tree-sitter join"
+        desc = "Toggle tree-sitter join",
       },
     },
     cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },

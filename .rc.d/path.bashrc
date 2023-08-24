@@ -30,3 +30,6 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 
 # flags
 export COMPOSE_PROFILES=web,kafka
+
+# flatpak
+export PATH="$PATH:/var/lib/flatpak/app/com.brave.Browser/current/active/files/bin"

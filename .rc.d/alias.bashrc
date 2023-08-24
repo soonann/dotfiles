@@ -10,6 +10,12 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 alias ll='ls -alhF --color=auto'
 
+# nvim alias as vim 
+alias vim="nvim"
+
+# fd
+alias fd='fdfind'
+
 # tmux
 alias t='tmux attach || tmux'
 alias pf='tmux new tmux-sessionizer'
