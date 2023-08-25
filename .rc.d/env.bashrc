@@ -1,3 +1,19 @@
+# get the user id 
+ID=$(id -u)
+
+# keyring setup
+if [ -n "${WAYLAND_DISPLAY}" ] && \
+   [ ! -n "${SSH_AUTH_SOCK}" ] && \
+   [ -r "/run/user/${ID}/keyring/ssh" ]; then
+    export SSH_AUTH_SOCK="/run/user/${ID}/keyring/ssh"
+fi
+
+if [ -n "${WAYLAND_DISPLAY}" ] && \
+   [ ! -n "${GPG_AGENT_INFO}" ] && \
+   [ -r "/run/user/${ID}/keyring/gpg" ]; then
+    export GPG_AGENT_INFO="/run/user/${ID}/keyring/gpg:0:1"
+fi
+
 # fzf theme option
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -7,3 +23,50 @@ export FZF_DEFAULT_OPTS=" \
 # XDG DATA DIR
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+
+
+# .local
+export PATH="$PATH:/home/ann/.local/bin"
+
+# flyctl
+export FLYCTL_INSTALL="$HOME/.fly" 
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# gcloud cli
+export PATH="$PATH:$HOME/.local/share/google-cloud-sdk/bin" 
+
+
+# /opt
+export PATH="$PATH:/opt/flutter/bin" # flutter
+export PATH="$PATH:/opt/jdtls/bin" # jdtls
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+# cargo
+export PATH="$PATH:$HOME/.cargo/bin" 
+
+# golang 
+export PATH="$PATH:/usr/local/go/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+
+# android/java
+export ANDROID_HOME="$HOME/Android/Sdk" 
+export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64" 
+export PATH="$PATH:$JAVA_HOME/bin"
+export PATH="$PATH:/opt/android-studio/bin"
+export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
+export PATH="$PATH:$HOME/Android/Sdk/emulator"
+
+
+# deno
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# chrome
+export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
+
+# docker/compose
+export COMPOSE_PROFILES=web,kafka
+
+# flatpak
+export PATH="$PATH:/var/lib/flatpak/app/com.brave.Browser/current/active/files/bin"
