@@ -8,6 +8,7 @@
 #
 # Logo key. Use Mod1 for Alt.
 set $mod Mod1
+set $mod4 Mod4
 
 # Home row direction keys, like vim
 set $left h
@@ -18,17 +19,22 @@ set $right l
 # Your preferred terminal emulator
 set $term alacritty
 
+# disable focus follows mouse
+focus_follows_mouse no
+
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
+#set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
+set $menu "wofi --show run,drun" 
+
 
 include /etc/sway/config-vars.d/*
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg ~/dotfiles/ fill
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # Example configuration:
 #
@@ -70,10 +76,25 @@ input "1739:52643:CUST0001:00_06CB:CDA3_Touchpad" {
   middle_emulation enabled
 }
 
+input "1133:45077:M720_Triathlon_Mouse" {
+    natural_scroll disabled
+    dwt enabled
+    accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+    pointer_accel -0.15 # set mouse sensitivity (between -1 and 1)
+}
+
 input type:keyboard {
     repeat_delay 240
     repeat_rate 40
 }
+
+output "Integrated Tech Express Inc HDMI To VGA 0x00000000" {
+   # ...config options...
+   mode 1920x1080@60.000Hz
+}
+
+output eDP-1 pos 0 0 res 1920x1080
+output DP-3 pos 1920 0 res 1920x1080
 
 
 ### Key bindings
@@ -84,7 +105,7 @@ input type:keyboard {
     bindsym $mod+Return exec $term
 
     # Kill focused window
-    bindsym $mod+Shift+q kill
+    bindsym $mod+Shift+x kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
@@ -97,10 +118,10 @@ input type:keyboard {
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+c reload
+    bindsym $mod+Shift+r reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod4+l exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 #
 # Moving around:
@@ -126,6 +147,26 @@ input type:keyboard {
     bindsym $mod+Shift+Down move down
     bindsym $mod+Shift+Up move up
     bindsym $mod+Shift+Right move right
+#
+# Swap Mode:
+#
+# Swaps focused window with window in direction in order to move it
+# around a layout without altering the layout.
+
+    mode "swap" {
+        bindsym $left mark --add "_swap", focus left, swap container with mark "_swap", focus left, unmark "_swap"
+        bindsym $down mark --add "_swap", focus down, swap container with mark "_swap", focus down, unmark "_swap"
+        bindsym $up mark --add "_swap", focus up, swap container with mark "_swap", focus up, unmark "_swap"
+        bindsym $right mark --add "_swap", focus right, swap container with mark "_swap", focus right, unmark "_swap"
+        
+        # Return to default mode
+        bindsym q mode "default"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+space mode "default"
+    }
+    bindsym $mod+space mode "swap"
+
 #
 # Workspaces:
 #
@@ -164,18 +205,18 @@ input type:keyboard {
     bindsym $mod+v splitv
 
     # Switch the current container between different layout styles
-    bindsym $mod+b layout stacking
-    bindsym $mod+w layout tabbed
+    bindsym $mod+b layout toggle stacking
+    bindsym $mod+t layout tabbed
     bindsym $mod+e layout toggle split
 
     # Make the current focus fullscreen
-    bindsym $mod+f fullscreen
+    bindsym $mod+z fullscreen
 
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    #bindsym $mod+escape focus mode_toggle
 
     # Move focus to the parent container
     bindsym $mod+a focus parent
@@ -213,6 +254,7 @@ mode "resize" {
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
 }
 bindsym $mod+r mode "resize"
 
@@ -225,7 +267,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    status_command while date +"[$(cat /sys/class/power_supply/BAT0/capacity)%] [%Y-%m-%d %I:%M %p]"; do sleep 1; done
 
     colors {
         statusline #ffffff
@@ -234,5 +276,7 @@ bar {
     }
 }
 
+exec eval $(gnome-keyring-daemon --start)
+exec export SSH_AUTH_SOCK
 
 include /etc/sway/config.d/*
