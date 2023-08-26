@@ -33,8 +33,12 @@ export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 # gcloud cli
-export PATH="$PATH:$HOME/.local/share/google-cloud-sdk/bin" 
+source /opt/google-cloud-sdk/completion.bash.inc 
+source /opt/google-cloud-sdk/path.bash.inc 
+export PATH="$PATH:/opt/google-cloud-sdk/bin" 
 
+# add Pulumi to the PATH
+export PATH="$PATH:$HOME/.pulumi/bin"
 
 # /opt
 export PATH="$PATH:/opt/flutter/bin" # flutter

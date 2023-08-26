@@ -26,8 +26,11 @@ focus_follows_mouse no
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 #set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
-set $menu "wofi --show run,drun" 
 
+# setup sway launcher desktop
+for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
+
+set $menu exec $term --class launcher -e /home/soonann/.local/bin/sway-launcher-desktop.sh
 
 include /etc/sway/config-vars.d/*
 
@@ -88,13 +91,6 @@ input type:keyboard {
     repeat_rate 40
 }
 
-output "Integrated Tech Express Inc HDMI To VGA 0x00000000" {
-   # ...config options...
-   mode 1920x1080@60.000Hz
-}
-
-output eDP-1 pos 0 0 res 1920x1080
-output DP-3 pos 1920 0 res 1920x1080
 
 
 ### Key bindings
@@ -267,7 +263,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +"[$(cat /sys/class/power_supply/BAT0/capacity)%] [%Y-%m-%d %I:%M %p]"; do sleep 1; done
+    status_command while date +" brightness: $(light | grep -oP '\d+' | head -n 1)% | volume: $(pamixer --get-volume)% | battery: $(cat /sys/class/power_supply/BAT0/capacity)% | %d-%m-%Y | %I:%M %p | "; do sleep 1; done
 
     colors {
         statusline #ffffff
@@ -276,7 +272,36 @@ bar {
     }
 }
 
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86MonBrightnessUp exec light -A 1 && light -G
+bindsym XF86MonBrightnessDown exec light -U 1 && light -G 
+
+# ssh sock
 exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
+
+# kanshi
+exec_always pkill kanshi; exec kanshi
+
+# https://github.com/ErikReider/SwayNotificationCenter
+# Notification Daemon
+exec swaync
+# Toggle control center
+bindsym $mod+Shift+n exec swaync-client -t -sw
+
+# https://github.com/Gustash/sway-screenshot
+bindsym $mod+Shift+s exec sway-screenshot -m region -o ~/Pictures/Screenshots
+
+
+# default desktop apps
+#assign [app_id="Alacritty"] workspace 1
+#assign [class="Brave-browser"] workspace 2
+#assign [app_id="org.gnome.Nautilus"] workspace 4
+#assign [app_id="org.telegram.desktop"] workspace 5
+#assign [class="thunderbird-default"] workspace 10
+#assign [app_id="ch.proton.bridge-gui"] workspace 10
 
 include /etc/sway/config.d/*
