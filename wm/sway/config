@@ -258,19 +258,20 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
+bar swaybar_command waybar
+#{
+    #position top
 
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +" brightness: $(light | grep -oP '\d+' | head -n 1)% | volume: $(pamixer --get-volume)% | battery: $(cat /sys/class/power_supply/BAT0/capacity)% | %d-%m-%Y | %I:%M %p | "; do sleep 1; done
+    ## When the status_command prints a new line to stdout, swaybar updates.
+    ## The default just shows the current date and time.
+    #status_command while date +" brightness: $(light | grep -oP '\d+' | head -n 1)% | volume: $(pamixer --get-volume)% - $( pamixer --get-mute ) | battery: $(cat /sys/class/power_supply/BAT0/capacity)% | %d-%m-%Y | %I:%M %p | "; do sleep 1; done
 
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+    #colors {
+        #statusline #ffffff
+        #background #323232
+        #inactive_workspace #32323200 #32323200 #5c5c5c
+    #}
+#}
 
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
