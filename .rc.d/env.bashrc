@@ -61,6 +61,9 @@ export PATH="$PATH:/opt/android-studio/bin"
 export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
 export PATH="$PATH:$HOME/Android/Sdk/emulator"
 
+# arduino nano
+export PATH="~/.npm-global/bin:$PATH"
+
 
 # deno
 export DENO_INSTALL="$HOME/.deno"
