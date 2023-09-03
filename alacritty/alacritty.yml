@@ -449,7 +449,7 @@ shell:
 #    - --login
 
 #shell:
-  program: /bin/bash
+  program: /run/current-system/sw/bin/bash
   #args:
     #- -l
     #- -c

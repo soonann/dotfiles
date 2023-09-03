@@ -25,19 +25,23 @@ focus_follows_mouse no
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-#set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
+set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
 
 # setup sway launcher desktop
-for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
+# for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
 
-set $menu exec $term --class launcher -e /home/soonann/.local/bin/sway-launcher-desktop.sh
+#set $menu exec $term --class launcher -e /home/soonann/.local/bin/sway-launcher-desktop.sh
+
+#set $menu exec rofi -modes "run,drun" -show run
 
 include /etc/sway/config-vars.d/*
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg /run/current-system/sw/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+
 #
 # Example configuration:
 #
@@ -101,7 +105,8 @@ input type:keyboard {
     bindsym $mod+Return exec $term
 
     # Kill focused window
-    bindsym $mod+Shift+x kill
+    bindsym $mod+Shift+q kill
+    bindsym $mod+w kill
 
     # Start your launcher
     bindsym $mod+d exec $menu
@@ -228,6 +233,7 @@ input type:keyboard {
     # Show the next scratchpad window or hide the focused scratchpad window.
     # If there are multiple scratchpad windows, this command cycles through them.
     bindsym $mod+minus scratchpad show
+    bindsym $mod+equal sticky toggle
 #
 # Resizing containers:
 #
@@ -277,8 +283,8 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1%
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1%
 bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-bindsym XF86MonBrightnessUp exec light -A 1 && light -G
-bindsym XF86MonBrightnessDown exec light -U 1 && light -G 
+bindsym XF86MonBrightnessUp exec light -A 5 
+bindsym XF86MonBrightnessDown exec light -U 5
 
 # ssh sock
 exec eval $(gnome-keyring-daemon --start)
@@ -289,12 +295,13 @@ exec_always pkill kanshi; exec kanshi
 
 # https://github.com/ErikReider/SwayNotificationCenter
 # Notification Daemon
-exec swaync
+
 # Toggle control center
-bindsym $mod+Shift+n exec swaync-client -t -sw
+#bindsym $mod+Shift+n exec swaync-client -t -sw
 
 # https://github.com/Gustash/sway-screenshot
-bindsym $mod+Shift+s exec sway-screenshot -m region -o ~/Pictures/Screenshots
+#bindsym $mod+Shift+s exec sway-screenshot -m region -o ~/Pictures/Screenshots
+bindsym $mod+Shift+s exec flameshot gui
 
 
 # default desktop apps
@@ -306,3 +313,5 @@ bindsym $mod+Shift+s exec sway-screenshot -m region -o ~/Pictures/Screenshots
 #assign [app_id="ch.proton.bridge-gui"] workspace 10
 
 include /etc/sway/config.d/*
+exec dbus-sway-environment
+exec configure-gtk

@@ -2,17 +2,17 @@
 ID=$(id -u)
 
 # keyring setup
-if [ -n "${WAYLAND_DISPLAY}" ] && \
-   [ ! -n "${SSH_AUTH_SOCK}" ] && \
-   [ -r "/run/user/${ID}/keyring/ssh" ]; then
-    export SSH_AUTH_SOCK="/run/user/${ID}/keyring/ssh"
-fi
+#if [ -n "${WAYLAND_DISPLAY}" ] && \
+   #[ ! -n "${SSH_AUTH_SOCK}" ] && \
+   #[ -r "/run/user/${ID}/keyring/ssh" ]; then
+    #export SSH_AUTH_SOCK="/run/user/${ID}/keyring/ssh"
+#fi
 
-if [ -n "${WAYLAND_DISPLAY}" ] && \
-   [ ! -n "${GPG_AGENT_INFO}" ] && \
-   [ -r "/run/user/${ID}/keyring/gpg" ]; then
-    export GPG_AGENT_INFO="/run/user/${ID}/keyring/gpg:0:1"
-fi
+#if [ -n "${WAYLAND_DISPLAY}" ] && \
+   #[ ! -n "${GPG_AGENT_INFO}" ] && \
+   #[ -r "/run/user/${ID}/keyring/gpg" ]; then
+    #export GPG_AGENT_INFO="/run/user/${ID}/keyring/gpg:0:1"
+#fi
 
 # fzf theme option
 export FZF_DEFAULT_OPTS=" \
@@ -33,8 +33,8 @@ export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 # gcloud cli
-source /opt/google-cloud-sdk/completion.bash.inc 
-source /opt/google-cloud-sdk/path.bash.inc 
+#source /opt/google-cloud-sdk/completion.bash.inc 
+#source /opt/google-cloud-sdk/path.bash.inc 
 export PATH="$PATH:/opt/google-cloud-sdk/bin" 
 
 # add Pulumi to the PATH

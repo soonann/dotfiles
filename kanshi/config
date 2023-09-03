@@ -1,0 +1,8 @@
+profile home_monitor {
+	output eDP-1 disable
+	output "Integrated Tech Express Inc HDMI To VGA Unknown" mode 1920x1080 position 0,0
+}
+
+profile laptop_only {
+	output eDP-1 enable
+}

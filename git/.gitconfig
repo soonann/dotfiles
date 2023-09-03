@@ -1,0 +1,7 @@
+[init]
+	defaultBranch = main
+[user]
+	name = soonann
+	email = sudo@soonann.dev
+[core]
+	editor = nvim

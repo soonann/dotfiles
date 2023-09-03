@@ -133,6 +133,7 @@ return {
           ['terraformls'] = { 'terraform' },
           ['gopls'] = { 'go' },
           ['clangd'] = { 'c' },
+          ['pyright'] = { 'python', 'py' },
         }
       })
     end
