@@ -64,10 +64,12 @@ export PATH="$PATH:$HOME/Android/Sdk/emulator"
 # arduino nano
 export PATH="~/.npm-global/bin:$PATH"
 
-
 # deno
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+# clang
+export PATH="~/.local/share/nvim/mason/bin:$PATH"
 
 # chrome
 export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
@@ -77,3 +79,4 @@ export COMPOSE_PROFILES=web,kafka
 
 # flatpak
 export PATH="$PATH:/var/lib/flatpak/app/com.brave.Browser/current/active/files/bin"
+

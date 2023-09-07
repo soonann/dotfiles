@@ -45,7 +45,8 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  hardware.bluetooth.enable = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -82,12 +83,13 @@ in
   users.users.soonann = {
     isNormalUser = true;
     description = "Soon Ann";
-    extraGroups = [ "networkmanager" "wheel" "video" "docker" ];
+    extraGroups = [ "libvirtd" "networkmanager" "wheel" "video" "docker" ];
     packages = with pkgs; [];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = "nix-command flakes";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -130,9 +132,10 @@ in
     obsidian
     slack
     telegram-desktop
-    xfce.thunar
+    #xfce.thunar
     xfce.thunar-volman
     xfce.thunar-archive-plugin
+    xarchiver
     gvfs
     tailscale
     libreoffice
@@ -141,6 +144,9 @@ in
     gnome.seahorse
     obs-studio
     zoom-us
+    vlc
+    ffmpeg
+    stdenv.cc.cc.lib
 
     # flatpak
     flatpak
@@ -166,6 +172,8 @@ in
     file
     dos2unix
     appimage-run
+    gnumake
+    btrfs-progs
 
     gnupg
     pinentry
@@ -173,22 +181,30 @@ in
     htop
     nvtop
     docker-compose
-    k3s
-    ipset
+    #k3s
+    #ipset
 
     # languages
     go
     python311
+    python311Packages.pydevtool
+    python311Packages.pyaudio
     virtualenv
     jdk17
+    rustup
+    cargo
 
     gcc_multi
     glibc
     gdb
     nodejs
     flutter
+    virt-manager 
+    woeusb
+
 
   ];
+  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -204,6 +220,8 @@ in
     #xwayland.enable = true;
   #};
 
+  programs.nix-ld.enable = true;
+
   programs.seahorse.enable = true;
 
   #programs.evolution = {
@@ -212,6 +230,9 @@ in
   #};
   
   security.polkit.enable = true;
+
+  virtualisation.libvirtd.enable = true;
+  programs.dconf.enable = true;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
@@ -249,12 +270,13 @@ in
   services.flatpak.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
-  services.k3s.enable = true;
-  services.k3s.role = "server";
-  services.k3s.extraFlags = toString [
+  #services.k3s.enable = true;
+  #services.k3s.role = "server";
+  #services.k3s.extraFlags = toString [
     # "--kubelet-arg=v=4" # Optionally add additional args to k3s
-  ];
+  #];
 
+  #systemd.services.k3s.path = [ pkgs.ipset ];
   #systemd.user.services.protonmail-bridge = {
   #  wantedBy = [ "default.target" ]; 
   #  after = [ "network.target" ];

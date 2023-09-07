@@ -16,7 +16,11 @@ return {
 
   -- auto rename html tags when changing one
   {
-    "windwp/nvim-ts-autotag"
+    "windwp/nvim-ts-autotag",
+    config = function()
+      local autotag = require("nvim-ts-autotag")
+      autotag.setup()
+    end
   },
 
   -- toggling multi line brackets
