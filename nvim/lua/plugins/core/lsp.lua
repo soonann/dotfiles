@@ -94,6 +94,7 @@ return {
         vim.keymap.set('n', '<leader>ac', vim.lsp.buf.code_action, bufopts)
         vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
 
+        -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/lsp.md#enable-format-on-save
         vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format { async = true } end, bufopts)
         vim.keymap.set('v', '<leader>fm', function() vim.lsp.buf.format { async = true } end, bufopts)
       end)
@@ -120,8 +121,24 @@ return {
       --}
       --end
       --require('lspconfig').terraform_lsp.setup({})
+      require('lspconfig').pylsp.setup {
+        settings = {
+          pylsp = {
+            plugins = {
+              autopep8 = {
+                enabled = false
+              },
+              flake8 = {
+                enabled = true
+              },
+            }
+          }
+        }
+      }
+
 
       -- enable format on save
+      -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/lsp.md#enable-format-on-save
       lsp.format_on_save({
         format_opts = {
           async = false,
@@ -133,7 +150,7 @@ return {
           ['terraformls'] = { 'terraform' },
           ['gopls'] = { 'go' },
           ['clangd'] = { 'c' },
-          ['pyright'] = { 'python', 'py' },
+          ['pylsp'] = { 'python' },
         }
       })
     end

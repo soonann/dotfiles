@@ -28,7 +28,7 @@ alias mk='minikube'
 alias tf='terraform'
 
 # python
-alias venv='python3 -m venv'
+#alias venv='python3 -m venv'
 alias ansible='python3 -m ansible'
 
 # java

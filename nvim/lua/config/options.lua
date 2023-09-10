@@ -48,6 +48,8 @@ vim.opt.colorcolumn = "80"
 -- disable mouse
 vim.opt.mouse = ""
 
+vim.g.omni_sql_no_default_maps = 1
+
 --vim.opt.clipboard = "unnamedplus"
 
 -- if vim.fn.has("wsl") == 1 then
