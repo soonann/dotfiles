@@ -24,12 +24,15 @@ export FZF_DEFAULT_OPTS=" \
 export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
+# flatpak binaries
+export PATH="$PATH:/var/lib/flatpak/exports/bin"
+
 # .local
 export PATH="$PATH:/home/ann/.local/bin"
 
 # flyctl
 export FLYCTL_INSTALL="$HOME/.fly" 
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
+export PATH="$PATH:$FLYCTL_INSTALL/bin"
 
 # gcloud cli
 #source /opt/google-cloud-sdk/completion.bash.inc 
@@ -61,21 +64,17 @@ export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
 export PATH="$PATH:$HOME/Android/Sdk/emulator"
 
 # arduino nano
-export PATH="~/.npm-global/bin:$PATH"
+export PATH="$PATH:~/.npm-global/bin"
 
 # deno
 export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH="$PATH:$DENO_INSTALL/bin"
 
 # clang
-export PATH="~/.local/share/nvim/mason/bin:$PATH"
+export PATH="$PATH:~/.local/share/nvim/mason/bin"
 
-# chrome
+# chrome/brave
 export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
 
 # docker/compose
-export COMPOSE_PROFILES=web,kafka
-
-# flatpak
-export PATH="$PATH:/var/lib/flatpak/app/com.brave.Browser/current/active/files/bin"
-
+# export COMPOSE_PROFILES=web,kafka

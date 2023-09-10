@@ -26,6 +26,7 @@ focus_follows_mouse no
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
+set $bar "waybar"
 
 # setup sway launcher desktop
 # for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
@@ -40,7 +41,7 @@ include /etc/sway/config-vars.d/*
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg /run/current-system/sw/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg ~/dotfiles/wallpapers/nix-black-4k.png fill
 
 #
 # Example configuration:
@@ -91,7 +92,7 @@ input "1133:45077:M720_Triathlon_Mouse" {
 }
 
 input type:keyboard {
-    repeat_delay 240
+    repeat_delay 220
     repeat_rate 40
 }
 
@@ -104,12 +105,12 @@ input type:keyboard {
     # Start a terminal
     bindsym $mod+Return exec $term
 
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
     # Kill focused window
     bindsym $mod+Shift+q kill
     bindsym $mod+w kill
-
-    # Start your launcher
-    bindsym $mod+d exec $menu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -122,7 +123,7 @@ input type:keyboard {
     bindsym $mod+Shift+r reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod4+l exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod4+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 #
 # Moving around:
@@ -214,7 +215,7 @@ input type:keyboard {
     bindsym $mod+z fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+p floating toggle
 
     # Swap focus between the tiling area and the floating area
     #bindsym $mod+escape focus mode_toggle
@@ -264,7 +265,7 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar swaybar_command waybar
+bar swaybar_command $bar
 #{
     #position top
 
@@ -292,9 +293,6 @@ exec export SSH_AUTH_SOCK
 
 # kanshi
 exec_always pkill kanshi; exec kanshi
-
-# https://github.com/ErikReider/SwayNotificationCenter
-# Notification Daemon
 
 # Toggle control center
 #bindsym $mod+Shift+n exec swaync-client -t -sw
