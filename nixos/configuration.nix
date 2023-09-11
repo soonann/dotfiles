@@ -42,6 +42,14 @@ let
     '';
   };
 
+  set-libs = pkgs.writeTextFile {
+    name = "set-libs";
+    destination = "/bin/set-libs";
+    executable = true;
+    text = ''
+      export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
+    '';
+  };
   #wrapper for python to inject NIX_LD_LIBRARY_PATH
    #pyLdWrapper = pkgs.writeShellScriptBin "python" ''
      #export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
@@ -175,23 +183,19 @@ in {
     dbus-sway-environment 
     xdg-utils # opening default programs using links
     glib # gsettings
-    dracula-theme # dracula theme
-    gnome3.adwaita-icon-theme # default gnome icons
     configure-gtk  # configure dracula theme
-    #eww-wayland
-    waybar
+    waybar # status bar
+    dracula-theme # dracula theme
+    gnome.adwaita-icon-theme # default gnome icons
 
     # utility
     brave
     spotify
     obsidian
     obs-studio
-    libreoffice
     vlc
-
-    # chat apps
-    slack
-    zoom-us
+    virt-manager 
+    libreoffice
 
     # file exporer
     xfce.thunar-volman
@@ -201,7 +205,6 @@ in {
 
     # libs
     ffmpeg
-    libsecret
 
     # networking
     tailscale
@@ -212,80 +215,76 @@ in {
 
     # development
     vim
+    neovim
     alacritty
     tmux
-    neovim
     android-studio
-
-    # cli tools
-    git
-    kubectl
-    curl
-    wget
-    rclone
-    dos2unix
-    appimage-run
-    neofetch
     
     # fs
     btrfs-progs
-    pinentry
-    file
+
+    # gpg
     gnupg
-    gnumake
+    pinentry # for the gpg to prompt
+
+    # libs
+    set-libs
+    nix-index # nix-locate
+    patchelf # patch elf binaries
+    glibc
+    stdenv.cc.cc
+    zlib # zlib
+    fuse3 # fuse
+    fuse # fuse2
+
+    # keyring
+    gnome.seahorse
+    gnome.gnome-keyring
 
     # cli tools
+    coreutils-full # gnu utils
+    gnumake
+    file
+    zip # archives
+    unzip 
+    git
+    curl
+    wget
+    rclone
+    ripgrep
+    fd 
+    fzf
+    jq
+    socat
+
+    # system
     htop # cpu/mem top
     nvtop # gpu top
     lsof # open files
     pciutils # lspci - pci devices
-    zip # archives
-    unzip 
     acpi # battery
-
-    ripgrep
-    fd 
-    fzf
-    jq # json parsing
-    socat
-    coreutils-full # gnu utils
+    neofetch
 
     # containers
     docker-compose
+    kubectl
 
-    # languages
+    # languages/frameworks/pkg-manager
     python311
     go
     jdk17
     rustup
     cargo
-
+    gcc_multi
+    gdb
     nodejs
     flutter
-    virt-manager 
-
-    # keyring
-    #gnome.seahorse
-    #gnome.gnome-keyring
-    #thunderbird
-    #evolution
-    #evolution-ews
-    #protonmail-bridge
-
-    # elf
-    nix-index # nix-locate
-    patchelf # patch elf binaries
-    zlib # zlib
-    fuse3 # fuse
-    fuse # fuse
-    stdenv.cc.cc 
-    gcc_multi
-    glibc
-    gdb
 
   ];
 
   security.polkit.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
+
   virtualisation = {
     libvirtd.enable = true;
 
@@ -309,8 +308,13 @@ in {
       videoDrivers = ["nvidia"];
     };
 
+    gnome.gnome-keyring.enable = true;
+
     dbus = {
       enable = true;
+      packages = [
+        pkgs.gnome.gnome-keyring
+      ];
     };
 
     pipewire = {
@@ -341,7 +345,6 @@ in {
       extraPortals = [ 
         pkgs.xdg-desktop-portal-gtk # thunar
       ];
-      gtkUsePortal = true;
     };
   };
 
@@ -364,6 +367,7 @@ in {
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
+      pinentryFlavor = "gtk2"; # Hyprland/Wayland
     };
 
     light = {
@@ -411,6 +415,10 @@ in {
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };
+
+    #variables = {
+      #WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1";
+    #};
 
   };
 
