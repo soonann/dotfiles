@@ -1,8 +1,15 @@
 { config, pkgs, ... }:
-
+let
+  custom-python-pkgs = ps: with ps; [
+    flake8
+    python-lsp-server
+  ];
+  custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
+  nixpkgs.config.allowUnfree = true;
   home.username = "soonann";
   home.homeDirectory = "/home/soonann";
 
@@ -18,7 +25,34 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    protonmail-bridge
     thunderbird
+    discord
+    zoom-us
+
+    # containers
+    docker-compose
+    kubectl
+
+    # languages/frameworks/pkg-manager
+    custom-python311
+    go
+    jdk17
+    rustup
+    gcc
+    gdb
+    nodejs
+    flutter
+
+    # iac
+    ansible
+    awscli2
+    terraform
+    terraform-lsp
+    pulumi
+    pulumiPackages.pulumi-language-go
+
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -69,4 +103,13 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  home.pointerCursor = {
+    name = "Adwaita";
+    package = pkgs.gnome.adwaita-icon-theme;
+    size = 24;
+    x11 = {
+      enable = true;
+      defaultCursor = "Adwaita";
+    };
+  };
 }

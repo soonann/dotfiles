@@ -42,14 +42,14 @@ let
     '';
   };
 
-  set-libs = pkgs.writeTextFile {
-    name = "set-libs";
-    destination = "/bin/set-libs";
-    executable = true;
-    text = ''
-      export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
-    '';
-  };
+  #set-libs = pkgs.writeTextFile {
+    #name = "set-libs";
+    #destination = "/bin/set-libs";
+    #executable = true;
+    #text = ''
+      #export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
+    #'';
+  #};
   #wrapper for python to inject NIX_LD_LIBRARY_PATH
    #pyLdWrapper = pkgs.writeShellScriptBin "python" ''
      #export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
@@ -96,27 +96,27 @@ in {
       driSupport32Bit = true;
     };
     nvidia = {
-      # Modesetting is required.
+      ## Modesetting is required.
       modesetting.enable = true;
 
-      # Enable power management (do not disable this unless you have a reason to).
-      # Likely to cause problems on laptops and with screen tearing if disabled.
+      ## Enable power management (do not disable this unless you have a reason to).
+      ## Likely to cause problems on laptops and with screen tearing if disabled.
       powerManagement.enable = true;
 
-      # Use the NVidia open source kernel module (not to be confused with the
-      # independent third-party "nouveau" open source driver).
-      # Support is limited to the Turing and later architectures. Full list of 
-      # supported GPUs is at: 
-      # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-      # Only available from driver 515.43.04+
-      # Do not disable this unless your GPU is unsupported or if you have a good reason to.
+      ## Use the NVidia open source kernel module (not to be confused with the
+      ## independent third-party "nouveau" open source driver).
+      ## Support is limited to the Turing and later architectures. Full list of 
+      ## supported GPUs is at: 
+      ## https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+      ## Only available from driver 515.43.04+
+      ## Do not disable this unless your GPU is unsupported or if you have a good reason to.
       open = true;
 
-      # Enable the Nvidia settings menu,
-      # accessible via `nvidia-settings`.
+      ## Enable the Nvidia settings menu,
+      ## accessible via `nvidia-settings`.
       nvidiaSettings = true;
 
-      # Optionally, you may need to select the appropriate driver version for your specific GPU.
+      ## Optionally, you may need to select the appropriate driver version for your specific GPU.
       package = config.boot.kernelPackages.nvidiaPackages.stable;
     };
   };
@@ -176,6 +176,8 @@ in {
     pavucontrol # pulse-audio gui
     pamixer # pulse-audio cli
     mako # notification
+    #grim
+    #slurp
     flameshot # screenshot
     swaybg # desktop bg
 
@@ -193,8 +195,9 @@ in {
     spotify
     obsidian
     obs-studio
-    vlc
-    virt-manager 
+    vlc # video/audio player
+    feh # image viewer
+    virt-manager # vm gui
     libreoffice
 
     # file exporer
@@ -228,8 +231,8 @@ in {
     pinentry # for the gpg to prompt
 
     # libs
-    set-libs
-    nix-index # nix-locate
+    #set-libs
+    #nix-index # nix-locate
     patchelf # patch elf binaries
     glibc
     stdenv.cc.cc
@@ -265,27 +268,13 @@ in {
     acpi # battery
     neofetch
 
-    # containers
-    docker-compose
-    kubectl
-
-    # languages/frameworks/pkg-manager
-    python311
-    go
-    jdk17
-    rustup
-    cargo
-    gcc_multi
-    gdb
-    nodejs
-    flutter
-
   ];
 
   security.polkit.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
 
   virtualisation = {
+
     libvirtd.enable = true;
 
     docker.enable = true;
@@ -305,7 +294,11 @@ in {
     xserver = {
       layout = "us";
       xkbVariant = "";
-      videoDrivers = ["nvidia"];
+      videoDrivers = [
+        "nvidia"
+        #"modesetting"
+        #"nouveau"
+      ];
     };
 
     gnome.gnome-keyring.enable = true;
@@ -348,6 +341,12 @@ in {
     };
   };
 
+  #qt = {
+    #enable = true;
+    #platformTheme = "";
+    #style = "";
+  #};
+
   # Programs
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -361,6 +360,8 @@ in {
          zlib # zlib.so
          fuse # fuse.so.2
          fuse3 
+         glibc
+         gcc
       ];
     };
 
@@ -420,6 +421,14 @@ in {
       #WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1";
     #};
 
+  };
+
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi ~/.config/kanshi/config'';
+    };
   };
 
   # This value determines the NixOS release from which the default

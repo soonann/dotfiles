@@ -34,6 +34,7 @@
   "vim-airline": { "branch": "master", "commit": "e6bb8427dc2d2dc3583ed1bf5ff6a9682c854d32" },
   "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
   "vim-gitgutter": { "branch": "main", "commit": "8a2f8199b689b93fe4391a8ba1d97dd84b86ebd6" },
+  "vim-go": { "branch": "master", "commit": "a2e59981a2d965bed9f4052fa15a08d2ee2f8040" },
   "vim-markdown": { "branch": "master", "commit": "cc82d88e2a791f54d2b6e2b26e41f743351ac947" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
   "vim-terraform": { "branch": "master", "commit": "2bbc5f65a80c79a5110494a2ba1b869075fcf7a0" }

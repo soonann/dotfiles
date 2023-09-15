@@ -102,25 +102,28 @@ return {
       lsp.ensure_installed({
         'lua_ls',
         'rust_analyzer',
-        'terraformls',
         'clangd',
       })
 
       lsp.setup()
 
       -- custom lsp after lsp setup
-      --local lsp_configurations = require('lspconfig.configs')
-      --if not lsp_configurations.terraform_lsp then
-      --lsp_configurations.terraform_lsp = {
-      --default_config = {
-      --name = 'terraform-lsp',
-      --cmd = { 'terraform-lsp' },
-      --filetypes = { 'terraform', 'hcl' },
-      --root_dir = require('lspconfig.util').root_pattern('.terraform', '.git')
-      --}
-      --}
-      --end
-      --require('lspconfig').terraform_lsp.setup({})
+      local lsp_configurations = require('lspconfig.configs')
+      if not lsp_configurations.terraform_lsp then
+        lsp_configurations.terraform_lsp = {
+          default_config = {
+            name = 'terraform-lsp',
+            cmd = { 'terraform-lsp' },
+            filetypes = { '*.tf', '*.autovars' },
+            root_dir = require('lspconfig.util').root_pattern('.terraform', '.git')
+          }
+        }
+      end
+      require('lspconfig').terraform_lsp.setup({})
+
+      local vimgo = require("vim-go")
+      vimgo.setup({})
+
       require('lspconfig').pylsp.setup {
         settings = {
           pylsp = {
@@ -147,8 +150,7 @@ return {
         servers = {
           ['lua_ls'] = { 'lua' },
           ['rust_analyzer'] = { 'rust' },
-          ['terraformls'] = { 'terraform' },
-          ['gopls'] = { 'go' },
+          ['terraformls'] = { 'terraform', 'terraform-vars' },
           ['clangd'] = { 'c' },
           ['pylsp'] = { 'python' },
         }
@@ -170,7 +172,7 @@ return {
   { 'mfussenegger/nvim-jdtls' },
 
   -- Golang language support
-  --{ 'fatih/vim-go' },
+  { 'fatih/vim-go' },
 
   -- Terraform language support
   { 'hashivim/vim-terraform' },
