@@ -44,11 +44,14 @@ return {
             fallback()
           end
         end, { 'i', 's' }),
+        ['<C-y>'] = cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.InsertEnter,
+          select = true,
+        },
         ['<CR>'] = cmp.mapping.confirm {
           behavior = cmp.ConfirmBehavior.Replace,
           select = true,
         },
-        ['<C-y>'] = cmp.mapping.complete(),
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({

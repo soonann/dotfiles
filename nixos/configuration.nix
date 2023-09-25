@@ -4,6 +4,13 @@
 
 { config, pkgs, ... }:
 let
+
+  # When using easyCerts=true the IP Address must resolve to the master on creation.
+  # So use simply 127.0.0.1 in that case. Otherwise you will have errors like this https://github.com/NixOS/nixpkgs/issues/59364
+  kubeMasterIP = "127.0.0.1";
+  kubeMasterHostname = "api.kube";
+  kubeMasterAPIServerPort = 6443;
+
   #  # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
   # see
@@ -32,33 +39,37 @@ let
     name = "configure-gtk";
     destination = "/bin/configure-gtk";
     executable = true;
-    text = let
-      schema = pkgs.gsettings-desktop-schemas;
-      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-    in ''
-      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-      gnome_schema=org.gnome.desktop.interface
-      gsettings set $gnome_schema gtk-theme 'Dracula'
-    '';
+    text =
+      let
+        schema = pkgs.gsettings-desktop-schemas;
+        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+      in
+      ''
+        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+        gnome_schema=org.gnome.desktop.interface
+        gsettings set $gnome_schema gtk-theme 'Dracula'
+      '';
   };
 
   #set-libs = pkgs.writeTextFile {
-    #name = "set-libs";
-    #destination = "/bin/set-libs";
-    #executable = true;
-    #text = ''
-      #export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
-    #'';
+  #name = "set-libs";
+  #destination = "/bin/set-libs";
+  #executable = true;
+  #text = ''
+  #export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
+  #'';
   #};
   #wrapper for python to inject NIX_LD_LIBRARY_PATH
-   #pyLdWrapper = pkgs.writeShellScriptBin "python" ''
-     #export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-     #exec ${pkgs.python311}/bin/python "$@"
-   #'';
+  #pyLdWrapper = pkgs.writeShellScriptBin "python" ''
+  #export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
+  #exec ${pkgs.python311}/bin/python "$@"
+  #'';
 
-in {
+in
+{
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./hosts.nix
     ];
@@ -75,6 +86,7 @@ in {
   networking = {
     hostName = "nixos"; # Define your hostname.
     networkmanager.enable = true; # Enable networking
+    extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
@@ -144,7 +156,7 @@ in {
     isNormalUser = true;
     description = "Soon Ann";
     extraGroups = [ "networkmanager" "wheel" "video" "docker" "libvirtd" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Nixpkgs/Nix
@@ -182,10 +194,10 @@ in {
     swaybg # desktop bg
 
     # sway
-    dbus-sway-environment 
+    dbus-sway-environment
     xdg-utils # opening default programs using links
     glib # gsettings
-    configure-gtk  # configure dracula theme
+    configure-gtk # configure dracula theme
     waybar # status bar
     dracula-theme # dracula theme
     gnome.adwaita-icon-theme # default gnome icons
@@ -197,13 +209,13 @@ in {
     obs-studio
     vlc # video/audio player
     feh # image viewer
+    evince # pdf viewer
     virt-manager # vm gui
-    libreoffice
 
     # file exporer
     xfce.thunar-volman
     xfce.thunar-archive-plugin
-    xarchiver
+    gnome.file-roller
     gvfs
 
     # libs
@@ -222,7 +234,12 @@ in {
     alacritty
     tmux
     android-studio
-    
+
+    # kubernetes
+    kompose
+    kubectl
+    kubernetes
+
     # fs
     btrfs-progs
 
@@ -249,16 +266,17 @@ in {
     gnumake
     file
     zip # archives
-    unzip 
+    unzip
     git
     curl
     wget
     rclone
     ripgrep
-    fd 
+    fd
     fzf
     jq
     socat
+    openssl
 
     # system
     htop # cpu/mem top
@@ -316,12 +334,30 @@ in {
       pulse.enable = true;
     };
 
-    blueman.enable = true; 
+    blueman.enable = true;
     gvfs.enable = true; # thunar - Mount, trash, and other functionalities
     tumbler.enable = true; # thunar - Thumbnail support for images
 
-    tailscale.enable = true;                                       
-    flatpak.enable = true;                                        
+    tailscale.enable = true;
+    flatpak.enable = true;
+
+    # kubernetes
+    kubernetes = {
+      roles = [ "master" "node" ];
+      masterAddress = kubeMasterHostname;
+      apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+      easyCerts = true;
+      apiserver = {
+        securePort = kubeMasterAPIServerPort;
+        advertiseAddress = kubeMasterIP;
+      };
+
+      # use coredns
+      addons.dns.enable = true;
+
+      # needed if you use swap
+      kubelet.extraOpts = "--fail-swap-on=false";
+    };
 
   };
 
@@ -335,16 +371,16 @@ in {
     portal = {
       enable = true;
       wlr.enable = true;
-      extraPortals = [ 
+      extraPortals = [
         pkgs.xdg-desktop-portal-gtk # thunar
       ];
     };
   };
 
   #qt = {
-    #enable = true;
-    #platformTheme = "";
-    #style = "";
+  #enable = true;
+  #platformTheme = "";
+  #style = "";
   #};
 
   # Programs
@@ -355,13 +391,13 @@ in {
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
-         stdenv.cc.cc
-         # flatpak
-         zlib # zlib.so
-         fuse # fuse.so.2
-         fuse3 
-         glibc
-         gcc
+        stdenv.cc.cc
+        # flatpak
+        zlib # zlib.so
+        fuse # fuse.so.2
+        fuse3
+        glibc
+        gcc
       ];
     };
 
@@ -418,16 +454,20 @@ in {
     };
 
     #variables = {
-      #WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1";
+    #WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1";
     #};
 
   };
 
+  # kanshi service
   systemd.user.services.kanshi = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
     description = "kanshi daemon";
     serviceConfig = {
       Type = "simple";
       ExecStart = ''${pkgs.kanshi}/bin/kanshi ~/.config/kanshi/config'';
+      ExecStop = ''pkill -9 kanshi'';
     };
   };
 

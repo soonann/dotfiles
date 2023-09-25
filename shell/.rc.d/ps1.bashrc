@@ -26,4 +26,9 @@ parse_git_branch() {
 # PS1 prompt
 PS1="\[\e[32m\]\u@\h:\[\033[38;5;27m\]\w\[\e[31m\]\$(parse_git_branch)\[\e[00m\]$ "
 
+# check if in nix shell
+if [[ -n "$IN_NIX_SHELL" ]]; then
+  export PS1="(nix-shell) $PS1"
+fi
+
 unset color_prompt

@@ -76,5 +76,9 @@ export PATH="$PATH:~/.local/share/nvim/mason/bin"
 # chrome/brave
 export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
 
-# docker/compose
+# docker/compose/kube
 # export COMPOSE_PROFILES=web,kafka
+export KUBECONFIG="/home/soonann/.kube/config"
+
+# nix tmp 
+export NIXPKGS_ALLOW_UNFREE=1

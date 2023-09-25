@@ -27,7 +27,7 @@
     "clock": {
         "timezone": "Asia/Singapore",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%I:%M %p | %Y-%m-%d}"
+        "format": "{:%I:%M %p | %d/%m/%Y}"
     },
     "cpu": {
         "format": "{usage}% ",
@@ -71,8 +71,8 @@
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
         "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon}  {format_source}",
+        "format-bluetooth-muted": " {icon}  {format_source}",
         "format-muted": " {format_source}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
@@ -87,5 +87,9 @@
         },
         "on-click": "pavucontrol"
     },
+    "tray": {
+      "icon-size": 21,
+      "spacing": 10,
+    }
 }
 

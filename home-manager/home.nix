@@ -10,6 +10,9 @@ in
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.permittedInsecurePackages = [
+  ];
+
   home.username = "soonann";
   home.homeDirectory = "/home/soonann";
 
@@ -25,10 +28,24 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+
     protonmail-bridge
+
+    # gui apps
     thunderbird
-    discord
     zoom-us
+    discord
+    telegram-desktop
+    onlyoffice-bin
+    libreoffice
+    gnome.gnome-calculator
+    xournalpp
+
+    # editing
+    gimp
+
+    # 3d printing
+    cura
 
     # containers
     docker-compose
@@ -43,6 +60,8 @@ in
     gdb
     nodejs
     flutter
+
+    vscode
 
     # iac
     ansible

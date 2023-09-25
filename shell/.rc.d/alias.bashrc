@@ -39,7 +39,7 @@ alias mvn='./mvnw'
 alias xclip='xclip -selection clipboard'
 
 # shutdown in 120
-alias sleepy='sudo shutdown "120"'
+alias sleepy='shutdown "120"'
 
 # sway
 alias sway='sway --unsupported-gpu'

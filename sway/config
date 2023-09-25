@@ -53,11 +53,10 @@ output * bg ~/dotfiles/wallpapers/nix-black-4k.png fill
 ### Idle configuration
 #
 # Example configuration:
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
+ exec swayidle -w \
+          timeout 300 'swaylock -f -c 000000' \
+          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+          before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -95,6 +94,10 @@ input "9610:8226:Glorious_Model_O_Wireless" {
   pointer_accel -0.6
 }
 
+input "1133:16512:Logitech_M350" {
+  pointer_accel -0.6
+}
+
 input type:keyboard {
     repeat_delay 220
     repeat_rate 40
@@ -126,8 +129,14 @@ input type:keyboard {
     # Reload the configuration file
     bindsym $mod+Shift+r reload
 
+    # Lock screen
+    bindsym $mod4+Shift+l exec swaylock -c '0827f5'
+
+    # Suspend
+    bindsym $mod4+Shift+s exec systemctl suspend
+
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod4+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod4+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 #
 # Moving around:
