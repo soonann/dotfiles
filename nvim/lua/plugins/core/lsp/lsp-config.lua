@@ -90,12 +90,6 @@ return {
         },
       },
 
-      -- c
-      clangd = {},
-
-      -- rust
-      rust_analyzer = {},
-
       -- nix
       rnix = {},
 
@@ -107,23 +101,25 @@ return {
       -- tsserver = {},
     }
 
-    -- enable mason and setup all servers with mason_lspconfig
+    -- enable mason
     mason.setup({})
+    -- setup all servers with mason_lspconfig
     mason_lspconfig.setup {
       ensure_installed = vim.tbl_keys(mason_servers),
-    }
-    mason_lspconfig.setup_handlers {
-      function(server_name)
-        lspconfig[server_name].setup {
-          capabilities = capabilities,
-          on_attach = on_attach,
-          settings = mason_servers[server_name],
-          filetypes = (mason_servers[server_name] or {}).filetypes,
-        }
-      end
+      handlers = {
+        function(server_name)
+          lspconfig[server_name].setup {
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = mason_servers[server_name],
+            filetypes = (mason_servers[server_name] or {}).filetypes,
+          }
+        end
+      },
     }
 
     -- IMPORTANT: setup the custom lspconfigs after mason_lspconfig
+    -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
     -- python lsp
     lspconfig["pylsp"].setup({
@@ -141,6 +137,25 @@ return {
           }
         }
       },
+    })
+
+    -- rust_analyzer lsp
+    lspconfig['rust_analyzer'].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+      settings = {
+        ['rust-analyzer'] = {
+          diagnostics = {
+            enable = true,
+          }
+        }
+      }
+    })
+
+    -- c/cpp lsp
+    lspconfig["clangd"].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
     })
 
     --  Use :FormatOnSaveToggle to toggle autoformatting on or off

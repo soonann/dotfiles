@@ -250,18 +250,21 @@ in
     # libs
     #set-libs
     #nix-index # nix-locate
+    appimage-run # run app images
     patchelf # patch elf binaries
     glibc
     stdenv.cc.cc
     zlib # zlib
     fuse3 # fuse
     fuse # fuse2
+    libsecret
 
     # keyring
     gnome.seahorse
     gnome.gnome-keyring
 
     # cli tools
+    clang-tools # c/cpp lsp
     coreutils-full # gnu utils
     gnumake
     file
@@ -395,6 +398,7 @@ in
         # flatpak
         zlib # zlib.so
         fuse # fuse.so.2
+        libsecret # libsecret-1.so.0
         fuse3
         glibc
         gcc

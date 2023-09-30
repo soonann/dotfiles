@@ -102,13 +102,14 @@ return {
       lsp.ensure_installed({
         'lua_ls',
         'rust_analyzer',
-        'clangd',
       })
 
       lsp.setup()
 
       -- custom lsp after lsp setup
+      -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
       local lsp_configurations = require('lspconfig.configs')
+      local lspconfig = require('lspconfig')
       if not lsp_configurations.terraform_lsp then
         lsp_configurations.terraform_lsp = {
           default_config = {
@@ -119,12 +120,16 @@ return {
           }
         }
       end
-      require('lspconfig').terraform_lsp.setup({})
 
+      -- golang lsp
       local vimgo = require("vim-go")
       vimgo.setup({})
 
-      require('lspconfig').pylsp.setup {
+      -- terraform lsp
+      lspconfig.terraform_lsp.setup({})
+
+      -- python lsp
+      lspconfig.pylsp.setup {
         settings = {
           pylsp = {
             plugins = {
@@ -139,9 +144,10 @@ return {
         }
       }
 
+      -- c/c++ lsp
+      lspconfig.clangd.setup {}
 
       -- enable format on save
-      -- https://github.com/VonHeikemen/lsp-zero.nvim/blob/v2.x/doc/md/lsp.md#enable-format-on-save
       lsp.format_on_save({
         format_opts = {
           async = false,
@@ -151,7 +157,7 @@ return {
           ['lua_ls'] = { 'lua' },
           ['rust_analyzer'] = { 'rust' },
           ['terraformls'] = { 'terraform', 'terraform-vars' },
-          ['clangd'] = { 'c' },
+          ['clangd'] = { 'c', 'cpp' },
           ['pylsp'] = { 'python' },
         }
       })

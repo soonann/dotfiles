@@ -55,7 +55,6 @@ in
     custom-python311
     go
     jdk17
-    rustup
     gcc
     gdb
     nodejs
