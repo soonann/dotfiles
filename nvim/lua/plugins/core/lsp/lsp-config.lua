@@ -48,6 +48,7 @@ return {
     capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
     -- servers to install and configure with mason
+    -- https://github.com/williamboman/mason-lspconfig.nvim#default-configuration
     local mason_servers = {
       -- lua
       lua_ls = {
@@ -68,7 +69,7 @@ return {
         },
       },
 
-      -- golang
+      -- golang -> replaced with vim-go
       gopls = {
         settings = {
           gopls = {
@@ -97,6 +98,30 @@ return {
       terraformls = {
         command = "terraform-ls serve",
       },
+
+      -- yaml
+      -- https://www.reddit.com/r/neovim/comments/ze9gbe/kubernetes_auto_completion_support_in_neovim/
+      yamlls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://raw.githubusercontent.com/instrumenta/kubernetes-json-schema/master/v1.18.0-standalone-strict/all.json"] = "*.{yml,yaml}",
+              ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+              ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+              ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+              ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+              ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+              ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+              ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+              ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+              ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
+              ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+            },
+          },
+        }
+      }
 
       -- tsserver = {},
     }
@@ -158,6 +183,12 @@ return {
       capabilities = capabilities,
     })
 
+    -- arduino lsp
+    lspconfig["arduino_language_server"].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
+
     --  Use :FormatOnSaveToggle to toggle autoformatting on or off
     local format_is_enabled = true
     vim.api.nvim_create_user_command('FormatOnSaveToggle', function()
@@ -214,10 +245,36 @@ return {
             vim.lsp.buf.format {
               async = false,
               filter = function(c)
+                if client.name == 'gopls' then
+                  return
+                end
                 return c.id == client.id
               end,
             }
           end,
+        })
+
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = "*.go",
+          callback = function()
+            local params = vim.lsp.util.make_range_params()
+            params.context = { only = { "source.organizeImports" } }
+            -- buf_request_sync defaults to a 1000ms timeout. Depending on your
+            -- machine and codebase, you may want longer. Add an additional
+            -- argument after params if you find that you have to write the file
+            -- twice for changes to be saved.
+            -- E.g., vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params)
+            for cid, res in pairs(result or {}) do
+              for _, r in pairs(res.result or {}) do
+                if r.edit then
+                  local enc = (vim.lsp.get_client_by_id(cid) or {}).offset_encoding or "utf-16"
+                  vim.lsp.util.apply_workspace_edit(r.edit, enc)
+                end
+              end
+            end
+            vim.lsp.buf.format({ async = false })
+          end
         })
       end,
     })

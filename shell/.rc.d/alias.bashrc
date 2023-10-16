@@ -13,9 +13,6 @@ alias ll='ls -alhF --color=auto'
 # nvim alias as vim 
 alias vim="nvim"
 
-# fd
-alias fd='fdfind'
-
 # tmux
 alias t='tmux attach || tmux'
 alias pf='tmux new tmux-sessionizer'
@@ -42,4 +39,4 @@ alias xclip='xclip -selection clipboard'
 alias sleepy='shutdown "120"'
 
 # sway
-alias sway='sway --unsupported-gpu'
+#alias sway='sway --unsupported-gpu'

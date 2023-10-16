@@ -1,8 +1,15 @@
+exec dbus-sway-environment
+exec configure-gtk
+
 # Default config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
 # Read `man 5 sway` for a complete reference.
+set $focus_color "#b5bd68"
+set $focus_text_color "#000000"
+
+client.focused "$focus_color" "$focus_color" "$focus_text_color" "$focus_color" "$focus_color"
 
 ### Variables
 #
@@ -25,7 +32,7 @@ focus_follows_mouse no
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu "rofi -combi-modi window,drun,ssh,run -show combi -show-icons" 
+set $menu "rofi -combi-modi window,drun,ssh,run,combi -show combi -show-icons" 
 set $bar "waybar"
 
 # setup sway launcher desktop
@@ -308,14 +315,23 @@ exec eval $(gnome-keyring-daemon --start)
 exec export SSH_AUTH_SOCK
 
 # kanshi
-exec_always sleep 3; exec systemctl --user restart kanshi.service
-exec_always pkill protonmail-bridge; exec protonmail-bridge --cli -n
+exec_always {
+  pkill -9 kanshi
+  sleep 2
+  kanshi &
+}
+
+#exec_always {
+  #pkill -9 -f 'protonmail-bridge --cli -n'
+  #sleep 2
+  #'protonmail-bridge --cli -n'
+#}
 
 # Toggle control center
 #bindsym $mod+Shift+n exec swaync-client -t -sw
 
 # screenshots
-bindsym $mod+Shift+s exec flameshot gui --raw | wl-copy
+bindsym $mod+Shift+s exec flameshot gui
 
 # default desktop apps
 assign [app_id="Alacritty"] workspace 1
@@ -330,5 +346,3 @@ for_window [title="^(Zoom|About|audio conference|as_toolbar)$"] border pixel, fl
 #assign [app_id="org.gnome.Nautilus"] workspace 4
 
 include /etc/sway/config.d/*
-exec dbus-sway-environment
-exec configure-gtk

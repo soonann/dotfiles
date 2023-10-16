@@ -1,6 +1,13 @@
 # get the user id 
 ID=$(id -u)
 
+# flameshot env
+export SDL_VIDEODRIVE=wayland
+export _JAVA_AWT_WM_NONREPARENTING=1
+export QT_QPA_PLATFORM=wayland
+export XDG_CURRENT_DESKTOP=sway
+export XDG_SESSION_DESKTOP=sway
+
 # keyring setup
 #if [ -n "${WAYLAND_DISPLAY}" ] && \
    #[ ! -n "${SSH_AUTH_SOCK}" ] && \
@@ -79,6 +86,7 @@ export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser"
 # docker/compose/kube
 # export COMPOSE_PROFILES=web,kafka
 export KUBECONFIG="/home/soonann/.kube/config"
+export KUBE_EDITOR="/run/current-system/sw/bin/nvim"
 
 # nix tmp 
 export NIXPKGS_ALLOW_UNFREE=1

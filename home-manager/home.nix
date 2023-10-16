@@ -7,6 +7,7 @@ let
   custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
 in
 {
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   nixpkgs.config.allowUnfree = true;
@@ -29,8 +30,6 @@ in
   # environment.
   home.packages = with pkgs; [
 
-    protonmail-bridge
-
     # gui apps
     thunderbird
     zoom-us
@@ -49,7 +48,10 @@ in
 
     # containers
     docker-compose
+    nerdctl
     kubectl
+    argocd
+    act
 
     # languages/frameworks/pkg-manager
     custom-python311
@@ -60,6 +62,7 @@ in
     nodejs
     flutter
 
+    # cope
     vscode
 
     # iac
@@ -130,4 +133,5 @@ in
       defaultCursor = "Adwaita";
     };
   };
+
 }

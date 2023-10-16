@@ -4,12 +4,7 @@
 
 { config, pkgs, ... }:
 let
-
-  # When using easyCerts=true the IP Address must resolve to the master on creation.
-  # So use simply 127.0.0.1 in that case. Otherwise you will have errors like this https://github.com/NixOS/nixpkgs/issues/59364
-  kubeMasterIP = "127.0.0.1";
-  kubeMasterHostname = "api.kube";
-  kubeMasterAPIServerPort = 6443;
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 
   #  # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
@@ -21,11 +16,10 @@ let
     name = "dbus-sway-environment";
     destination = "/bin/dbus-sway-environment";
     executable = true;
-
     text = ''
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
+      systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
+      systemctl --user start pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
     '';
   };
 
@@ -65,6 +59,15 @@ let
   #exec ${pkgs.python311}/bin/python "$@"
   #'';
 
+  find-files = pkgs.writeTextFile {
+    name = "find-files";
+    destination = "/bin/find-files";
+    executable = true;
+    text = ''
+      cd $(fd -t d . ~ | fzf)
+    '';
+  };
+
 in
 {
   imports =
@@ -86,16 +89,16 @@ in
   networking = {
     hostName = "nixos"; # Define your hostname.
     networkmanager.enable = true; # Enable networking
-    extraHosts = "${kubeMasterIP} ${kubeMasterHostname}";
+    # Open ports in the firewall.
+    #firewall.allowedTCPPorts = [ 6443 ];
+    #firewall.allowedUDPPorts = [ ... ];
+    # Or disable the firewall altogether.
+
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
     # Configure network proxy if necessary
     #proxy.default = "http://user:password@proxy:port/";
     #proxy.noProxy = "127.0.0.1,localhost,internal.domain"; 
-    # Open ports in the firewall.
-    #firewall.allowedTCPPorts = [ ... ];
-    #firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
     #firewall.enable = false;
   };
 
@@ -155,12 +158,35 @@ in
   users.users.soonann = {
     isNormalUser = true;
     description = "Soon Ann";
-    extraGroups = [ "networkmanager" "wheel" "video" "docker" "libvirtd" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+      "docker"
+      "libvirtd"
+      "libvirt"
+      "kvm"
+      "dialout" # writing to /dev/ttyACM0
+    ];
     packages = with pkgs; [ ];
   };
 
   # Nixpkgs/Nix
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs = {
+    config.allowUnfree = true;
+    #overlays = [
+    ## android studio xdg-current-desktop overlay
+    #(final: prev: {
+    #android-studio = prev.android-studio.overrideAttrs (oldAttrs: {
+    #postInstall = (oldAttrs.postInstall or "") + ''
+    #substituteInPlace $out/share/applications/android-studio.desktop \
+    #--replace "Exec=android-studio" "Exec=env QT_QPA_PLATFORM=xcb android-studio"
+    #'';
+    #});
+    #})
+    #];
+  };
+
   nix = {
     settings.experimental-features = "nix-command flakes";
     gc = {
@@ -173,6 +199,11 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
+    # custom
+    dbus-sway-environment # configure dbus for sway
+    configure-gtk # configure dracula theme
+    find-files
 
     # wayland essentials
     wayland
@@ -188,22 +219,21 @@ in
     pavucontrol # pulse-audio gui
     pamixer # pulse-audio cli
     mako # notification
-    #grim
-    #slurp
-    flameshot # screenshot
+    grim # image grabber
+    slurp # screen selection 
+    flameshot # screenshot -> broken :(
     swaybg # desktop bg
 
     # sway
-    dbus-sway-environment
     xdg-utils # opening default programs using links
     glib # gsettings
-    configure-gtk # configure dracula theme
     waybar # status bar
     dracula-theme # dracula theme
     gnome.adwaita-icon-theme # default gnome icons
 
     # utility
     brave
+    firefox
     spotify
     obsidian
     obs-studio
@@ -233,12 +263,13 @@ in
     neovim
     alacritty
     tmux
-    android-studio
+    unstable.android-studio
 
     # kubernetes
-    kompose
+    minikube
+    kind
     kubectl
-    kubernetes
+    kubernetes-helm
 
     # fs
     btrfs-progs
@@ -264,7 +295,6 @@ in
     gnome.gnome-keyring
 
     # cli tools
-    clang-tools # c/cpp lsp
     coreutils-full # gnu utils
     gnumake
     file
@@ -277,6 +307,7 @@ in
     ripgrep
     fd
     fzf
+    ranger
     jq
     socat
     openssl
@@ -297,12 +328,16 @@ in
   virtualisation = {
 
     libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+
+    containerd.enable = true;
 
     docker.enable = true;
     docker.rootless = {
       enable = true;
       setSocketVariable = true;
     };
+
 
   };
 
@@ -316,11 +351,14 @@ in
       layout = "us";
       xkbVariant = "";
       videoDrivers = [
+        #"modesetting" # default
+        #"nouveau" # no power management
         "nvidia"
-        #"modesetting"
-        #"nouveau"
       ];
     };
+
+    #qemuGuest.enable = true;
+    #spice-vdagentd.enable = true;
 
     gnome.gnome-keyring.enable = true;
 
@@ -333,6 +371,7 @@ in
 
     pipewire = {
       enable = true;
+      wireplumber.enable = true;
       alsa.enable = true;
       pulse.enable = true;
     };
@@ -344,23 +383,15 @@ in
     tailscale.enable = true;
     flatpak.enable = true;
 
-    # kubernetes
-    kubernetes = {
-      roles = [ "master" "node" ];
-      masterAddress = kubeMasterHostname;
-      apiserverAddress = "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
-      easyCerts = true;
-      apiserver = {
-        securePort = kubeMasterAPIServerPort;
-        advertiseAddress = kubeMasterIP;
-      };
+    #k3s = {
+    #enable = true;
+    #role = "server";
+    #extraFlags = toString [
+    ## "--kubelet-arg=v=4" # Optionally add additional args to k3s
+    #];
 
-      # use coredns
-      addons.dns.enable = true;
+    #};
 
-      # needed if you use swap
-      kubelet.extraOpts = "--fail-swap-on=false";
-    };
 
   };
 
@@ -463,17 +494,10 @@ in
 
   };
 
-  # kanshi service
-  systemd.user.services.kanshi = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    description = "kanshi daemon";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi ~/.config/kanshi/config'';
-      ExecStop = ''pkill -9 kanshi'';
-    };
-  };
+  # change the timeout duration
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=30s
+  '';
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
