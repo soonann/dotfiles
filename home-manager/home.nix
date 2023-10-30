@@ -52,6 +52,7 @@ in
     kubectl
     argocd
     act
+    tmate # tmux sharing
 
     # languages/frameworks/pkg-manager
     custom-python311
@@ -70,9 +71,9 @@ in
     awscli2
     terraform
     terraform-lsp
-    pulumi
-    pulumiPackages.pulumi-language-go
 
+    # mongodb
+    mongodb-compass
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.

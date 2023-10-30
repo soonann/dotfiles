@@ -60,10 +60,10 @@ output * bg ~/dotfiles/wallpapers/nix-black-4k.png fill
 ### Idle configuration
 #
 # Example configuration:
- exec swayidle -w \
-          timeout 300 'swaylock -f -c 000000' \
-          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-          before-sleep 'swaylock -f -c 000000'
+ #exec swayidle -w \
+          #timeout 300 'swaylock -f -c 000000' \
+          #timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+          #before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -340,6 +340,7 @@ assign [class="thunderbird-default"] workspace 10
 
 # zoom windows
 for_window [title="^zoom$"] border none, floating enable
+for_window [title="^feh$"] border none, floating enable
 for_window [title="^(Zoom|About|audio conference|as_toolbar)$"] border pixel, floating enable
 
 #assign [class="Brave-browser"] workspace 2

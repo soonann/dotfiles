@@ -21,8 +21,8 @@ alias ff='find-files'
 # containers
 alias k='kubectl'
 alias dc='docker compose'
-alias mk='minikube'
 alias tf='terraform'
+alias r='ranger'
 
 # python
 #alias venv='python3 -m venv'

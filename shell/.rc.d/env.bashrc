@@ -35,7 +35,7 @@ export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
 
 # .local
-export PATH="$PATH:/home/ann/.local/bin"
+export PATH="$PATH:$HOME/.local/bin"
 
 # flyctl
 export FLYCTL_INSTALL="$HOME/.fly" 
@@ -90,3 +90,5 @@ export KUBE_EDITOR="/run/current-system/sw/bin/nvim"
 
 # nix tmp 
 export NIXPKGS_ALLOW_UNFREE=1
+
+export EDITOR=nvim

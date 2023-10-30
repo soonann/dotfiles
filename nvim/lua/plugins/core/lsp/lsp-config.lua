@@ -38,13 +38,19 @@ return {
       vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
 
       -- formatting
-      vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format { async = true } end, bufopts)
-      vim.keymap.set('v', '<leader>fm', function() vim.lsp.buf.format { async = true } end, bufopts)
+      if client then
+        -- Check if the server supports formatting
+        if client.server_capabilities.documentFormattingProvider then
+          -- Sync formatting prevents weird buffer interactions
+          vim.keymap.set('n', '<leader>fm', function() vim.lsp.buf.format { async = false } end, bufopts)
+          vim.keymap.set('v', '<leader>fm', function() vim.lsp.buf.format { async = false } end, bufopts)
+        end
+      end
     end
 
     -- used to enable autocompletion (assign to every lsp server config)
-    --local capabilities = cmp_nvim_lsp.default_capabilities()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    --local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = cmp_nvim_lsp.default_capabilities()
     capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
     -- servers to install and configure with mason
@@ -81,7 +87,6 @@ return {
           },
         }
       },
-
       -- html
       html = {
         filetypes = {
@@ -154,7 +159,7 @@ return {
         pylsp = {
           plugins = {
             autopep8 = {
-              enabled = false
+              enabled = true
             },
             flake8 = {
               enabled = true
@@ -188,6 +193,8 @@ return {
       on_attach = on_attach,
       capabilities = capabilities,
     })
+
+
 
     --  Use :FormatOnSaveToggle to toggle autoformatting on or off
     local format_is_enabled = true
@@ -226,8 +233,7 @@ return {
           return
         end
 
-        -- Tsserver usually works poorly. Sorry you work with bad languages
-        -- You can remove this line if you know what you're doing :)
+        -- ignore tsserver and gopls for formatting
         if client.name == 'tsserver' then
           return
         end
@@ -238,22 +244,20 @@ return {
           group = get_augroup(client),
           buffer = bufnr,
           callback = function()
+            -- check if format_on_save is enabled
             if not format_is_enabled then
               return
             end
-
             vim.lsp.buf.format {
               async = false,
               filter = function(c)
-                if client.name == 'gopls' then
-                  return
-                end
                 return c.id == client.id
               end,
             }
           end,
         })
 
+        -- instead of gopls, use this for formatting
         vim.api.nvim_create_autocmd("BufWritePre", {
           pattern = "*.go",
           callback = function()

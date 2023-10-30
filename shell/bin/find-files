@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env /run/current-system/sw/bin/bash
 
 # local search tool
 selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)

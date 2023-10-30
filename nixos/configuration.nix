@@ -110,30 +110,30 @@ in
       driSupport = true;
       driSupport32Bit = true;
     };
-    nvidia = {
-      ## Modesetting is required.
-      modesetting.enable = true;
+    #nvidia = {
+    ### Modesetting is required.
+    #modesetting.enable = true;
 
-      ## Enable power management (do not disable this unless you have a reason to).
-      ## Likely to cause problems on laptops and with screen tearing if disabled.
-      powerManagement.enable = true;
+    ### Enable power management (do not disable this unless you have a reason to).
+    ### Likely to cause problems on laptops and with screen tearing if disabled.
+    #powerManagement.enable = true;
 
-      ## Use the NVidia open source kernel module (not to be confused with the
-      ## independent third-party "nouveau" open source driver).
-      ## Support is limited to the Turing and later architectures. Full list of 
-      ## supported GPUs is at: 
-      ## https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-      ## Only available from driver 515.43.04+
-      ## Do not disable this unless your GPU is unsupported or if you have a good reason to.
-      open = true;
+    ### Use the NVidia open source kernel module (not to be confused with the
+    ### independent third-party "nouveau" open source driver).
+    ### Support is limited to the Turing and later architectures. Full list of 
+    ### supported GPUs is at: 
+    ### https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
+    ### Only available from driver 515.43.04+
+    ### Do not disable this unless your GPU is unsupported or if you have a good reason to.
+    #open = true;
 
-      ## Enable the Nvidia settings menu,
-      ## accessible via `nvidia-settings`.
-      nvidiaSettings = true;
+    ### Enable the Nvidia settings menu,
+    ### accessible via `nvidia-settings`.
+    #nvidiaSettings = true;
 
-      ## Optionally, you may need to select the appropriate driver version for your specific GPU.
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
+    ### Optionally, you may need to select the appropriate driver version for your specific GPU.
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #};
   };
 
   # Time/Locale
@@ -189,11 +189,11 @@ in
 
   nix = {
     settings.experimental-features = "nix-command flakes";
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
+    #gc = {
+    #automatic = true;
+    #dates = "weekly";
+    #options = "--delete-older-than 7d";
+    #};
   };
 
   # List packages installed in system profile. To search, run:
@@ -264,12 +264,19 @@ in
     alacritty
     tmux
     unstable.android-studio
+    unstable.bruno
+    k6
+    mongosh
 
     # kubernetes
     minikube
     kind
     kubectl
     kubernetes-helm
+    telepresence2
+    tilt
+    devspace
+    helmfile
 
     # fs
     btrfs-progs
@@ -283,12 +290,13 @@ in
     #nix-index # nix-locate
     appimage-run # run app images
     patchelf # patch elf binaries
-    glibc
+    glibc_multi
     stdenv.cc.cc
     zlib # zlib
     fuse3 # fuse
     fuse # fuse2
     libsecret
+    gcc
 
     # keyring
     gnome.seahorse
@@ -309,8 +317,10 @@ in
     fzf
     ranger
     jq
+    stow
     socat
     openssl
+    du-dust # du alternative
 
     # system
     htop # cpu/mem top
@@ -333,10 +343,10 @@ in
     containerd.enable = true;
 
     docker.enable = true;
-    docker.rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+    #docker.rootless = {
+    #enable = true;
+    #setSocketVariable = true;
+    #};
 
 
   };
@@ -350,11 +360,11 @@ in
     xserver = {
       layout = "us";
       xkbVariant = "";
-      videoDrivers = [
-        #"modesetting" # default
-        #"nouveau" # no power management
-        "nvidia"
-      ];
+      #videoDrivers = [
+      #"modesetting" # default
+      #"nouveau" # no power management
+      #"nvidia"
+      #];
     };
 
     #qemuGuest.enable = true;
@@ -431,8 +441,8 @@ in
         fuse # fuse.so.2
         libsecret # libsecret-1.so.0
         fuse3
-        glibc
-        gcc
+        glibc_multi
+        openssl
       ];
     };
 
