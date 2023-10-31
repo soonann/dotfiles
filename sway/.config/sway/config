@@ -138,7 +138,7 @@ input type:keyboard {
     floating_modifier $mod normal
 
     # Reload the configuration file
-    bindsym $mod+Shift+r reload
+    bindsym $mod4+Shift+r reload
 
     # Lock screen
     bindsym $mod4+Shift+l exec swaylock -c '0827f5'
@@ -190,8 +190,9 @@ input type:keyboard {
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+space mode "default"
+        bindsym $mod+Shift+r mode "default"
     }
-    bindsym $mod+space mode "swap"
+    bindsym $mod+Shift+r mode "swap"
 
 #
 # Workspaces:
