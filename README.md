@@ -1,29 +1,28 @@
 # Installation Dependencies
 1. Git
-2. [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+2. Stow
 
 # Cloning
-Note that there are multiple versions of the config which are specified by the branches they're in:
-- main branch serves as a common ground for config files that are in all versions
-- linux and mac branches contain playbooks for installation on the specific platforms
+Note that this project uses submodules, to clone it with it submodules, use the following command:
 ```bash
-git clone --recurse-submodules --branch <main,linux,mac> https://github.com/soonann/dotfiles.git 
+# cd to your home directory
+cd
+
+# clone the dotfiles
+git clone --recurse-submodules https://github.com/soonann/dotfiles.git 
 ```
 
 # Installation
+To install the dotfiles on your system, you can select the specific dir of dotfiles to install:
+```bash
+# installs only nvim tmux and alacritty
+stow nvim tmux alacritty
+```
 
+Stow creates a symlink to your home directory at different locations depending on the structure of the dir selected
 
-## Dependencies
-1. Neovim 
-2. [Packer](https://github.com/wbthomason/packer.nvim)
-3. fzf 
-4. ripgrep 
-5. npm 
-6. tree-sitter
-7. tmux 
-8. [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md)
-9. ranger 
-
-
-## Scripts
-1. `links
+## Uninstall
+To uninstall, simply run the following command:
+```bash
+stow -D nvim tmux alacritty 
+```
