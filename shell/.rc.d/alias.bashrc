@@ -16,7 +16,7 @@ alias vim="nvim"
 # tmux
 alias t='tmux attach || tmux'
 alias pf='tmux new tmux-sessionizer'
-alias ff='find-files'
+alias ff='cd $(fd -d 5 | fzf)'
 
 # containers
 alias k='kubectl'

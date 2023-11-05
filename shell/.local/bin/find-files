@@ -1,8 +1,10 @@
 #!/usr/bin/env /run/current-system/sw/bin/bash
 
 # local search tool
-selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
-if [ -n "$selected" ]; then
+selected=$(fd ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
+if [ -z "$selected" ]; then
+  echo "exit"
+else
   if [ -d "$selected" ]; then
     cd "$selected"
   fi

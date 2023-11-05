@@ -315,6 +315,7 @@ in
     ripgrep
     fd
     fzf
+    bat
     ranger
     jq
     stow

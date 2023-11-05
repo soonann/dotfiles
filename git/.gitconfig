@@ -5,3 +5,5 @@
 	email = sudo@soonann.dev
 [core]
 	editor = nvim
+[log]
+	date = local
