@@ -1,68 +1,44 @@
-exec_always --no-startup-id pkill -9 polybar && polybar &
-exec_always --no-startup-id feh --bg-scale ~/dotfiles/wallpapers/nix-black-4k.png
+# exec_always
+exec_always --no-startup-id ~/.config/i3/launch.sh
+
+# exec
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
 
 # variables
 set $mod Mod1
 set $mod4 Mod4
 set $menu "rofi -combi-modi drun,ssh,run,combi -show combi -show-icons" 
 set $term alacritty
+set $refresh_status killall -SIGUSR1 i3status
 
-# colors
+# style variables
 set $focus_color #b5bd68
 set $focus_text_color #000000
 set $border_thickness 2
 
-# style
+# workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# i3 settings
+floating_modifier $mod
+focus_follows_mouse no
+tiling_drag modifier titlebar
+
+# i3 style
 default_border pixel $border_thickness 
 default_floating_border pixel $border_thickness
 client.focused $focus_color $focus_color $focus_text_color $focus_color $focus_color
-
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-#font pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
-
-# Start XDG autostart .desktop files using dex. See also
-# https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
-
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-#bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
-# audio bindings
-bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_i3status
-bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_i3status
-bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_i3status
-
-# brightness bindings
-bindsym XF86MonBrightnessUp exec light -A 5 
-bindsym XF86MonBrightnessDown exec light -U 5
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
-focus_follows_mouse no
-
-# move tiling windows via drag & drop by left-clicking into the title bar,
-# or left-clicking anywhere into the window while holding the floating modifier.
-tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Return exec $term
@@ -96,7 +72,7 @@ bindsym $mod+p floating toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+b layout stacking
 bindsym $mod+e layout toggle split
-#bindsym $mod+w layout tabbed
+# bindsym $mod+t layout tabbed
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -106,18 +82,6 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
-# workspaces
-set $ws1 "1"
-set $ws2 "2"
-set $ws3 "3"
-set $ws4 "4"
-set $ws5 "5"
-set $ws6 "6"
-set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
-set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -167,6 +131,18 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+# screenshots
+bindsym $mod+Shift+s exec flameshot gui
+
+# audio bindings
+bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
+bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
+bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
+
+# brightness bindings
+bindsym XF86MonBrightnessUp exec light -A 5 && $refresh_status
+bindsym XF86MonBrightnessDown exec light -U 5 && $refresh_status
 
 # bar {
 #         status_command i3status

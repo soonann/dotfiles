@@ -1,0 +1,2 @@
+xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
+xset r rate 220 40

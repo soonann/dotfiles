@@ -142,6 +142,7 @@ in
     pamixer # pulse-audio cli
     flameshot # screenshot -> broken :(
     lxappearance # themes and icons
+    arandr # display mgmt
     rofi # app menu
     polybar # status bar
 
