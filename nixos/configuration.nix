@@ -5,69 +5,6 @@
 { config, pkgs, ... }:
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-
-  #  # bash script to let dbus know about important env variables and
-  # propagate them to relevent services run at the end of sway config
-  # see
-  # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/"It-doesn't-work"-Troubleshooting-Checklist
-  # note: this is pretty much the same as  /etc/sway/config.d/nixos.conf but also restarts  
-  # some user services to make sure they have the correct environment variables
-  dbus-sway-environment = pkgs.writeTextFile {
-    name = "dbus-sway-environment";
-    destination = "/bin/dbus-sway-environment";
-    executable = true;
-    text = ''
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
-      systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
-      systemctl --user start pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
-    '';
-  };
-
-  # currently, there is some friction between sway and gtk:
-  # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
-  # the suggested way to set gtk settings is with gsettings
-  # for gsettings to work, we need to tell it where the schemas are
-  # using the XDG_DATA_DIR environment variable
-  # run at the end of sway config
-  configure-gtk = pkgs.writeTextFile {
-    name = "configure-gtk";
-    destination = "/bin/configure-gtk";
-    executable = true;
-    text =
-      let
-        schema = pkgs.gsettings-desktop-schemas;
-        datadir = "${schema}/share/gsettings-schemas/${schema.name}";
-      in
-      ''
-        export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
-        gnome_schema=org.gnome.desktop.interface
-        gsettings set $gnome_schema gtk-theme 'Dracula'
-      '';
-  };
-
-  #set-libs = pkgs.writeTextFile {
-  #name = "set-libs";
-  #destination = "/bin/set-libs";
-  #executable = true;
-  #text = ''
-  #export LD_LIBRARY_PATH=NIX_LD_LIBRARY_PATH
-  #'';
-  #};
-  #wrapper for python to inject NIX_LD_LIBRARY_PATH
-  #pyLdWrapper = pkgs.writeShellScriptBin "python" ''
-  #export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-  #exec ${pkgs.python311}/bin/python "$@"
-  #'';
-
-  find-files = pkgs.writeTextFile {
-    name = "find-files";
-    destination = "/bin/find-files";
-    executable = true;
-    text = ''
-      cd $(fd -t d . ~ | fzf)
-    '';
-  };
-
 in
 {
   imports =
@@ -200,36 +137,17 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
-    # custom
-    dbus-sway-environment # configure dbus for sway
-    configure-gtk # configure dracula theme
-    find-files
-
-    # wayland essentials
-    wayland
-    swayidle # idle counter
-    swaylock # locking
-    kanshi # monitor
-    wdisplays # monitor manager
-    wl-clipboard # clipboard
-
-    rofi-wayland # menu
-    networkmanagerapplet # nm-applet
     blueman # bluetooth manager gui
     pavucontrol # pulse-audio gui
     pamixer # pulse-audio cli
-    mako # notification
-    grim # image grabber
-    slurp # screen selection 
     flameshot # screenshot -> broken :(
-    swaybg # desktop bg
+    lxappearance # themes and icons
+    rofi # app menu
+    polybar # status bar
 
-    # sway
+
     xdg-utils # opening default programs using links
     glib # gsettings
-    waybar # status bar
-    dracula-theme # dracula theme
-    gnome.adwaita-icon-theme # default gnome icons
 
     # utility
     brave
@@ -349,7 +267,6 @@ in
     #setSocketVariable = true;
     #};
 
-
   };
 
   # List services that you want to enable:
@@ -361,15 +278,32 @@ in
     xserver = {
       layout = "us";
       xkbVariant = "";
+      enable = true;
+
+      desktopManager = {
+        xterm.enable = false;
+      };
+
+      displayManager = {
+        defaultSession = "none+i3";
+      };
+
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu #application launcher most people use
+          i3status # gives you the default i3 status bar
+          i3lock #default i3 screen locker
+          i3blocks #if you are planning on using i3blocks over i3status
+        ];
+      };
+
       #videoDrivers = [
       #"modesetting" # default
       #"nouveau" # no power management
       #"nvidia"
       #];
     };
-
-    #qemuGuest.enable = true;
-    #spice-vdagentd.enable = true;
 
     gnome.gnome-keyring.enable = true;
 
@@ -394,16 +328,6 @@ in
     tailscale.enable = true;
     flatpak.enable = true;
 
-    #k3s = {
-    #enable = true;
-    #role = "server";
-    #extraFlags = toString [
-    ## "--kubelet-arg=v=4" # Optionally add additional args to k3s
-    #];
-
-    #};
-
-
   };
 
   # xdg-desktop-portal works by exposing a series of D-Bus interfaces
@@ -415,10 +339,6 @@ in
   xdg = {
     portal = {
       enable = true;
-      wlr.enable = true;
-      extraPortals = [
-        pkgs.xdg-desktop-portal-gtk # thunar
-      ];
     };
   };
 
@@ -447,20 +367,10 @@ in
       ];
     };
 
-    gnupg.agent = {
-      enable = true;
-      enableSSHSupport = true;
-      pinentryFlavor = "gtk2"; # Hyprland/Wayland
-    };
-
-    light = {
-      enable = true;
-    };
-
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true;
-    };
+    light =
+      {
+        enable = true;
+      };
 
     thunar = {
       enable = true;
@@ -494,7 +404,7 @@ in
 
   # Environment
   environment = {
-
+    pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw 
     sessionVariables = {
       NIXOS_OZONE_WL = "1";
     };

@@ -1,11 +1,7 @@
 exec dbus-sway-environment
 exec configure-gtk
 
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
+# Default config for sway Copy this to ~/.config/sway/config and edit it to your liking. Read `man 5 sway` for a complete reference.
 set $focus_color "#b5bd68"
 set $focus_text_color "#000000"
 
