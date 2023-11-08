@@ -144,8 +144,7 @@ in
     lxappearance # themes and icons
     arandr # display mgmt
     rofi # app menu
-    polybar # status bar
-
+    polybarFull # status bar
 
     xdg-utils # opening default programs using links
     glib # gsettings
@@ -287,6 +286,7 @@ in
 
       displayManager = {
         defaultSession = "none+i3";
+        #lightdm.enable = true;
       };
 
       windowManager.i3 = {
@@ -297,11 +297,15 @@ in
           i3lock #default i3 screen locker
           i3blocks #if you are planning on using i3blocks over i3status
         ];
+        extraSessionCommands = ''
+          eval $(gnome-keyring-daemon --daemonize)
+          export SSH_AUTH_SOCK
+        '';
       };
 
       #videoDrivers = [
-      #"modesetting" # default
-      #"nouveau" # no power management
+      ##"modesetting" # default
+      ##"nouveau" # no power management
       #"nvidia"
       #];
     };

@@ -1,5 +1,5 @@
 # exec_always
-exec_always --no-startup-id ~/.config/i3/launch.sh
+exec_always --no-startup-id $HOME/.config/i3/launch.sh
 
 # exec
 exec --no-startup-id dex --autostart --environment i3
@@ -39,6 +39,11 @@ tiling_drag modifier titlebar
 default_border pixel $border_thickness 
 default_floating_border pixel $border_thickness
 client.focused $focus_color $focus_color $focus_text_color $focus_color $focus_color
+smart_borders on
+smart_gaps inverse_outer
+
+gaps inner 5px
+gaps outer 5px
 
 # start a terminal
 bindsym $mod+Return exec $term
