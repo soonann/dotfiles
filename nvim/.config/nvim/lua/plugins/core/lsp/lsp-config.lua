@@ -87,6 +87,16 @@ return {
           },
         }
       },
+
+      -- typescript
+      tsserver = {
+      },
+
+      -- tailwind
+      tailwindcss = {
+      },
+
+
       -- html
       html = {
         filetypes = {
@@ -194,7 +204,11 @@ return {
       capabilities = capabilities,
     })
 
-
+    -- tiltfile
+    lspconfig['tilt_ls'].setup({
+      on_attach = on_attach,
+      capabilities = capabilities,
+    })
 
     --  Use :FormatOnSaveToggle to toggle autoformatting on or off
     local format_is_enabled = true
@@ -217,6 +231,16 @@ return {
       return _augroups[client.id]
     end
 
+    -- tiltfile set filetype
+    vim.api.nvim_create_autocmd('BufRead', {
+      pattern = "Tiltfile",
+      group = vim.api.nvim_create_augroup('Tiltfile', { clear = true }),
+      callback = function(args)
+        vim.api.nvim_command('setf tiltfile')
+        vim.treesitter.start(args.buf, 'starlark')
+      end
+    })
+
     -- Whenever an LSP attaches to a buffer, we will run this function.
     --
     -- See `:help LspAttach` for more information about this autocmd event.
@@ -234,9 +258,9 @@ return {
         end
 
         -- ignore tsserver and gopls for formatting
-        if client.name == 'tsserver' then
-          return
-        end
+        --if client.name == 'tsserver' then
+        --return
+        --end
 
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.

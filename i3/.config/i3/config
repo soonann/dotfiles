@@ -149,6 +149,3 @@ bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
 bindsym XF86MonBrightnessUp exec light -A 5 && $refresh_status
 bindsym XF86MonBrightnessDown exec light -U 5 && $refresh_status
 
-# bar {
-#         status_command i3status
-# }

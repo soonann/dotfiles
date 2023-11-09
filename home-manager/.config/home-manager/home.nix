@@ -5,6 +5,7 @@ let
     python-lsp-server
   ];
   custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in
 {
 
@@ -69,8 +70,13 @@ in
     # iac
     ansible
     awscli2
+    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
     terraform
     terraform-lsp
+
+    # ops
+    vault
+    certbot
 
     # mongodb
     mongodb-compass

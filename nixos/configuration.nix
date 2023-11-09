@@ -26,6 +26,11 @@ in
   networking = {
     hostName = "nixos"; # Define your hostname.
     networkmanager.enable = true; # Enable networking
+
+    #firewall.allowedTCPPorts = [
+    #443
+    #80
+    #];
     # Open ports in the firewall.
     #firewall.allowedTCPPorts = [ 6443 ];
     #firewall.allowedUDPPorts = [ ... ];
@@ -112,6 +117,19 @@ in
   nixpkgs = {
     config.allowUnfree = true;
     #overlays = [
+    #(final: prev:
+    #{
+    #polybarFull = prev.polybarFull.overrideAttrs (old: {
+    #src = prev.fetchFromGitHub {
+    #owner = "polybar";
+    #repo = "polybar";
+    #rev = "2471f3595c3ca582fe0b0abcd3ce9a03ff144f23";
+    #hash = "sha256-fRjqY7RxhbwTHKtmohmkC5n9MVoRb0yInF2HPw7Jppw=";
+    #};
+    #});
+    #})
+    #];
+    #overlays = [
     ## android studio xdg-current-desktop overlay
     #(final: prev: {
     #android-studio = prev.android-studio.overrideAttrs (oldAttrs: {
@@ -145,6 +163,7 @@ in
     arandr # display mgmt
     rofi # app menu
     polybarFull # status bar
+    libgestures # trackpad gestures
 
     xdg-utils # opening default programs using links
     glib # gsettings
@@ -240,6 +259,7 @@ in
     socat
     openssl
     du-dust # du alternative
+    envsubst
 
     # system
     htop # cpu/mem top

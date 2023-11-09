@@ -7,5 +7,7 @@ polybar 2>&1 | tee -a /tmp/polybar.log & disown
 feh --bg-scale ~/dotfiles/wallpapers/nix-black-4k.png
 
 # gnome keyring
-eval $(gnome-keyring-daemon --start)
+rm -rf /run/user/1000/keyring
+pkill -9 -f 'gnome-keyring-daemon --daemonize'
+eval $(gnome-keyring-daemon --daemonize)
 systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK 

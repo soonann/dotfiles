@@ -1,3 +1,4 @@
 xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
-# xinput set-prop 'M720 Triathlon Mouse' 'libinput Accel Speed' 2.5
+xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
+xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
 xset r rate 220 40

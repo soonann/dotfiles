@@ -2,11 +2,11 @@
 ID=$(id -u)
 
 # flameshot env
-export SDL_VIDEODRIVE=wayland
-export _JAVA_AWT_WM_NONREPARENTING=1
-export QT_QPA_PLATFORM=wayland
-export XDG_CURRENT_DESKTOP=sway
-export XDG_SESSION_DESKTOP=sway
+#export SDL_VIDEODRIVE=wayland
+#export _JAVA_AWT_WM_NONREPARENTING=1
+#export QT_QPA_PLATFORM=wayland
+#export XDG_CURRENT_DESKTOP=sway
+#export XDG_SESSION_DESKTOP=sway
 
 # keyring setup
 #if [ -n "${WAYLAND_DISPLAY}" ] && \
@@ -36,15 +36,11 @@ export PATH="$PATH:/var/lib/flatpak/exports/bin"
 
 # .local
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/custom-bin"
 
 # flyctl
 export FLYCTL_INSTALL="$HOME/.fly" 
 export PATH="$PATH:$FLYCTL_INSTALL/bin"
-
-# gcloud cli
-#source /opt/google-cloud-sdk/completion.bash.inc 
-#source /opt/google-cloud-sdk/path.bash.inc 
-export PATH="$PATH:/opt/google-cloud-sdk/bin" 
 
 # add Pulumi to the PATH
 export PATH="$PATH:$HOME/.pulumi/bin"
@@ -78,7 +74,7 @@ export DENO_INSTALL="$HOME/.deno"
 export PATH="$PATH:$DENO_INSTALL/bin"
 
 # clang
-export PATH="$PATH:~/.local/share/nvim/mason/bin"
+export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 # chrome/brave
 export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 

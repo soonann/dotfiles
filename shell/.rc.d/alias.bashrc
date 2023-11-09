@@ -37,6 +37,7 @@ alias xclip='xclip -selection clipboard'
 
 # shutdown in 120
 alias sleepy='shutdown "120"'
+alias shit='shutdown now'
 
 # sway
 #alias sway='sway --unsupported-gpu'
