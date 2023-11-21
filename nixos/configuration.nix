@@ -16,6 +16,16 @@ in
 
   # boot
   boot = {
+    # zfs support
+    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+    kernelParams = [
+      "nohibernate"
+    ];
+    supportedFilesystems = [
+      "zfs"
+    ];
+
+    # others
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -24,6 +34,7 @@ in
 
   # Networking
   networking = {
+    hostId = "9449bc67";
     hostName = "nixos"; # Define your hostname.
     networkmanager.enable = true; # Enable networking
 
@@ -47,11 +58,16 @@ in
   # Hardware
   hardware = {
     bluetooth.enable = true;
+
+    # https://nixos.wiki/wiki/Nvidia#Laptop_Configuration:_Hybrid_Graphics_.28Nvidia_Optimus_PRIME.29
+    # nvidia 
     opengl = {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
     };
+
+    # actual nvidia drivers
     #nvidia = {
     ### Modesetting is required.
     #modesetting.enable = true;
@@ -164,12 +180,14 @@ in
     rofi # app menu
     polybarFull # status bar
     libgestures # trackpad gestures
+    zfs # for zfs support
 
     xdg-utils # opening default programs using links
     glib # gsettings
 
     # utility
-    brave
+    google-chrome
+    telegram-desktop
     firefox
     spotify
     obsidian
@@ -183,7 +201,6 @@ in
     xfce.thunar-volman
     xfce.thunar-archive-plugin
     gnome.file-roller
-    gvfs
 
     # libs
     ffmpeg
@@ -200,7 +217,9 @@ in
     neovim
     alacritty
     tmux
+    scrcpy
     unstable.android-studio
+    gradle_7
     unstable.bruno
     k6
     mongosh
@@ -214,6 +233,7 @@ in
     tilt
     devspace
     helmfile
+    dagger
 
     # fs
     btrfs-progs
@@ -294,11 +314,26 @@ in
   # services.openssh.enable = true;
   services = {
 
+    greenclip.enable = true;
+
+    # fix screen tearing on i3
+    picom = {
+      enable = true;
+      vSync = true;
+    };
+
     # Configure keymap in X11
     xserver = {
+      enable = true;
       layout = "us";
       xkbVariant = "";
-      enable = true;
+
+      # video drivers
+      #videoDrivers = [
+      #"modesetting" # default
+      #"nouveau" # no power management
+      #"nvidia"
+      #];
 
       desktopManager = {
         xterm.enable = false;
@@ -323,11 +358,6 @@ in
         '';
       };
 
-      #videoDrivers = [
-      ##"modesetting" # default
-      ##"nouveau" # no power management
-      #"nvidia"
-      #];
     };
 
     gnome.gnome-keyring.enable = true;
@@ -396,6 +426,12 @@ in
       {
         enable = true;
       };
+
+    #ssh = {
+    #extraConfig = ''
+    #IdentitiesOnly=yes
+    #'';
+    #};
 
     thunar = {
       enable = true;

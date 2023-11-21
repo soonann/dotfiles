@@ -35,7 +35,6 @@ in
     thunderbird
     zoom-us
     discord
-    telegram-desktop
     onlyoffice-bin
     libreoffice
     gnome.gnome-calculator

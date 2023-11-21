@@ -1,25 +1,6 @@
 # get the user id 
 ID=$(id -u)
 
-# flameshot env
-#export SDL_VIDEODRIVE=wayland
-#export _JAVA_AWT_WM_NONREPARENTING=1
-#export QT_QPA_PLATFORM=wayland
-#export XDG_CURRENT_DESKTOP=sway
-#export XDG_SESSION_DESKTOP=sway
-
-# keyring setup
-#if [ -n "${WAYLAND_DISPLAY}" ] && \
-   #[ ! -n "${SSH_AUTH_SOCK}" ] && \
-   #[ -r "/run/user/${ID}/keyring/ssh" ]; then
-    #export SSH_AUTH_SOCK="/run/user/${ID}/keyring/ssh"
-#fi
-
-#if [ -n "${WAYLAND_DISPLAY}" ] && \
-   #[ ! -n "${GPG_AGENT_INFO}" ] && \
-   #[ -r "/run/user/${ID}/keyring/gpg" ]; then
-    #export GPG_AGENT_INFO="/run/user/${ID}/keyring/gpg:0:1"
-#fi
 
 # fzf theme option
 export FZF_DEFAULT_OPTS=" \
@@ -60,7 +41,7 @@ export PATH="$PATH:$GOPATH/bin"
 
 # android/java
 export ANDROID_HOME="$HOME/Android/Sdk" 
-export JAVA_HOME="/usr/lib/jvm/java-17-openjdk-amd64" 
+export JAVA_HOME=$(readlink -e $(type -p javac) | sed  -e 's/\/bin\/javac//g')
 export PATH="$PATH:$JAVA_HOME/bin"
 export PATH="$PATH:/opt/android-studio/bin"
 export PATH="$PATH:$HOME/Android/Sdk/platform-tools"

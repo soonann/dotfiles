@@ -56,6 +56,7 @@ return {
     -- servers to install and configure with mason
     -- https://github.com/williamboman/mason-lspconfig.nvim#default-configuration
     local mason_servers = {
+
       -- lua
       lua_ls = {
         settings = { -- custom settings for lua
@@ -136,9 +137,18 @@ return {
             },
           },
         }
-      }
+      },
 
-      -- tsserver = {},
+      -- kotlin lsp
+      kotlin_language_server = {
+
+      },
+
+      -- bash lsp
+      bashls = {
+
+      },
+
     }
 
     -- enable mason
