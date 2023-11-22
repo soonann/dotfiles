@@ -4,158 +4,172 @@
 
 { config, pkgs, ... }:
 let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  custom-python-pkgs = ps: with ps; [
+    flake8
+    python-lsp-server
+  ];
+  custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
 in
 {
   imports =
-    [
-      # Include the results of the hardware scan.
+    [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./hosts.nix
     ];
 
-  # boot
-  boot = {
-    # zfs support
-    kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-    kernelParams = [
-      "nohibernate"
-    ];
-    supportedFilesystems = [
-      "zfs"
-    ];
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-    # others
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+  networking.hostName = "nixos"; # Define your hostname.
+  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Set your time zone.
+  time.timeZone = "Asia/Singapore";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_SG.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_SG.UTF-8";
+    LC_IDENTIFICATION = "en_SG.UTF-8";
+    LC_MEASUREMENT = "en_SG.UTF-8";
+    LC_MONETARY = "en_SG.UTF-8";
+    LC_NAME = "en_SG.UTF-8";
+    LC_NUMERIC = "en_SG.UTF-8";
+    LC_PAPER = "en_SG.UTF-8";
+    LC_TELEPHONE = "en_SG.UTF-8";
+    LC_TIME = "en_SG.UTF-8";
+  };
+
+
+  xdg = {
+    portal = {
+      enable = true;
     };
   };
 
-  # Networking
-  networking = {
-    hostId = "9449bc67";
-    hostName = "nixos"; # Define your hostname.
-    networkmanager.enable = true; # Enable networking
 
-    #firewall.allowedTCPPorts = [
-    #443
-    #80
-    #];
-    # Open ports in the firewall.
-    #firewall.allowedTCPPorts = [ 6443 ];
-    #firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-
-    #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-    # Configure network proxy if necessary
-    #proxy.default = "http://user:password@proxy:port/";
-    #proxy.noProxy = "127.0.0.1,localhost,internal.domain"; 
-    #firewall.enable = false;
-  };
-
-  # Hardware
+  # Enable sound with pipewire.
+  sound.enable = true;
   hardware = {
     bluetooth.enable = true;
+    pulseaudio.enable = false;
+  };
+  security.rtkit.enable = true; # gnome-defaults
+  security.polkit.enable = true; # polkit for i3
+  security.pam.services.login.enableGnomeKeyring = true; # using i3 with gkr
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
 
-    # https://nixos.wiki/wiki/Nvidia#Laptop_Configuration:_Hybrid_Graphics_.28Nvidia_Optimus_PRIME.29
-    # nvidia 
-    opengl = {
+  # greenclip clipboard
+  services.greenclip.enable = true;
+
+  services.gnome.gnome-keyring.enable = true;
+
+  services.dbus = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      packages = [
+        pkgs.gnome.gnome-keyring
+      ];
     };
 
-    # actual nvidia drivers
-    #nvidia = {
-    ### Modesetting is required.
-    #modesetting.enable = true;
+  services.pipewire = {
+    enable = true;
+    wireplumber.enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
 
-    ### Enable power management (do not disable this unless you have a reason to).
-    ### Likely to cause problems on laptops and with screen tearing if disabled.
-    #powerManagement.enable = true;
-
-    ### Use the NVidia open source kernel module (not to be confused with the
-    ### independent third-party "nouveau" open source driver).
-    ### Support is limited to the Turing and later architectures. Full list of 
-    ### supported GPUs is at: 
-    ### https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    ### Only available from driver 515.43.04+
-    ### Do not disable this unless your GPU is unsupported or if you have a good reason to.
-    #open = true;
-
-    ### Enable the Nvidia settings menu,
-    ### accessible via `nvidia-settings`.
-    #nvidiaSettings = true;
-
-    ### Optionally, you may need to select the appropriate driver version for your specific GPU.
-    #package = config.boot.kernelPackages.nvidiaPackages.stable;
-    #};
-  };
-
-  # Time/Locale
-  time.timeZone = "Asia/Singapore";
-  i18n = {
-    defaultLocale = "en_SG.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "en_SG.UTF-8";
-      LC_IDENTIFICATION = "en_SG.UTF-8";
-      LC_MEASUREMENT = "en_SG.UTF-8";
-      LC_MONETARY = "en_SG.UTF-8";
-      LC_NAME = "en_SG.UTF-8";
-      LC_NUMERIC = "en_SG.UTF-8";
-      LC_PAPER = "en_SG.UTF-8";
-      LC_TELEPHONE = "en_SG.UTF-8";
-      LC_TIME = "en_SG.UTF-8";
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
     };
+
+  services.blueman.enable = true;
+  services.gvfs.enable = true; # thunar - Mount, trash, and other functionalities
+  services.tumbler.enable = true; # thunar - Thumbnail support for images
+
+  services.tailscale.enable = true;
+    services.flatpak.enable = true;
+
+  # Configure keymap in X11
+  services.xserver = {
+      enable = true;
+      layout = "us";
+      xkbVariant = "";
+      
+      # Enable the i3 Desktop Environment.
+      desktopManager = {
+        xterm.enable = false;
+      };
+      displayManager = {
+        defaultSession = "none+i3";
+        #lightdm.enable = true;
+      };
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu #application launcher most people use
+          i3status # gives you the default i3 status bar
+          i3lock #default i3 screen locker
+          i3blocks #if you are planning on using i3blocks over i3status
+        ];
+        extraSessionCommands = ''
+          eval $(gnome-keyring-daemon --daemonize)
+          export SSH_AUTH_SOCK
+        '';
+      };
+
+      # Enable the GNOME Desktop Environment.
+      #displayManager.gdm.enable = true;
+      #desktopManager.gnome.enable = true;
+      
   };
+
+
+  services.pipewire = {
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  # Users
   users.users.soonann = {
     isNormalUser = true;
     description = "Soon Ann";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
+    extraGroups = [ 
+      "networkmanager" 
+      "wheel" 
       "video"
       "docker"
       "libvirtd"
       "libvirt"
       "kvm"
       "dialout" # writing to /dev/ttyACM0
+  ];
+    packages = with pkgs; [
+    #  firefox
+    #  thunderbird
     ];
-    packages = with pkgs; [ ];
   };
 
-  # Nixpkgs/Nix
   nixpkgs = {
-    config.allowUnfree = true;
-    #overlays = [
-    #(final: prev:
-    #{
-    #polybarFull = prev.polybarFull.overrideAttrs (old: {
-    #src = prev.fetchFromGitHub {
-    #owner = "polybar";
-    #repo = "polybar";
-    #rev = "2471f3595c3ca582fe0b0abcd3ce9a03ff144f23";
-    #hash = "sha256-fRjqY7RxhbwTHKtmohmkC5n9MVoRb0yInF2HPw7Jppw=";
-    #};
-    #});
-    #})
-    #];
-    #overlays = [
-    ## android studio xdg-current-desktop overlay
-    #(final: prev: {
-    #android-studio = prev.android-studio.overrideAttrs (oldAttrs: {
-    #postInstall = (oldAttrs.postInstall or "") + ''
-    #substituteInPlace $out/share/applications/android-studio.desktop \
-    #--replace "Exec=android-studio" "Exec=env QT_QPA_PLATFORM=xcb android-studio"
-    #'';
-    #});
-    #})
-    #];
+    # Allow unfree packages
+    config = {
+      allowUnfree = true;
+      permittedInsecurePackages = [
+        "electron-24.8.6"
+      ];
+    };
   };
 
   nix = {
@@ -188,6 +202,7 @@ in
     # utility
     google-chrome
     telegram-desktop
+    slack
     firefox
     spotify
     obsidian
@@ -212,17 +227,63 @@ in
     flatpak
     gnome.gnome-software
 
+    # gui apps
+    thunderbird
+    zoom-us
+    discord
+    onlyoffice-bin
+    libreoffice
+    gnome.gnome-calculator
+    xournalpp
+
+    # editing
+    gimp
+
+    # 3d printing
+    cura
+
+    # containers
+    docker-compose
+    nerdctl
+    kubectl
+    argocd
+    act
+    tmate # tmux sharing
+
+    # languages/frameworks/pkg-manager
+    custom-python311
+    go
+    jdk17
+    gcc_multi
+    gdb
+    nodejs
+    flutter
+    rustup
+
+    # cope
+    vscode
+
+    # iac
+    ansible
+    awscli2
+    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
+    terraform
+    terraform-lsp
+
+    # ops
+    vault
+    certbot
+
     # development
     vim
     neovim
     alacritty
     tmux
     scrcpy
-    unstable.android-studio
     gradle_7
-    unstable.bruno
     k6
     mongosh
+    mongodb-compass
 
     # kubernetes
     minikube
@@ -253,7 +314,6 @@ in
     fuse3 # fuse
     fuse # fuse2
     libsecret
-    gcc
 
     # keyring
     gnome.seahorse
@@ -270,11 +330,11 @@ in
     wget
     rclone
     ripgrep
-    fd
-    fzf
+    fd # faster find
+    fzf # fuzzy finder
     bat
-    ranger
-    jq
+    ranger # tui explorer
+    jq # json parser
     stow
     socat
     openssl
@@ -291,117 +351,31 @@ in
 
   ];
 
-  security.polkit.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
-
   virtualisation = {
-
     libvirtd.enable = true;
     spiceUSBRedirection.enable = true;
 
+    # containers
     containerd.enable = true;
-
     docker.enable = true;
     #docker.rootless = {
     #enable = true;
     #setSocketVariable = true;
     #};
-
   };
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
 
   # List services that you want to enable:
+
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
-  services = {
-
-    greenclip.enable = true;
-
-    # fix screen tearing on i3
-    picom = {
-      enable = true;
-      vSync = true;
-    };
-
-    # Configure keymap in X11
-    xserver = {
-      enable = true;
-      layout = "us";
-      xkbVariant = "";
-
-      # video drivers
-      #videoDrivers = [
-      #"modesetting" # default
-      #"nouveau" # no power management
-      #"nvidia"
-      #];
-
-      desktopManager = {
-        xterm.enable = false;
-      };
-
-      displayManager = {
-        defaultSession = "none+i3";
-        #lightdm.enable = true;
-      };
-
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu #application launcher most people use
-          i3status # gives you the default i3 status bar
-          i3lock #default i3 screen locker
-          i3blocks #if you are planning on using i3blocks over i3status
-        ];
-        extraSessionCommands = ''
-          eval $(gnome-keyring-daemon --daemonize)
-          export SSH_AUTH_SOCK
-        '';
-      };
-
-    };
-
-    gnome.gnome-keyring.enable = true;
-
-    dbus = {
-      enable = true;
-      packages = [
-        pkgs.gnome.gnome-keyring
-      ];
-    };
-
-    pipewire = {
-      enable = true;
-      wireplumber.enable = true;
-      alsa.enable = true;
-      pulse.enable = true;
-    };
-
-    blueman.enable = true;
-    gvfs.enable = true; # thunar - Mount, trash, and other functionalities
-    tumbler.enable = true; # thunar - Thumbnail support for images
-
-    tailscale.enable = true;
-    flatpak.enable = true;
-
-  };
-
-  # xdg-desktop-portal works by exposing a series of D-Bus interfaces
-  # known as portals under a well-known name
-  # (org.freedesktop.portal.Desktop) and object path
-  # (/org/freedesktop/portal/desktop).
-  # The portal interfaces include APIs for file access, opening URIs,
-  # printing and others.
-  xdg = {
-    portal = {
-      enable = true;
-    };
-  };
-
-  #qt = {
-  #enable = true;
-  #platformTheme = "";
-  #style = "";
-  #};
 
   # Programs
   # Some programs need SUID wrappers, can be configured further or are
@@ -418,6 +392,7 @@ in
         libsecret # libsecret-1.so.0
         fuse3
         glibc_multi
+        gcc_multi
         openssl
       ];
     };
@@ -481,6 +456,12 @@ in
     DefaultTimeoutStopSec=30s
   '';
 
+  # Open ports in the firewall.
+  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
@@ -488,4 +469,5 @@ in
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
+
 }
