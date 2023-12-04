@@ -295,7 +295,7 @@ in
     tilt
     devspace
     helmfile
-    dagger
+    #dagger
 
     # fs
     btrfs-progs

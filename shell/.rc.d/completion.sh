@@ -18,7 +18,7 @@
 . <(k6 completion bash)
 
 # dagger completion
-. <(dagger completion bash)
+#. <(dagger completion bash)
 
 
 # fzf completion/keybindings

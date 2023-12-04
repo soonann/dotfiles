@@ -1,6 +1,6 @@
 {
 
-  description = "nixos-bladestealth";
+  description = "nixos";
 
   inputs = {
     # nixpkgs - shorthand
@@ -14,7 +14,7 @@
     in
     {
       nixosConfigurations = {
-        nixos-bladestealth = lib.nixosSystem {
+        nixos = lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
             ./configuration.nix
