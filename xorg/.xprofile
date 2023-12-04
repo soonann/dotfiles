@@ -1,4 +1,10 @@
+# razer touchpad
 xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
 xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
 xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
+
+# glorious mouse
+#xinput set-prop 'Glorious Model O Wireless' 'libinput Accel Speed' -0.7
+
+# keyboard settings
 xset r rate 220 40

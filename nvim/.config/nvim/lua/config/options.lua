@@ -5,13 +5,14 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
--- 4 space tab
 spaces = 2
-vim.opt.tabstop = spaces
-vim.opt.softtabstop = spaces
-vim.opt.shiftwidth = spaces
-vim.opt.expandtab = true
-vim.opt.smartindent = true
+vim.opt.expandtab = true     -- expand tabs new to spaces (retab if needed)
+vim.opt.tabstop = spaces     -- how many space = 1 tab
+vim.opt.softtabstop = spaces -- break tabstop down further
+
+vim.opt.autoindent = true    -- auto indent next line when using o/O or enter
+vim.opt.smartindent = true   -- auto indent next line for lang specific e.g c
+vim.opt.shiftwidth = spaces  -- no of spaces for auto indent next line
 
 -- disable line wraps - enabled because I like it :)
 --vim.opt.wrap = false

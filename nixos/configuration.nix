@@ -12,7 +12,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -60,6 +61,7 @@ in
   sound.enable = true;
   hardware = {
     bluetooth.enable = true;
+    bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
     pulseaudio.enable = false;
   };
   security.rtkit.enable = true; # gnome-defaults
@@ -74,11 +76,11 @@ in
   services.gnome.gnome-keyring.enable = true;
 
   services.dbus = {
-      enable = true;
-      packages = [
-        pkgs.gnome.gnome-keyring
-      ];
-    };
+    enable = true;
+    packages = [
+      pkgs.gnome.gnome-keyring
+    ];
+  };
 
   services.pipewire = {
     enable = true;
@@ -92,52 +94,51 @@ in
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
-    };
+  };
 
   services.blueman.enable = true;
   services.gvfs.enable = true; # thunar - Mount, trash, and other functionalities
   services.tumbler.enable = true; # thunar - Thumbnail support for images
 
   services.tailscale.enable = true;
-    services.flatpak.enable = true;
+  services.flatpak.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
+    enable = true;
+    layout = "us";
+    xkbVariant = "";
+
+    # Enable the i3 Desktop Environment.
+    desktopManager = {
+      xterm.enable = false;
+    };
+    displayManager = {
+      defaultSession = "none+i3";
+      #lightdm.enable = true;
+    };
+    windowManager.i3 = {
       enable = true;
-      layout = "us";
-      xkbVariant = "";
-      
-      # Enable the i3 Desktop Environment.
-      desktopManager = {
-        xterm.enable = false;
-      };
-      displayManager = {
-        defaultSession = "none+i3";
-        #lightdm.enable = true;
-      };
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu #application launcher most people use
-          i3status # gives you the default i3 status bar
-          i3lock #default i3 screen locker
-          i3blocks #if you are planning on using i3blocks over i3status
-        ];
-        extraSessionCommands = ''
-          eval $(gnome-keyring-daemon --daemonize)
-          export SSH_AUTH_SOCK
-        '';
-      };
+      extraPackages = with pkgs; [
+        dmenu #application launcher most people use
+        i3status # gives you the default i3 status bar
+        i3lock #default i3 screen locker
+        i3blocks #if you are planning on using i3blocks over i3status
+      ];
+      extraSessionCommands = ''
+        eval $(gnome-keyring-daemon --daemonize)
+        export SSH_AUTH_SOCK
+      '';
+    };
 
-      # Enable the GNOME Desktop Environment.
-      #displayManager.gdm.enable = true;
-      #desktopManager.gnome.enable = true;
-      
+    # Enable the GNOME Desktop Environment.
+    #displayManager.gdm.enable = true;
+    #desktopManager.gnome.enable = true;
+
   };
 
 
-  services.pipewire = {
-  };
+  services.pipewire = { };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -146,19 +147,19 @@ in
   users.users.soonann = {
     isNormalUser = true;
     description = "Soon Ann";
-    extraGroups = [ 
-      "networkmanager" 
-      "wheel" 
+    extraGroups = [
+      "networkmanager"
+      "wheel"
       "video"
       "docker"
       "libvirtd"
       "libvirt"
       "kvm"
       "dialout" # writing to /dev/ttyACM0
-  ];
+    ];
     packages = with pkgs; [
-    #  firefox
-    #  thunderbird
+      #  firefox
+      #  thunderbird
     ];
   };
 
@@ -173,7 +174,7 @@ in
   };
 
   nix = {
-    settings.experimental-features = "nix-command flakes";
+    settings.experimental-features = [ "nix-command" "flakes" ];
     #gc = {
     #automatic = true;
     #dates = "weekly";
@@ -185,7 +186,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
-    blueman # bluetooth manager gui
+    #blueman # bluetooth manager gui
     pavucontrol # pulse-audio gui
     pamixer # pulse-audio cli
     flameshot # screenshot -> broken :(
@@ -391,8 +392,7 @@ in
         fuse # fuse.so.2
         libsecret # libsecret-1.so.0
         fuse3
-        glibc_multi
-        gcc_multi
+        glib
         openssl
       ];
     };

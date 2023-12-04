@@ -318,12 +318,6 @@ exec_always {
   kanshi &
 }
 
-#exec_always {
-  #pkill -9 -f 'protonmail-bridge --cli -n'
-  #sleep 2
-  #'protonmail-bridge --cli -n'
-#}
-
 # Toggle control center
 #bindsym $mod+Shift+n exec swaync-client -t -sw
 
@@ -339,8 +333,5 @@ assign [class="thunderbird-default"] workspace 10
 for_window [title="^zoom$"] border none, floating enable
 for_window [title="^feh$"] border none, floating enable
 for_window [title="^(Zoom|About|audio conference|as_toolbar)$"] border pixel, floating enable
-
-#assign [class="Brave-browser"] workspace 2
-#assign [app_id="org.gnome.Nautilus"] workspace 4
 
 include /etc/sway/config.d/*
