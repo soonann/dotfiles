@@ -202,6 +202,7 @@ in
 
     # utility
     google-chrome
+    brave
     telegram-desktop
     slack
     firefox
@@ -258,8 +259,10 @@ in
     gcc_multi
     gdb
     nodejs
+    yarn
     flutter
     rustup
+    nasm
 
     # cope
     vscode
@@ -327,6 +330,9 @@ in
     zip # archives
     unzip
     git
+    git-filter-repo
+    bfg-repo-cleaner
+    gh # github cli
     curl
     wget
     rclone
