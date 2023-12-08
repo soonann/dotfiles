@@ -69,3 +69,6 @@ export KUBE_EDITOR="/run/current-system/sw/bin/nvim"
 export NIXPKGS_ALLOW_UNFREE=1
 
 export EDITOR=nvim
+
+# steam
+export XDG_DATA_HOME="$HOME/.local/share"
