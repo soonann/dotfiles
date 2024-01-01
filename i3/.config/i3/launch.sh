@@ -18,4 +18,5 @@ eval $(gnome-keyring-daemon --daemonize)
 systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK 
 
 # monitor
-. $HOME/.screenlayout/laptop-monitory-only.sh
+. $HOME/.screenlayout/laptop-only.sh
+. $HOME/.xprofile

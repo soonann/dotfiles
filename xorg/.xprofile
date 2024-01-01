@@ -4,7 +4,10 @@ xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enab
 xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
 
 # glorious mouse
-#xinput set-prop 'Glorious Model O Wireless' 'libinput Accel Speed' -0.7
+MOUSE=$(xinput list | grep 'Glorious Model O Wireless')
+if [[ -n "$MOUSE" ]]; then
+  xinput set-prop  'Glorious Model O Wireless' 'libinput Accel Profile Enabled' 0, 1
+fi
 
 # keyboard settings
 xset r rate 220 40

@@ -1,7 +1,7 @@
 -- OPTIMISED KEYSTROKES HERE ------------------------------------------------------
 
 -- map delete word in insert mode
---vim.keymap.set("i", "<C-H>", "<C-w>")
+vim.keymap.set("i", "<C-H>", "<C-w>")
 
 -- unbind Q
 vim.keymap.set("n", "Q", "<nop>")

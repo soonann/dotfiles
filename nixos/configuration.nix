@@ -2,27 +2,30 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, modulesPath, pkgs, ... }:
 let
   custom-python-pkgs = ps: with ps; [
     flake8
     python-lsp-server
+    virtualenv
+    pip
   ];
   custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec "$@"
-  '';
 in
 {
   imports =
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # modules
+      ./fonts
+      ./nvidia/razer-blade-stealth-13-2021
+      ./x11
+      ./apps
+
     ];
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -57,8 +60,10 @@ in
   };
 
 
+  # TODO: change this based on the updated config
   xdg = {
     portal = {
+      config.common.default = "*";
       enable = true;
     };
   };
@@ -72,8 +77,10 @@ in
     pulseaudio.enable = false;
   };
   security.rtkit.enable = true; # gnome-defaults
-  security.polkit.enable = true; # polkit for i3
-  security.pam.services.login.enableGnomeKeyring = true; # using i3 with gkr
+
+  # enable picom
+  services.picom.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -104,48 +111,8 @@ in
   };
 
   services.blueman.enable = true;
-  services.gvfs.enable = true; # thunar - Mount, trash, and other functionalities
-  services.tumbler.enable = true; # thunar - Thumbnail support for images
 
-  services.tailscale.enable = true;
   services.flatpak.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    xkbVariant = "";
-
-    # Enable the i3 Desktop Environment.
-    desktopManager = {
-      xterm.enable = false;
-    };
-    displayManager = {
-      defaultSession = "none+i3";
-      #lightdm.enable = true;
-    };
-    windowManager.i3 = {
-      enable = true;
-      extraPackages = with pkgs; [
-        dmenu #application launcher most people use
-        i3status # gives you the default i3 status bar
-        i3lock #default i3 screen locker
-        i3blocks #if you are planning on using i3blocks over i3status
-      ];
-      extraSessionCommands = ''
-        eval $(gnome-keyring-daemon --daemonize)
-        export SSH_AUTH_SOCK
-      '';
-    };
-
-    # Enable the GNOME Desktop Environment.
-    #displayManager.gdm.enable = true;
-    #desktopManager.gnome.enable = true;
-
-  };
-
-
-  services.pipewire = { };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -164,10 +131,6 @@ in
       "kvm"
       "dialout" # writing to /dev/ttyACM0
     ];
-    packages = with pkgs; [
-      #  firefox
-      #  thunderbird
-    ];
   };
 
   nixpkgs = {
@@ -176,6 +139,7 @@ in
       allowUnfree = true;
       permittedInsecurePackages = [
         "electron-24.8.6"
+        "electron-25.9.0"
       ];
     };
   };
@@ -193,15 +157,10 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
-    #blueman # bluetooth manager gui
     pavucontrol # pulse-audio gui
     pamixer # pulse-audio cli
     flameshot # screenshot -> broken :(
-    lxappearance # themes and icons
-    arandr # display mgmt
     rofi # app menu
-    polybarFull # status bar
-    libgestures # trackpad gestures
     zfs # for zfs support
 
     xdg-utils # opening default programs using links
@@ -209,60 +168,33 @@ in
 
     # utility
     google-chrome
-    brave
-    telegram-desktop
-    slack
-    firefox
-    spotify
-    obsidian
-    obs-studio
-    vlc # video/audio player
+    chromedriver
     feh # image viewer
     evince # pdf viewer
     virt-manager # vm gui
+    virtiofsd # vm file sharing 
 
-    # file exporer
-    xfce.thunar-volman
-    xfce.thunar-archive-plugin
-    gnome.file-roller
 
     # libs
     ffmpeg
 
-    # networking
-    tailscale
-
     # flatpak
     flatpak
     gnome.gnome-software
-
-    # gui apps
-    thunderbird
-    zoom-us
-    discord
-    onlyoffice-bin
-    libreoffice
-    gnome.gnome-calculator
-    xournalpp
-
-    # editing
-    gimp
-
-    # 3d printing
-    cura
 
     # containers
     docker-compose
     nerdctl
     kubectl
     argocd
-    act
+    act # local github actions
     tmate # tmux sharing
 
     # languages/frameworks/pkg-manager
     custom-python311
     go
     jdk17
+    jdt-language-server
     gcc_multi
     gdb
     nodejs
@@ -316,7 +248,7 @@ in
 
     # libs
     #set-libs
-    #nix-index # nix-locate
+    nix-index # nix-locate
     appimage-run # run app images
     patchelf # patch elf binaries
     glibc_multi
@@ -325,10 +257,6 @@ in
     fuse3 # fuse
     fuse # fuse2
     libsecret
-
-    # keyring
-    gnome.seahorse
-    gnome.gnome-keyring
 
     # cli tools
     coreutils-full # gnu utils
@@ -357,7 +285,6 @@ in
 
     # system
     htop # cpu/mem top
-    nvtop # gpu top
     lsof # open files
     lshw # find gpu id
     pciutils # lspci - pci devices
@@ -379,138 +306,24 @@ in
     #};
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Programs
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-
-  # steam install ------------------------
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
-  # steam install ------------------------
-
-  # razer install ------------------------
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
-  };
-
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    powerManagement.enable = false;
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
-
-    # Enable the Nvidia settings menu,
-    # accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-
-    prime = {
-      #sync.enable = true;
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:88:0:0";
-    };
-  };
-  # nvidia install ------------------------
-
-
   programs = {
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
-        stdenv.cc.cc
-        # flatpak
         zlib # zlib.so
         fuse # fuse.so.2
         libsecret # libsecret-1.so.0
+        stdenv.cc.cc # gcc
+        gcc_multi
         fuse3
         glib
         openssl
       ];
     };
 
-    light =
-      {
-        enable = true;
-      };
-
-    #ssh = {
-    #extraConfig = ''
-    #IdentitiesOnly=yes
-    #'';
-    #};
-
-    thunar = {
-      enable = true;
-      plugins = with pkgs.xfce; [
-        thunar-archive-plugin
-        thunar-volman
-      ];
-    };
 
   };
 
-  # Fonts
-  fonts = {
-    fonts = with pkgs; [
-      (nerdfonts.override { fonts = [ "Hack" ]; })
-      # sway fonts
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      font-awesome
-      source-han-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
-    ];
-    # sway fonts
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Source Han Serif" ];
-      sansSerif = [ "Noto Sans" "Source Han Sans" ];
-    };
-  };
 
   # Environment
   environment = {
@@ -542,6 +355,6 @@ in
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 
 }

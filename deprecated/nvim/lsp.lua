@@ -122,8 +122,8 @@ return {
       end
 
       -- golang lsp
-      local vimgo = require("vim-go")
-      vimgo.setup({})
+      --local vimgo = require("vim-go")
+      --vimgo.setup({})
 
       -- terraform lsp
       lspconfig.terraform_lsp.setup({})
@@ -159,6 +159,7 @@ return {
           ['terraformls'] = { 'terraform', 'terraform-vars' },
           ['clangd'] = { 'c', 'cpp' },
           ['pylsp'] = { 'python' },
+          ['jdtls'] = { 'java' },
         }
       })
     end
@@ -178,7 +179,7 @@ return {
   { 'mfussenegger/nvim-jdtls' },
 
   -- Golang language support
-  { 'fatih/vim-go' },
+  --{ 'fatih/vim-go' },
 
   -- Terraform language support
   { 'hashivim/vim-terraform' },
