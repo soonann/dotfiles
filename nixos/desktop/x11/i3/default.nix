@@ -37,13 +37,26 @@
 
   };
 
+  # TODO: change this based on the updated config
+  xdg = {
+    portal = {
+      config.common.default = "*";
+      enable = true;
+    };
+  };
+
+
   # i3 packages
   environment.systemPackages = with pkgs; [
-    lxappearance # themes and icons
-    arandr # display mgmt
-    rofi # app menu
+
     polybarFull # status bar
+    lxappearance # themes and icons
+    rofi # app menu
+
+    arandr # display mgmt
     libgestures # trackpad gestures on x11
+    xdg-utils # opening default programs using links
+    glib # gsettings
 
     # gnome keyring packages
     gnome.seahorse

@@ -4,13 +4,6 @@
 
 { config, modulesPath, pkgs, ... }:
 let
-  custom-python-pkgs = ps: with ps; [
-    flake8
-    python-lsp-server
-    virtualenv
-    pip
-  ];
-  custom-python311 = pkgs.python3.withPackages custom-python-pkgs;
 in
 {
   imports =
@@ -19,10 +12,12 @@ in
       ./hardware-configuration.nix
 
       # modules
-      ./fonts
-      ./nvidia/razer-blade-stealth-13-2021
-      ./x11
       ./apps
+      ./development
+      ./virtualisation
+      ./desktop/x11/i3
+      ./nvidia/razer-blade-stealth-13-2021
+      ./fonts
 
     ];
 
@@ -59,14 +54,6 @@ in
     LC_TIME = "en_SG.UTF-8";
   };
 
-
-  # TODO: change this based on the updated config
-  xdg = {
-    portal = {
-      config.common.default = "*";
-      enable = true;
-    };
-  };
 
 
   # Enable sound with pipewire.
@@ -112,10 +99,6 @@ in
 
   services.blueman.enable = true;
 
-  services.flatpak.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.soonann = {
@@ -125,10 +108,6 @@ in
       "networkmanager"
       "wheel"
       "video"
-      "docker"
-      "libvirtd"
-      "libvirt"
-      "kvm"
       "dialout" # writing to /dev/ttyACM0
     ];
   };
@@ -161,86 +140,16 @@ in
     pamixer # pulse-audio cli
     flameshot # screenshot -> broken :(
     rofi # app menu
+
     zfs # for zfs support
-
-    xdg-utils # opening default programs using links
-    glib # gsettings
-
-    # utility
-    google-chrome
-    chromedriver
-    feh # image viewer
-    evince # pdf viewer
-    virt-manager # vm gui
-    virtiofsd # vm file sharing 
-
-
-    # libs
-    ffmpeg
-
-    # flatpak
-    flatpak
-    gnome.gnome-software
-
-    # containers
-    docker-compose
-    nerdctl
-    kubectl
-    argocd
-    act # local github actions
-    tmate # tmux sharing
-
-    # languages/frameworks/pkg-manager
-    custom-python311
-    go
-    jdk17
-    jdt-language-server
-    gcc_multi
-    gdb
-    nodejs
-    yarn
-    flutter
-    rustup
-    nasm
+    btrfs-progs # for btrfs support
 
     # cope
     vscode
 
-    # iac
-    ansible
-    awscli2
-    (google-cloud-sdk.withExtraComponents [ google-cloud-sdk.components.gke-gcloud-auth-plugin ])
-    terraform
-    terraform-lsp
-
     # ops
     vault
     certbot
-
-    # development
-    vim
-    neovim
-    alacritty
-    tmux
-    scrcpy
-    gradle_7
-    k6
-    mongosh
-    mongodb-compass
-
-    # kubernetes
-    minikube
-    kind
-    kubectl
-    kubernetes-helm
-    telepresence2
-    tilt
-    devspace
-    helmfile
-    #dagger
-
-    # fs
-    btrfs-progs
 
     # gpg
     gnupg
@@ -258,53 +167,7 @@ in
     fuse # fuse2
     libsecret
 
-    # cli tools
-    coreutils-full # gnu utils
-    gnumake
-    file
-    zip # archives
-    unzip
-    git
-    unstable.git-filter-repo
-    bfg-repo-cleaner
-    gh # github cli
-    curl
-    wget
-    rclone
-    ripgrep
-    fd # faster find
-    fzf # fuzzy finder
-    bat
-    ranger # tui explorer
-    jq # json parser
-    stow
-    socat
-    openssl
-    du-dust # du alternative
-    envsubst
-
-    # system
-    htop # cpu/mem top
-    lsof # open files
-    lshw # find gpu id
-    pciutils # lspci - pci devices
-    acpi # battery
-    neofetch
-
   ];
-
-  virtualisation = {
-    libvirtd.enable = true;
-    spiceUSBRedirection.enable = true;
-
-    # containers
-    containerd.enable = true;
-    docker.enable = true;
-    #docker.rootless = {
-    #enable = true;
-    #setSocketVariable = true;
-    #};
-  };
 
   programs = {
     nix-ld = {

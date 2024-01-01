@@ -1,7 +1,9 @@
 { pkgs, config, ... }: {
 
   imports = [
+    ./flatpak
     ./thunar
+    ./steam
   ];
 
   environment.systemPackages = with pkgs; [
@@ -23,13 +25,17 @@
     vlc
     gimp
     cura
+    feh # image viewer
+    scrcpy
+
 
     # notes/docs
     obsidian
     syncthing
-    onlyoffice-bin
-    libreoffice
-    xournalpp
+    onlyoffice-bin # docs
+    libreoffice # docs
+    xournalpp # pdf editor
+    evince # pdf viewer
 
     # email 
     thunderbird
