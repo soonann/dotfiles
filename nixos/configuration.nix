@@ -16,6 +16,7 @@ in
       ./development
       ./virtualisation
       ./desktop/x11/i3
+      #./desktop/wayland/sway
       ./nvidia/razer-blade-stealth-13-2021
       ./fonts
 

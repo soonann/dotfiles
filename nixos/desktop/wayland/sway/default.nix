@@ -82,7 +82,7 @@ in
 
   # gnome keyring
   gnome.gnome-keyring.enable = true;
-  dbus = {
+  services.dbus = {
     enable = true;
     packages = [
       pkgs.gnome.gnome-keyring
