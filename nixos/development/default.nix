@@ -43,6 +43,8 @@
 
     # cli tools
     coreutils-full # gnu utils
+    busybox
+    age
     rclone
     curl
     wget

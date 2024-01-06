@@ -1,7 +1,8 @@
 # polybar
-polybar-msg cmd quit
-echo "---" | tee -a /tmp/polybar.log
-polybar 2>&1 | tee -a /tmp/polybar.log & disown
+#polybar-msg cmd quit
+#echo "---" | tee -a /tmp/polybar.log
+#polybar 2>&1 | tee -a /tmp/polybar.log & disown
+printf '%.f' $(light) > /tmp/brightness
 
 # bg
 pkill -9 -f 'feh --bg-scale ~/dotfiles/wallpapers/nix-black-4k.png'

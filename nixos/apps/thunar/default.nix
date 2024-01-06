@@ -5,13 +5,12 @@
     xfce.thunar-volman
     xfce.thunar-archive-plugin
     gnome.file-roller
+
   ];
 
   services = {
-
     gvfs.enable = true; # thunar - Mount, trash, and other functionalities
     tumbler.enable = true; # thunar - Thumbnail support for images
-
   };
 
   programs = {
@@ -24,5 +23,8 @@
         thunar-volman
       ];
     };
+
+    # since xfce is not used, we need to enable this to persist configs
+    xfconf.enable = true;
   };
 }

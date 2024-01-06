@@ -22,10 +22,10 @@
       overlay-unstable = final: prev: {
         unstable = nixpkgs-unstable.legacyPackages.${prev.system};
         # use this variant if unfree packages are needed:
-        # unstable = import nixpkgs-unstable {
-        #   inherit system;
-        #   config.allowUnfree = true;
-        # };
+        #unstable = import nixpkgs-unstable {
+        #inherit system;
+        #config.allowUnfree = true;
+        #};
 
       };
     in
@@ -37,10 +37,16 @@
         nixos = nixpkgs.lib.nixosSystem {
           modules = [
             # Overlays-module makes "pkgs.unstable" available in configuration.nix
-            ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
+            ({ config, pkgs, ... }: {
+              nixpkgs.overlays = [
+                overlay-unstable
+              ];
+            })
+
             nix-ld.nixosModules.nix-ld
-            ./configuration.nix
             #nix-index-database.nixosModules.nix-index
+
+            ./configuration.nix
           ];
         };
       };

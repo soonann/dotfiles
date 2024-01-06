@@ -2,8 +2,8 @@
 
   imports = [
     ./flatpak
-    ./thunar
     ./steam
+    ./thunar
   ];
 
   environment.systemPackages = with pkgs; [

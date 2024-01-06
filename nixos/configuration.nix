@@ -10,6 +10,8 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./nfs
+      ./zfs
 
       # modules
       ./apps
@@ -26,6 +28,20 @@ in
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  # grub bootloader
+  #boot.loader = {
+  #efi = {
+  #canTouchEfiVariables = true;
+  #efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+  #};
+  #grub = {
+  #efiSupport = true;
+  ##efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+  #device = "nodev";
+  #useOSProber = true;
+  #};
+  #};
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -187,6 +203,8 @@ in
 
 
   };
+
+  programs.direnv.enable = true;
 
 
   # Environment

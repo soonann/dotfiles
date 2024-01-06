@@ -1,3 +1,4 @@
+# ===== execs =====
 # exec_always
 exec_always --no-startup-id $HOME/.config/i3/launch.sh
 
@@ -35,30 +36,58 @@ floating_modifier $mod
 focus_follows_mouse no
 tiling_drag modifier titlebar
 
+# i3 bar
+bar {
+  status_command i3status
+}
+
 # i3 style
 default_border pixel $border_thickness 
 default_floating_border pixel $border_thickness
 client.focused $focus_color $focus_color $focus_text_color $focus_color $focus_color
 smart_borders on
 smart_gaps inverse_outer
+gaps inner 2px
+gaps outer 2px
 
-gaps inner 5px
-gaps outer 5px
-
-# view greenclip clipboard
-bindsym $mod+Shift+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
-
-# monitor
-bindsym $mod4+Shift+2 exec --no-startup-id $HOME/.screenlayout/home-external-monitor.sh
+# =========== bindings ============
 
 # start a terminal
 bindsym $mod+Return exec $term
 
-# kill focused window
-bindsym $mod+w kill
-
 # start dmenu (a program launcher)
 bindsym $mod+d exec $menu
+
+# greenclip
+bindsym $mod+Shift+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+
+# flameshot
+bindsym $mod+Shift+s exec flameshot gui
+
+# display
+bindsym $mod4+Shift+2 exec --no-startup-id /home/soonann/.screenlayout/monitor-only.sh
+bindsym $mod4+Shift+1 exec --no-startup-id /home/soonann/.screenlayout/laptop-only.sh
+
+# audio bindings
+bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
+bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
+bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+9 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+8 exec pamixer -t @DEFAULT_SINK@ && $refresh_status
+
+
+# brightness bindings
+bindsym XF86MonBrightnessUp exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym XF86MonBrightnessDown exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod4+shift+7 exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod4+shift+6 exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+
+
+# ========= i3 native bindings ===========
+
+# kill focused window
+bindsym $mod+w kill
 
 # change focus
 bindsym $mod+h focus left
@@ -72,6 +101,21 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+  bindsym h resize shrink width 10 px or 10 ppt
+  bindsym j resize grow height 10 px or 10 ppt
+  bindsym k resize shrink height 10 px or 10 ppt
+  bindsym l resize grow width 10 px or 10 ppt
+
+  # back to normal: Enter or Escape or $mod+r
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+  bindsym $mod+r mode "default"
+}
+
+
 # split in horizontal/vertical orientation
 bindsym $mod+s split h
 bindsym $mod+v split v
@@ -84,9 +128,6 @@ bindsym $mod+p floating toggle
 bindsym $mod+b layout stacking
 bindsym $mod+e layout toggle split
 # bindsym $mod+t layout tabbed
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -106,6 +147,8 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 bindsym $mod+minus scratchpad show
+bindsym $mod+o [instance="obsidian"] scratchpad show
+bindsym $mod+t [title="Alacritty"] scratchpad show
 bindsym $mod+equal sticky toggle
 
 # move focused container to workspace
@@ -120,6 +163,8 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+o [instance="obsidian"] move scratchpad
+bindsym $mod+Shift+t [instance="Alacritty"] move scratchpad
 
 # reload the configuration file
 bindsym $mod4+Shift+r restart
@@ -127,31 +172,3 @@ bindsym $mod4+Shift+s exec systemctl suspend
 
 # exit i3 (logs you out of your X session)
 bindsym $mod4+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# screenshots
-bindsym $mod+Shift+s exec flameshot gui
-
-# audio bindings
-bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
-bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
-bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
-
-# brightness bindings
-bindsym XF86MonBrightnessUp exec light -A 5 && $refresh_status
-bindsym XF86MonBrightnessDown exec light -U 5 && $refresh_status
-

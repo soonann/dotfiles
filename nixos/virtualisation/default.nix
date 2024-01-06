@@ -14,10 +14,10 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    virt-manager # vm gui
-    virtiofsd # vm file sharing 
+  programs.virt-manager.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    virtiofsd # vm file sharing 
   ];
 
 }

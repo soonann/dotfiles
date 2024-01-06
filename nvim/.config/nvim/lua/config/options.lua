@@ -11,8 +11,12 @@ vim.opt.tabstop = spaces     -- how many space = 1 tab
 vim.opt.softtabstop = spaces -- break tabstop down further
 
 vim.opt.autoindent = true    -- auto indent next line when using o/O or enter
-vim.opt.smartindent = true   -- auto indent next line for lang specific e.g c
 vim.opt.shiftwidth = spaces  -- no of spaces for auto indent next line
+
+-- fix hash removing indents: https://vim.fandom.com/wiki/Restoring_indent_after_typing_hash
+-- smartindent is deprecated for cindent
+-- vim.opt.smartindent = true   -- auto indent next line for lang specific e.g c
+
 
 -- disable line wraps - enabled because I like it :)
 --vim.opt.wrap = false

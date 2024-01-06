@@ -1,0 +1,61 @@
+general {
+  colors = true
+  interval = 30
+}
+
+volume master {
+  format = "VOL: %volume"
+  format_muted = "MUTED (%volume)"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+  separator_block_width = 30
+}
+
+read_file BRIGHTNESS {
+  format = "BRI: %content%"
+  color_good = "#FFFFFF"
+  path = "/tmp/brightness"
+  max_characters = 3
+  separator_block_width = 30
+}
+
+battery 0 {
+  format = "%status: %percentage"
+  format_down = "NIL"
+  status_chr = "CHG-BAT"
+  status_bat = "BAT"
+  status_unk = "UNK"
+  status_full = "MAX-BAT"
+  path = "/sys/class/power_supply/BAT%d/uevent"
+  last_full_capacity = true
+  format_percentage = "%.f%s"
+  low_threshold = 30
+  separator_block_width = 30
+}
+
+wireless wlo1 {
+  format_up = "W: (%quality at %essid, %bitrate) %ip"
+  format_down = "W: down"
+  separator_block_width = 30
+}
+
+
+ethernet eth0 {
+  format_up = "E: %ip (%speed)"
+  format_down = "E: down"
+  separator_block_width = 30
+}
+
+tztime local {
+  format = "%d-%m-%Y %H:%M"
+  separator_block_width = 30
+}
+
+order += "volume master"
+order += "read_file BRIGHTNESS"
+order += "battery 0"
+order += "wireless wlo1"
+order += "ethernet eth0"
+order += "tztime local"
+
