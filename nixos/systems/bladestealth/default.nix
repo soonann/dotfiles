@@ -10,17 +10,17 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./nfs
-      ./zfs
+      ../../modules/nfs
+      ../../modules/zfs
 
       # modules
-      ./apps
-      ./development
-      ./virtualisation
-      ./desktop/x11/i3
-      #./desktop/wayland/sway
-      ./nvidia/razer-blade-stealth-13-2021
-      ./fonts
+      ../../modules/apps
+      ../../modules/development
+      ../../modules/virtualisation
+      ../../modules/desktop/x11/i3
+      #../../modules/desktop/wayland/sway
+      ../../modules/nvidia/razer-blade-stealth-13-2021
+      ../../modules/fonts
 
     ];
 

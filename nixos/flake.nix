@@ -33,8 +33,7 @@
       nixosConfigurations = {
         inherit system; # inherit the system declared
 
-        # specify system
-        nixos = nixpkgs.lib.nixosSystem {
+        bladestealth = nixpkgs.lib.nixosSystem {
           modules = [
             # Overlays-module makes "pkgs.unstable" available in configuration.nix
             ({ config, pkgs, ... }: {
@@ -46,7 +45,21 @@
             nix-ld.nixosModules.nix-ld
             #nix-index-database.nixosModules.nix-index
 
-            ./configuration.nix
+            ./systems/bladestealth
+          ];
+        };
+
+        potatovault = nixpkgs.lib.nixosSystem {
+          modules = [
+
+            ({ config, pkgs, ... }: {
+              nixpkgs.overlays = [
+                overlay-unstable
+              ];
+            })
+
+            ./systems/potatovault
+
           ];
         };
       };
