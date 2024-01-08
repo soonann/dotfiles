@@ -17,6 +17,7 @@ in
       ./traefik
       ./containers
       ./virtualisation
+      ../../modules/base
       #./k3s
     ];
 
@@ -54,11 +55,25 @@ in
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.soonann = {
-    isNormalUser = true;
-    description = "soonann";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
+  users.users = {
+    soonann = {
+      isNormalUser = true;
+      description = "soonann";
+      extraGroups = [ "networkmanager" "wheel" ];
+      packages = with pkgs; [];
+    };
+
+    nextcloud = {
+      isSystemUser = true;
+      uid = 999;
+      group = "nextcloud";
+    };
+  };
+
+  users.groups = {
+    nextcloud = {
+      gid = 999;
+    };
   };
 
   security.sudo.extraConfig = ''
@@ -70,6 +85,9 @@ in
 
   # enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.extraOptions = ''
+    plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
+  '';
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

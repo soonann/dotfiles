@@ -1,6 +1,7 @@
 {pkgs, config, ...}:{
   imports = [
-    ./nextcloud
+    ./vaultwarden
+    #./nextcloud
   ];
 
   # networking for containers
@@ -32,7 +33,6 @@
 
   # add your user to docker group
   users.users.soonann.extraGroups = [ "docker" ];
-  users.users.traefik.extraGroups = [ "docker" ];
 
   environment.systemPackages = with pkgs; [
     docker-compose
