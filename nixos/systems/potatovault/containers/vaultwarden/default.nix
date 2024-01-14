@@ -15,8 +15,8 @@
     ephemeral = true;
     autoStart = true;
     privateNetwork = true;
-    hostAddress = "10.0.0.10";
-    localAddress = "10.0.0.11";
+    hostBridge = "br0";
+    localAddress = "10.0.0.11/24";
     bindMounts = { 
       "${container_env_file}" = { 
         hostPath = host_env_file;

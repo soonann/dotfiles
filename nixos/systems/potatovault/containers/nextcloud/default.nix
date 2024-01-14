@@ -1,46 +1,39 @@
 {pkgs, config, lib, ...}:
   let
-    # admin password file
-    host_adminpass_file = "/potatopool/secrets/nextcloud/pgsql/adminpass";
-    container_adminpass_file = "/run/secrets/adminpass";
-    
-    # db password file
-    host_dbpass_file = "/potatopool/secrets/nextcloud/dbpass";
-    container_dbpass_file = "/run/secrets/dbpass";
+    # nextcloud admin password file
+    nextcloud_host_adminpass = "/potatopool/secrets/nextcloud/adminpass";
+    nextcloud_container_adminpass = "/run/secrets/adminpass";
 
-    # data dir
-    host_data_dir = "/potatopool/appdata/nextcloud";
-    container_data_dir = "/var/lib/nextcloud";
+    # nextcloud data dir
+    nextcloud_host_data = "/potatopool/appdata/nextcloud";
+    nextcloud_container_data = "/var/lib/nextcloud";
+    
+    # pg data dir
+    pgsql_host_data = "/potatopool/appdata/nextcloud-pgsql";
+    pgsql_container_data = "/var/lib/postgresql/15";
   in
 {
-  #container.postgreqsl = {
-  #  ephemeral = true;
-  #  autostart = true;
-  #  privateNetwork = true;
-  #  hostAddress = "10.0.0.10";
-  #  localAddress = "10.0.0.11";
-  #  bindMounts = {
-  #  };
-  #};
 
   # nextcloud container
   containers.nextcloud = {
     ephemeral = true;
     autoStart = true;
     privateNetwork = true;
-    hostAddress = "10.0.0.10";
-    localAddress = "10.0.0.20";
+    hostBridge = "br0";
+    localAddress = "10.0.0.20/24";
     bindMounts = { 
-      "${container_adminpass_file}" = { 
-        hostPath = host_adminpass_file;
+      "${nextcloud_container_adminpass}" = { 
+        hostPath = nextcloud_host_adminpass;
         isReadOnly = true; 
       };
-      "${container_dbpass_file}" = { 
-        hostPath = host_dbpass_file;
-        isReadOnly = true; 
+
+      # data
+      "${pgsql_container_data}" = { 
+        hostPath = pgsql_host_data;
+        isReadOnly = false; 
       };
-      "${container_data_dir}" = { 
-        hostPath = host_data_dir;
+      "${nextcloud_container_data}" = { 
+        hostPath = nextcloud_host_data;
         isReadOnly = false;
       };
     };
@@ -55,20 +48,47 @@
         enable = true;
         package = pkgs.nextcloud28;
         hostName = "cloud.soonann.dev";
-        home = container_data_dir;
-        config.adminuser = "soonann";
-        config.adminpassFile = container_adminpass_file;
-        config.dbtype = "pgsql";
-        config.dbhost = "nextcloud-pgsql";
-        config.dbname = "nextcloud";
-        config.dbuser = "nextcloud";
-        config.dbpassFile = container_dbpass_file;
+        home = nextcloud_container_data;
+
+        # proxy/domains
         config.trustedProxies = [
           "10.0.0.10"
         ];
+
         config.extraTrustedDomains = [
         ];
+        # admin user
+        config.adminuser = "soonann";
+        config.adminpassFile = nextcloud_container_adminpass;
+
+        # db config
+        config.dbtype = "pgsql";
+        config.dbhost = "/run/postgresql";
+        config.dbname = "nextcloud";
+        config.dbuser = "nextcloud";
       };
+
+      # postgresql for nextcloud
+      services.postgresql = {
+        enable = true;
+	package = pkgs.postgresql_15;
+	dataDir = pgsql_container_data;
+        ensureDatabases = [ "nextcloud" ];
+        ensureUsers = [
+        { 
+          name = "nextcloud";
+          ensureDBOwnership = true;
+        }
+        ];
+	#initialScript = pgsql_container_initScript;
+      };
+
+      # map dependencies of nextcloud with systemd 
+      systemd.services."nextcloud-setup" = {
+        requires = ["postgresql.service"];
+        after = ["postgresql.service"];
+      };
+
 
       networking = {
         firewall = {

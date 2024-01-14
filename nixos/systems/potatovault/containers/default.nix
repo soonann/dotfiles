@@ -1,42 +1,64 @@
 {pkgs, config, ...}:{
   imports = [
     ./vaultwarden
-    #./nextcloud
+    ./nextcloud
   ];
 
   # networking for containers
   # https://nixos.org/manual/nixos/stable/#ch-containers
   networking = {
 
-    nat = {
-      enable = true;
-      externalInterface = "enp2s0";
-      internalInterfaces = ["ve-+"];
+    #nat = {
+      #  enable = true;
+      #  internalInterfaces = ["ve-+"];
+      #  externalInterface = "enp2s0";
+      #};
+
+    bridges = {
+      br0 = {
+        interfaces = [ 
+          "enp2s0"
+        ];
+      };
     };
 
-    networkmanager.unmanaged = [ "interface-name:ve-*" ];
+    interfaces = {
+      br0 = {
+        ipv4.addresses = [
+        { address = "10.0.0.10"; prefixLength = 24; }
+        { address = "192.168.0.199"; prefixLength = 24; }
+        ];
+      };
+    };
 
-  };
+    defaultGateway = "192.168.0.1";
+    nameservers = [ "192.168.0.1" ];
 
-  virtualisation = {
-    # containers
-    containerd.enable = true;
-    docker.enable = true;
+    
 
-    # rootless docker
-    #docker.rootless = {
-      #enable = true;
-      #setSocketVariable = true;
-      #};
-  };
+    #networkmanager.unmanaged = [ "interface-name:ve-*" ];
+
+    };
+
+    virtualisation = {
+      # containers
+      containerd.enable = true;
+      docker.enable = true;
+
+      # rootless docker
+      #docker.rootless = {
+        #enable = true;
+        #setSocketVariable = true;
+        #};
+    };
 
 
-  # add your user to docker group
-  users.users.soonann.extraGroups = [ "docker" ];
+    # add your user to docker group
+    users.users.soonann.extraGroups = [ "docker" ];
 
-  environment.systemPackages = with pkgs; [
-    docker-compose
-  ];
+    environment.systemPackages = with pkgs; [
+      docker-compose
+    ];
 
 
 
