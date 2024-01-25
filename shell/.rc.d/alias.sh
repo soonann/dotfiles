@@ -8,6 +8,22 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+# check if you're in a tmux pane
+#if [[ -n $TMUX_SESS_ROOT ]]; then
+
+  ## overwrite the cd cmd without args to bring you to the session's root dir
+  #function cd(){
+    #if [[ -z "$1" ]]; then
+      #echo "$1"
+      #builtin cd $TMUX_SESS_ROOT
+    #else
+      #builtin cd $1
+    #fi
+  #}
+
+#fi
+
 alias ll='ls --group-directories-first -ahlF'
 
 # nvim alias as vim 

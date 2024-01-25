@@ -41,7 +41,7 @@ wireless wlo1 {
 }
 
 
-ethernet eth0 {
+ethernet br-a93bc6c42739 {
   format_up = "E: %ip (%speed)"
   format_down = "E: down"
   separator_block_width = 30

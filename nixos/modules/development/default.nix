@@ -44,6 +44,8 @@
     # cli tools
     coreutils-full # gnu utils
     busybox
+    pv
+    openssl
     age
     rclone
     curl
@@ -52,7 +54,6 @@
     unzip
     file
     envsubst
-    openssl
     jq
     gnumake
 

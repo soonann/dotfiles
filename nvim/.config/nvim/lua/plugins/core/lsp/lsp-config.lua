@@ -210,13 +210,20 @@ return {
     lspconfig["clangd"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
+      --settings = {
+
+      --}
     })
 
     -- arduino lsp
     lspconfig["arduino_language_server"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
+      cmd = {
+        "arduino-lsp"
+      },
     })
+
 
     -- tiltfile
     lspconfig['tilt_ls'].setup({
