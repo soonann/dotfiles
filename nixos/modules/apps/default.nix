@@ -4,6 +4,9 @@
     ./flatpak
     ./steam
     ./thunar
+    ./obs-studio
+    ./virtual-box
+    ./wine
   ];
 
   environment.systemPackages = with pkgs; [
@@ -21,7 +24,6 @@
 
     # media
     spotify
-    obs-studio
     vlc
     gimp
     cura
@@ -31,7 +33,6 @@
 
     # notes/docs
     obsidian
-    syncthing
     onlyoffice-bin # docs
     libreoffice # docs
     xournalpp # pdf editor
@@ -50,4 +51,14 @@
 
   # enable tailscaled
   services.tailscale.enable = true;
+
+  # syncthing
+  services = {
+    syncthing = {
+      enable = true;
+      user = "soonann";
+      dataDir = "/home/soonann/development/syncthing/data";
+      configDir = "/home/soonann/development/syncthing/config";
+    };
+  };
 }

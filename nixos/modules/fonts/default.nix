@@ -2,6 +2,7 @@
 {
   # Fonts
   fonts = {
+    enableDefaultPackages = true;
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "Hack" ]; })
       noto-fonts

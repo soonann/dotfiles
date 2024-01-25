@@ -40,8 +40,12 @@
   # TODO: change this based on the updated config
   xdg = {
     portal = {
-      config.common.default = "*";
       enable = true;
+      config = {
+        common = {
+          default = "*";
+        };
+      };
     };
   };
 

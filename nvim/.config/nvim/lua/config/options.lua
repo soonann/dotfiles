@@ -31,6 +31,7 @@ vim.opt.undofile = true
 -- incremental search highlights the terms as you type your regex expression
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
+-- vim.opt.inccommand = "split"
 
 -- enable syntax highlighting
 vim.opt.termguicolors = true

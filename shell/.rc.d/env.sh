@@ -58,7 +58,7 @@ export PATH="$PATH:$DENO_INSTALL/bin"
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 # chrome/brave
-export CHROME_EXECUTABLE="/var/lib/flatpak/exports/bin/com.brave.Browser" 
+export CHROME_EXECUTABLE="/var/run/current-system/sw/bin/brave" 
 
 # docker/compose/kube
 # export COMPOSE_PROFILES=web,kafka

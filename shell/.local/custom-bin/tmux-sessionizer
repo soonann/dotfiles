@@ -1,26 +1,30 @@
 #!/usr/bin/env bash
-# theprimeagen's tmux-sessionizer
 
 if [[ $# -eq 1 ]]; then
-	selected=$1
+	selected_dir=$1
 else
-	selected=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
+	selected_dir=$(find ~ ~/development ~/dotfiles -mindepth 1 -maxdepth 4 -type d | fzf)
 fi
 
-if [[ -z $selected ]]; then
+if [[ -z $selected_dir ]]; then
 	exit 0
 fi
 
-selected_name=$(rev <<< "$selected" | cut -d '/' -f -2 | rev | tr '/' '_')
+# parent folder prefix
+session_name=$(rev <<< "$selected_dir" | cut -d '/' -f -2 | rev | tr '/' '_')
+# hash prefixes -> session_name="$(sha1sum <<< "$selected_dir" | cut -c 1-5)-$(basename "$selected_dir" | tr . _)"
+# original -> session_name=$(basename "$selected_dir" | tr . _)
+
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-	tmux new-session -s $selected_name -c $selected
+	tmux new-session -s $session_name -c $selected_dir
 	exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-	tmux new-session -ds $selected_name -c $selected
+if ! tmux has-session -t=$session_name 2> /dev/null; then
+	tmux new-session -ds $session_name -c $selected_dir
 fi
 
-tmux switch-client -t $selected_name
+tmux switch-client -t $session_name
+tmux setenv -t $session_name TMUX_SESS_ROOT $selected_dir
