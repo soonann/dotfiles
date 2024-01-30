@@ -29,6 +29,12 @@
 
   ];
 
+  documentation.man = {
+    # In order to enable to mandoc man-db has to be disabled.
+    man-db.enable = true;
+  };
+  documentation.dev.enable = true;
+
   # essential cli tools
   environment.systemPackages = with pkgs; [
 
@@ -40,6 +46,11 @@
     tmate # tmux sharing
     ranger # tui explorer
     ffmpeg # process media
+
+    # man pages
+    linux-manual
+    man-pages
+    man-pages-posix
 
     # cli tools
     coreutils-full # gnu utils
