@@ -44,6 +44,11 @@ in
   #};
 
   networking.hostName = "bladestealth-nix"; # Define your hostname.
+  networking.hostId = "8fcd69c9";
+
+  # import pool on boot
+  boot.zfs.extraPools = [ "razerpool" ];
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -70,8 +75,6 @@ in
     LC_TELEPHONE = "en_SG.UTF-8";
     LC_TIME = "en_SG.UTF-8";
   };
-
-
 
   # Enable sound with pipewire.
   sound.enable = true;
