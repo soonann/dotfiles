@@ -15,6 +15,8 @@ in
       ./networking
       ./zfs
       ./traefik
+      ./authelia
+      ./syncthing
       ./containers
       ./virtualisation
       ../../modules/base
@@ -59,7 +61,7 @@ in
     soonann = {
       isNormalUser = true;
       description = "soonann";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" "nextcloud" ];
       packages = with pkgs; [];
     };
 
@@ -99,6 +101,7 @@ in
     tmux
     tmate
     htop
+    pv
     tailscale 
     git
   ];

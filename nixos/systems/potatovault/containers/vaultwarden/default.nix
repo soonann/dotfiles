@@ -2,11 +2,11 @@
   let 
     # persistence
     container_data_dir = "/var/lib/bitwarden_rs";
-    host_data_dir = "/potatopool/appdata/vaultwarden";
+    host_data_dir = "/run/appdata/vaultwarden";
 
     # env variables
     container_env_file = "/var/lib/vaultwarden.env";
-    host_env_file = "/potatopool/secrets/vaultwarden/vaultwarden.env";
+    host_env_file = "/run/secrets/vaultwarden/vaultwarden.env";
 
   in
 {

@@ -40,10 +40,16 @@
 
     };
 
+    networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
+
     virtualisation = {
       # containers
       containerd.enable = true;
       docker.enable = true;
+      podman.enable = true;
+      podman.defaultNetwork.settings = {
+        dns_enabled = true;
+      };
 
       # rootless docker
       #docker.rootless = {
@@ -59,7 +65,5 @@
     environment.systemPackages = with pkgs; [
       docker-compose
     ];
-
-
 
 }
