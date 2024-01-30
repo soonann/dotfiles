@@ -254,7 +254,7 @@ return {
 
     -- tiltfile set filetype
     vim.api.nvim_create_autocmd('BufRead', {
-      pattern = "Tiltfile",
+      pattern = "*Tiltfile",
       group = vim.api.nvim_create_augroup('Tiltfile', { clear = true }),
       callback = function(args)
         vim.api.nvim_command('setf tiltfile')

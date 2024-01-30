@@ -16,7 +16,8 @@ exec --no-startup-id telegram-desktop
 
 assign [class="Alacritty"] 1
 assign [class="Brave-browser"] 2
-assign [class="obsidian"] 3
+for_window [class="obsidian"] move scratchpad
+
 assign [class="Thunar"] 4
 assign [class="TelegramDesktop"] 5
 
@@ -81,6 +82,8 @@ bindsym $mod+Shift+s exec flameshot gui
 # display
 bindsym $mod4+Shift+1 exec --no-startup-id /home/soonann/.screenlayout/laptop-only.sh
 bindsym $mod4+Shift+2 exec --no-startup-id /home/soonann/.screenlayout/monitor-only.sh
+bindsym $mod4+Shift+3 exec --no-startup-id /home/soonann/.screenlayout/monitor-only-other.sh
+bindsym $mod4+Shift+5 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-trackpad
 
 # audio bindings
 bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status

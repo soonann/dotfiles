@@ -43,7 +43,7 @@ in
   #};
   #};
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "bladestealth-nix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -193,7 +193,7 @@ in
         zlib # zlib.so
         fuse # fuse.so.2
         libsecret # libsecret-1.so.0
-        stdenv.cc.cc # gcc
+        #stdenv.cc.cc # gcc
         gcc_multi
         fuse3
         glib

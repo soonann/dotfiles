@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+res=$(xinput list-props 'CUST0001:00 06CB:CDA3 Touchpad' | grep 'Device Enabled' | sed 's/Device Enabled (204):.*\(1\|0\).*/\1/')
+if [[ "$res" =~ "1" ]]; then
+  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'Device Enabled' 0
+else 
+  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'Device Enabled' 1
+  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
+  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
+  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
+fi
+
+#swaymsg 'input "5426:594:Razer_Razer_Blade_Keyboard" events toggle'
+# 1739:52643:CUST0001:00_06CB:CDA3_Touchpad # for keyboard

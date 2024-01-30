@@ -61,10 +61,12 @@
     libgestures # trackpad gestures on x11
     xdg-utils # opening default programs using links
     glib # gsettings
+    xorg.xmodmap # bindings
 
     # gnome keyring packages
     gnome.seahorse
     gnome.gnome-keyring
+
 
   ];
 

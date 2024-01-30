@@ -20,15 +20,14 @@ return {
   { 'hashivim/vim-terraform' },
 
   -- Android language support
-  { "hsanson/vim-android" },
+  --{ "hsanson/vim-android" },
+
+  -- Kotlin language support
+  --{ "udalov/kotlin-vim", },
 
   -- Markdown preview support
   {
     "iamcco/markdown-preview.nvim",
     build = function() vim.fn["mkdp#util#install"]() end,
-  },
-
-  {
-    "hsanson/vim-android",
   },
 }

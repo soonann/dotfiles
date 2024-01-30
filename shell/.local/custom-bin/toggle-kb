@@ -1,4 +1,0 @@
-#!/usr/bin/env /run/current-system/sw/bin/bash
-
-#swaymsg 'input "5426:594:Razer_Razer_Blade_Keyboard" events toggle'
-# 1739:52643:CUST0001:00_06CB:CDA3_Touchpad # for keyboard
