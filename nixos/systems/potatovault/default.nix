@@ -5,21 +5,20 @@
 { config, pkgs, ... }:
 let
   # .bashrc
-  
+
   # .vimrc 
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./networking
-      ./zfs
-      ./traefik
-      ./authelia
-      ./syncthing
-      ./containers
-      ./virtualisation
-      ../../modules/base
+      ../../modules/services/syncthing/potatovault.nix
+      ../../modules/services/traefik
+      ../../modules/services/authelia
+      ../../modules/services/containers
+      ../../modules/zfs
+      ../../modules/virtualisation
       #./k3s
     ];
 
@@ -31,7 +30,7 @@ in
   boot.kernelModules = [ "xfs" ];
   boot.supportedFilesystems = [ "xfs" ];
 
-  
+
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
 
@@ -62,7 +61,7 @@ in
       isNormalUser = true;
       description = "soonann";
       extraGroups = [ "networkmanager" "wheel" "nextcloud" ];
-      packages = with pkgs; [];
+      packages = with pkgs; [ ];
     };
 
     nextcloud = {
@@ -77,6 +76,24 @@ in
       gid = 999;
     };
   };
+
+  # basic networking settings
+  networking = {
+    hostName = "potatovault"; # Define your hostname
+    #useDHCP = false;
+    #interfaces = {
+    #  enp2s0.ipv4.addresses = [
+    #    {
+    #      address = "192.168.0.199";
+    #      prefixLength = 24;
+    #    }
+    #  ];
+    #};
+    #defaultGateway = "192.168.0.1";
+    #nameservers = [ "192.168.0.1" ];
+  };
+
+  networking.hostId = "f839bdb9";
 
   security.sudo.extraConfig = ''
     Defaults        timestamp_timeout=30
@@ -102,15 +119,15 @@ in
     tmate
     htop
     pv
-    tailscale 
+    tailscale
     git
   ];
 
   services.tailscale = {
     enable = true;
     extraUpFlags = [
-          "--ssh"
-          "--advertise-exit-node"
+      "--ssh"
+      "--advertise-exit-node"
     ];
     useRoutingFeatures = "server";
   };
@@ -140,9 +157,47 @@ in
     DefaultTimeoutStopSec=90s
   '';
 
-  # env variables
-  environment.sessionVariables = rec {
-        
+  # import pool on boot
+  boot.zfs.extraPools = [ "potatopool" "cachepool" ];
+
+  # sanoid
+  services.sanoid = {
+    enable = true;
+    package = pkgs.sanoid;
+    templates = {
+      "prod" = {
+        monthly = 2;
+        daily = 30;
+        hourly = 24;
+        autoprune = true;
+        autosnap = true;
+      };
+    };
+    datasets = {
+      "potatopool/data" = {
+        use_template = [ "prod" ];
+        recursive = true;
+      };
+      "potatopool/local" = {
+        use_template = [ "prod" ];
+        recursive = true;
+      };
+      "potatopool/unraid" = {
+        use_template = [ "prod" ];
+        recursive = true;
+      };
+      "cachepool/secrets" = {
+        use_template = [ "prod" ];
+        recursive = true;
+      };
+      "cachepool/appdata" = {
+        use_template = [ "prod" ];
+        recursive = true;
+      };
+    };
   };
+
+  # env variables
+  environment.sessionVariables = rec { };
 
 }
