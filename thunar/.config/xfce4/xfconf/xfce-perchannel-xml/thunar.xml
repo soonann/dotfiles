@@ -19,7 +19,7 @@
   <property name="misc-parallel-copy-mode" type="string" value="THUNAR_PARALLEL_COPY_MODE_ALWAYS"/>
   <property name="misc-exec-shell-scripts-by-default" type="bool" value="true"/>
   <property name="last-details-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
-  <property name="last-details-view-column-widths" type="string" value="50,50,139,139,139,88,50,50,1129,50,50,71,50,401"/>
+  <property name="last-details-view-column-widths" type="string" value="50,50,139,139,139,88,50,50,1135,50,50,69,50,397"/>
   <property name="last-separator-position" type="int" value="171"/>
   <property name="last-compact-view-zoom-level" type="string" value="THUNAR_ZOOM_LEVEL_38_PERCENT"/>
   <property name="last-location-bar" type="string" value="ThunarLocationEntry"/>
@@ -42,5 +42,5 @@
     <value type="string" value="78C63F8CC63F49A0"/>
   </property>
   <property name="last-sort-column" type="string" value="THUNAR_COLUMN_NAME"/>
-  <property name="last-sort-order" type="string" value="GTK_SORT_DESCENDING"/>
+  <property name="last-sort-order" type="string" value="GTK_SORT_ASCENDING"/>
 </channel>
