@@ -15,8 +15,8 @@ in
       ./hardware-configuration.nix
       ../../modules/services/syncthing/potatovault.nix
       ../../modules/services/traefik
-      ../../modules/services/authelia
-      ../../modules/services/containers
+      #../../modules/services/authelia
+      ../../modules/containers
       ../../modules/zfs
       ../../modules/virtualisation
       #./k3s
@@ -168,7 +168,6 @@ in
       "prod" = {
         monthly = 2;
         daily = 30;
-        hourly = 24;
         autoprune = true;
         autosnap = true;
       };

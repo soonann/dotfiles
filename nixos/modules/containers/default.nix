@@ -2,6 +2,7 @@
   imports = [
     ./vaultwarden
     ./nextcloud
+    ./linkding
   ];
 
   # networking for containers

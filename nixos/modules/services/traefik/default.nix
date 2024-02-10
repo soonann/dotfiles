@@ -73,6 +73,16 @@
           };
         };
 
+        linkding = {
+          rule = "Host(`linkding.soonann.dev`)";
+          service = "linkding";
+          tls = {
+            certResolver = "soonann-dev-resolver";
+            domains = {
+              main = [ "linkding.soonann.dev" ];
+            };
+          };
+        };
 
       };
 
@@ -83,6 +93,14 @@
           loadBalancer =  {
             servers = [
               { url = "http://vaultwarden:80"; }
+            ];
+          };
+        };
+
+        linkding = {
+          loadBalancer =  {
+            servers = [
+              { url = "http://localhost:9090"; }
             ];
           };
         };
