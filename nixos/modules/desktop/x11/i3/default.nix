@@ -60,6 +60,7 @@
     arandr # display mgmt
     libgestures # trackpad gestures on x11
     xdg-utils # opening default programs using links
+    xclip # clipboard
     glib # gsettings
     xorg.xmodmap # bindings
 

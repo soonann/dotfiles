@@ -41,16 +41,10 @@
     # email 
     thunderbird
 
-    # networking
-    tailscale
-
     # utilities
     gnome.gnome-calculator
 
   ];
-
-  # enable tailscaled
-  services.tailscale.enable = true;
 
   # syncthing
   services = {
