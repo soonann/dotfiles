@@ -32,6 +32,10 @@ return {
   },
 
   {
-    "stevearcc/vim-arduino",
+    "mrjosh/helm-ls",
   },
+
+  --{
+  --"stevearcc/vim-arduino",
+  --},
 }

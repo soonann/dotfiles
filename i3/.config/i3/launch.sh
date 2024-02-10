@@ -10,7 +10,7 @@ feh --bg-scale ~/dotfiles/wallpapers/nix-black-4k.png & disown
 
 # picom &
 pkill -9 -f 'picom'
-picom & disown
+#picom & disown
 
 # gnome keyring
 rm -rf /run/user/1000/keyring

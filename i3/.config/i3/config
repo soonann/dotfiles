@@ -89,9 +89,9 @@ bindsym $mod4+Shift+5 exec --no-startup-id /home/soonann/.local/custom-bin/toggl
 bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
 bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
-bindsym $mod4+shift+0 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
-bindsym $mod4+shift+9 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 bindsym $mod4+shift+8 exec pamixer -t @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+9 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 
 
 # brightness bindings

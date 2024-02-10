@@ -87,6 +87,9 @@
     # manage dotfiles
     stow
 
+    # ngrok
+    zrok
+
 
   ];
 }

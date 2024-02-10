@@ -44,6 +44,11 @@ in
 
   networking.hostName = "bladestealth-nix"; # Define your hostname.
   networking.hostId = "8fcd69c9";
+  networking.extraHosts = ''
+    192.168.49.2 client.cob.quest
+    192.168.49.2 livekit.cob.quest
+    127.0.0.1 stunner.cob.quest
+  '';
 
   # import pool on boot
   boot.zfs.extraPools = [ "razerpool" ];
@@ -56,6 +61,7 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  #networking.networkmanager.appendNameservers = [ "192.168.49.2" ];
 
   # Set your time zone.
   time.timeZone = "Asia/Singapore";
@@ -221,6 +227,18 @@ in
     #};
 
   };
+
+  # enable tailscaled
+  services = {
+    tailscale = {
+      enable = true;
+      extraUpFlags = [
+        #"accept-dns=false"
+      ];
+    };
+  };
+
+
 
   # change the timeout duration
   systemd.extraConfig = ''

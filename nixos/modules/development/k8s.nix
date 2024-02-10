@@ -4,11 +4,11 @@
 
     kubectl
     argocd
-    kubernetes-helm
+    unstable.kubernetes-helm
     helmfile
 
     # dev tools
-    tilt
+    unstable.tilt
     telepresence2
     devspace
 
