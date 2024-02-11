@@ -169,9 +169,6 @@ in
     zfs # for zfs support
     btrfs-progs # for btrfs support
 
-    # cope
-    vscode
-
     # ops
     vault
     certbot
