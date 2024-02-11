@@ -7,6 +7,7 @@
     ./obs-studio
     ./virtual-box
     ./wine
+    ./onlyoffice
   ];
 
   environment.systemPackages = with pkgs; [
@@ -33,7 +34,7 @@
 
     # notes/docs
     obsidian
-    onlyoffice-bin # docs
+    #onlyoffice-bin # docs
     libreoffice # docs
     xournalpp # pdf editor
     evince # pdf viewer
@@ -55,4 +56,6 @@
       configDir = "/home/soonann/development/syncthing/config";
     };
   };
+
+  programs.onlyoffice.enable = true;
 }
