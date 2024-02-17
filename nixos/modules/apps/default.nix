@@ -1,4 +1,21 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, ... }:
+let
+  # get the latest brave version
+  braveOverlay = final: prev: {
+    brave = prev.brave.overrideAttrs (oldAttrs:
+      let
+        version = "1.63.157";
+      in
+      {
+        src = prev.fetchurl {
+          url = "https://github.com/brave/brave-browser/releases/download/v${version}/brave-browser_${version}_amd64.deb";
+          hash = "sha256-M8QdA4eA6tOoY106sLohOrjTCnaRBSH/F546hLi8TFg=";
+        };
+      }
+    );
+  };
+in
+{
 
   imports = [
     ./flatpak
@@ -8,6 +25,10 @@
     ./virtual-box
     ./wine
     ./onlyoffice
+  ];
+
+  nixpkgs.overlays = [
+    braveOverlay
   ];
 
   environment.systemPackages = with pkgs; [

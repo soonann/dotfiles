@@ -70,5 +70,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 export EDITOR=nvim
 
+export DEV=/home/soonann/development
+
 # steam
 export XDG_DATA_HOME="$HOME/.local/share"
