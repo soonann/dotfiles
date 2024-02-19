@@ -1,2 +1,20 @@
+" good reference:
+" https://github.com/fdietze/dotfiles/blob/master/.ideavimrc
+
+" executing actions in android studio
+" https://github.com/JetBrains/ideavim#executing-ide-actions
+
+" action lists
+" https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
+
 set relativenumber
 set visualbell
+set incsearch
+set scrolloff=10
+
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+
+let mapleader = " "
+
+map <leader>ff <Action>(SearchEverywhere)

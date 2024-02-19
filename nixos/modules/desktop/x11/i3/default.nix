@@ -63,6 +63,7 @@
     xclip # clipboard
     glib # gsettings
     xorg.xmodmap # bindings
+    xorg.xhost
 
     # gnome keyring packages
     gnome.seahorse

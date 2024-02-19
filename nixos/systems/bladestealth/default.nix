@@ -201,6 +201,7 @@ in
   ];
 
   programs = {
+    ssh.askPassword = "";
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
