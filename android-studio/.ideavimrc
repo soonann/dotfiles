@@ -8,13 +8,30 @@
 " https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 
 set relativenumber
+set number
 set visualbell
 set incsearch
 set scrolloff=10
 
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'preservim/nerdtree'
 
 let mapleader = " "
 
-map <leader>ff <Action>(SearchEverywhere)
+nmap <leader>ff <Action>(SearchEverywhere)
+nmap <leader>ac <Action>(ShowIntentionActions)
+nmap <leader>fm <Action>(ReformatCode)
+nmap <leader>rn <Action>(RenameElement)
+nmap <C-j> <Action>(GoToNextError)
+nmap <C-k> <Action>(GoToPreviousError)
+nmap <C-S-N> <Action>(NERDTreeToggle)
+
+nmap <C-d> <C-d>zz
+nmap <C-u> <C-u>zz
+nmap <C-n> <Down>
+nmap <C-p> <Up>
+nmap <C-y> <CR>
+
+nmap <C-S-=> :action EditorIncreaseFontSize<CR>
+nmap <C--> :action EditorDecreaseFontSize<CR>

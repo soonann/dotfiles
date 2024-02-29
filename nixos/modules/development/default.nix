@@ -90,6 +90,8 @@
     # ngrok
     zrok
 
+    # ollama
+    ollama
 
   ];
 }

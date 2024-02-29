@@ -20,12 +20,19 @@
     let
       system = "x86_64-linux";
       overlay-unstable = final: prev: {
-        unstable = nixpkgs-unstable.legacyPackages.${prev.system};
+        # unstable = nixpkgs-unstable.legacyPackages.${prev.system};
         # use this variant if unfree packages are needed:
-        #unstable = import nixpkgs-unstable {
-        #inherit system;
-        #config.allowUnfree = true;
-        #};
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          # Allow unfree packages
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              "electron-24.8.6"
+              "electron-25.9.0"
+            ];
+          };
+        };
 
       };
     in

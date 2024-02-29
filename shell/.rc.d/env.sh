@@ -74,3 +74,4 @@ export DEV=/home/soonann/development
 
 # steam
 export XDG_DATA_HOME="$HOME/.local/share"
+export CGO_ENABLED=0

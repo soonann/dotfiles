@@ -44,11 +44,16 @@ in
 
   networking.hostName = "bladestealth-nix"; # Define your hostname.
   networking.hostId = "8fcd69c9";
-  networking.extraHosts = ''
-    192.168.49.2 client.cob.quest
-    192.168.49.2 livekit.cob.quest
-    127.0.0.1 stunner.cob.quest
-  '';
+  networking.firewall.interfaces."docker0".allowedTCPPorts = [
+    6789
+  ];
+  # networking.extraHosts = ''
+  #   192.168.49.2 client.cob.quest
+  #   192.168.49.2 livekit.cob.quest
+  #   127.0.0.1 stunner.cob.quest
+  # '';
+  boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = true;
+  boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = true;
 
   # import pool on boot
   boot.zfs.extraPools = [ "razerpool" ];
@@ -150,10 +155,6 @@ in
     # Allow unfree packages
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "electron-24.8.6"
-        "electron-25.9.0"
-      ];
     };
   };
 
@@ -198,7 +199,10 @@ in
     fuse # fuse2
     libsecret
 
+
   ];
+
+  virtualisation.docker.enableNvidia = true;
 
   programs = {
     ssh.askPassword = "";

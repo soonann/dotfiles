@@ -54,7 +54,7 @@ in
 
 
     # notes/docs
-    obsidian
+    unstable.obsidian
     #onlyoffice-bin # docs
     libreoffice # docs
     xournalpp # pdf editor
