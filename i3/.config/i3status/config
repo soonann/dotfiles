@@ -34,14 +34,14 @@ battery 0 {
   separator_block_width = 30
 }
 
-wireless wlo1 {
+wireless _first_ {
   format_up = "W: (%quality at %essid, %bitrate) %ip"
   format_down = "W: down"
   separator_block_width = 30
 }
 
 
-ethernet br-a93bc6c42739 {
+ethernet _first_ {
   format_up = "E: %ip (%speed)"
   format_down = "E: down"
   separator_block_width = 30
@@ -55,7 +55,7 @@ tztime local {
 order += "volume master"
 order += "read_file BRIGHTNESS"
 order += "battery 0"
-order += "wireless wlo1"
-order += "ethernet eth0"
+order += "wireless _first_"
+order += "ethernet _first_"
 order += "tztime local"
 
