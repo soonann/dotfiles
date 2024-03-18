@@ -12,6 +12,10 @@
     enable = true;
     package = pkgs.traefik;
     group = "docker";
+    dataDir = "/run/appdata/traefik";
+    environmentFiles = [
+      "/run/secrets/traefik/.env"
+    ];
 
     # static config
     staticConfigOptions = {
@@ -23,6 +27,8 @@
         dashboard = true;
         insecure = true;
       };
+
+      # entrypoints
       entryPoints = {
         web = {
           address = ":80";
@@ -35,11 +41,20 @@
           address = ":443";
         };
       };
+	
+      # cert resolvers
       certificatesResolvers = {
-        soonann-dev-resolver = {
+        cloudflare = {
           acme = {
             email = "sudo@soonann.dev";
-            tlsChallenge = {};
+	    storage = "/run/secrets/traefik/acme.json";
+            dnsChallenge = {
+		provider = "cloudflare";
+		resolvers = [
+		  "1.1.1.1:53"
+		  "1.0.0.1:53"
+		];
+	    };
           };
         };
       };
@@ -49,41 +64,34 @@
     dynamicConfigOptions = {
 
       # routers
-      http.routers = {
-
-        vaultwarden = {
-          rule = "Host(`vaultwarden.soonann.dev`) && !Path(`/admin`)";
-          service = "vaultwarden";
-          tls = {
-            certResolver = "soonann-dev-resolver";
-            domains = {
-              main = [ "vaultwarden.soonann.dev" ];
+      http = {
+	routers = {
+          vaultwarden = {
+            rule = "Host(`vaultwarden.soonann.dev`) && !Path(`/admin`)";
+            service = "vaultwarden";
+	    entrypoints = [ "websecure" ];
+            tls = {
+              certResolver = "cloudflare";
             };
           };
-        };
-
-        nextcloud = {
-          rule = "Host(`cloud.soonann.dev`)";
-          service = "nextcloud";
-          tls = {
-            certResolver = "soonann-dev-resolver";
-            domains = {
-              main = [ "cloud.soonann.dev" ];
+          nextcloud = {
+            rule = "Host(`cloud.soonann.dev`)";
+            service = "nextcloud";
+	    entrypoints = [ "websecure" ];
+            tls = {
+              certResolver = "cloudflare";
             };
           };
-        };
-
-        linkding = {
-          rule = "Host(`linkding.soonann.dev`)";
-          service = "linkding";
-          tls = {
-            certResolver = "soonann-dev-resolver";
-            domains = {
-              main = [ "linkding.soonann.dev" ];
+          linkding = {
+            rule = "Host(`linkding.soonann.dev`)";
+            service = "linkding";
+	    entrypoints = [ "websecure" ];
+            tls = {
+              certResolver = "cloudflare";
             };
           };
-        };
 
+	};
       };
 
       # services

@@ -119,6 +119,7 @@ in
     tmate
     htop
     pv
+    du-dust
     tailscale
     git
   ];
