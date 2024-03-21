@@ -4,6 +4,10 @@
 
 { config, modulesPath, pkgs, ... }:
 let
+  keyboard-x11 = pkgs.writeShellScriptBin "keyboard-x11" ''
+    xset r rate 220 40
+    setxkbmap -option caps:none # disable caps
+  '';
 in
 {
   imports =
@@ -44,9 +48,10 @@ in
 
   networking.hostName = "bladestealth-nix"; # Define your hostname.
   networking.hostId = "8fcd69c9";
-  networking.firewall.interfaces."docker0".allowedTCPPorts = [
+  networking.firewall.interfaces."docker+".allowedTCPPorts = [
     6789
   ];
+
   # networking.extraHosts = ''
   #   192.168.49.2 client.cob.quest
   #   192.168.49.2 livekit.cob.quest
@@ -120,6 +125,9 @@ in
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2341", MODE:="0666"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="1fc9", MODE:="0666"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0525", MODE:="0666"
+
+    # Match Bluetooth devices
+    SUBSYSTEM=="input", ATTRS{uniq}=="c5:79:49:3a:17:60", ACTION=="add", RUN+="${keyboard-x11}"
   '';
 
   services.pipewire = {

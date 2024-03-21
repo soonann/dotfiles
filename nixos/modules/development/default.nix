@@ -22,6 +22,7 @@
 
     # database
     ./mongo.nix
+    ./cassandra.nix
 
     # testing
     ./k6.nix
@@ -42,6 +43,7 @@
     vim
     neovim
     alacritty
+    #warp-terminal # boo, no linux version yet
     tmux
     tmate # tmux sharing
     ranger # tui explorer
@@ -78,11 +80,13 @@
     # system monitoring
     neofetch
     htop # cpu/mem top
+    btop # another top
     lsof # open files
     lshw # find gpu id
     pciutils # lspci - pci devices
     acpi # battery
     socat # socket cat
+    nmap # networking
 
     # manage dotfiles
     stow

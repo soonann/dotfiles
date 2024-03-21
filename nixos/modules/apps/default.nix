@@ -25,6 +25,7 @@ in
     ./virtual-box
     ./wine
     ./onlyoffice
+    ./davinci-resolve
   ];
 
   nixpkgs.overlays = [
@@ -55,6 +56,8 @@ in
 
     # notes/docs
     unstable.obsidian
+    pandoc
+
     #onlyoffice-bin # docs
     libreoffice # docs
     xournalpp # pdf editor

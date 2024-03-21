@@ -115,6 +115,8 @@ return {
         command = "terraform-ls serve",
       },
 
+      bufls = {},
+
       -- yaml
       -- https://www.reddit.com/r/neovim/comments/ze9gbe/kubernetes_auto_completion_support_in_neovim/
       --yamlls = {
@@ -269,6 +271,7 @@ return {
       group = vim.api.nvim_create_augroup('Tiltfile', { clear = true }),
       callback = function(args)
         vim.api.nvim_command('setf tiltfile')
+        vim.api.nvim_command('setlocal commentstring=#\\ %s')
         vim.treesitter.start(args.buf, 'starlark')
       end
     })

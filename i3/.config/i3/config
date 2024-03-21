@@ -83,6 +83,7 @@ bindsym $mod+Shift+s exec flameshot gui
 bindsym $mod4+Shift+1 exec --no-startup-id /home/soonann/.screenlayout/laptop-only.sh
 bindsym $mod4+Shift+2 exec --no-startup-id /home/soonann/.screenlayout/monitor-only.sh
 bindsym $mod4+Shift+3 exec --no-startup-id /home/soonann/.screenlayout/monitor-only-other.sh
+bindsym $mod4+Shift+4 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-keyboard
 bindsym $mod4+Shift+5 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-trackpad
 
 # audio bindings

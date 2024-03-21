@@ -13,7 +13,7 @@
     devspace
 
     # cluster virt
-    minikube
+    unstable.minikube
     kind
 
   ];

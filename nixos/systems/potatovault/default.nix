@@ -118,6 +118,7 @@ in
     tmux
     tmate
     htop
+    btop
     pv
     tailscale
     git

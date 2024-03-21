@@ -48,10 +48,10 @@ return {
           behavior = cmp.ConfirmBehavior.InsertEnter,
           select = true,
         },
-        ['<CR>'] = cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Replace,
-          select = true,
-        },
+        -- ['<CR>'] = cmp.mapping.confirm {
+        --   behavior = cmp.ConfirmBehavior.Replace,
+        --   select = true,
+        -- },
       }),
       -- sources for autocompletion
       sources = cmp.config.sources({
