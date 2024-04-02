@@ -28,7 +28,7 @@ return {
     vim.g.airline_theme = 'catppuccin'
     vim.cmd.colorscheme "catppuccin"
 
-    -- set backround transparent
+    -- set background transparent
     vim.api.nvim_set_hl(0, "normal", { bg = "none" })
     vim.api.nvim_set_hl(0, "normalfloat", { bg = "none" })
   end

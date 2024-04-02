@@ -98,8 +98,8 @@ bindsym $mod4+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 # brightness bindings
 bindsym XF86MonBrightnessUp exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
 bindsym XF86MonBrightnessDown exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
-bindsym $mod4+shift+6 exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
-bindsym $mod4+shift+7 exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod4+shift+6 exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod4+shift+7 exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
 
 
 # ========= i3 native bindings ===========
@@ -148,7 +148,7 @@ bindsym $mod+e layout toggle split
 # bindsym $mod+t layout tabbed
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+tab focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent

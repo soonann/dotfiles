@@ -13,7 +13,7 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/services/syncthing/potatovault.nix
+      # ../../modules/services/syncthing/potatovault.nix
       ../../modules/services/traefik
       #../../modules/services/authelia
       ../../modules/containers

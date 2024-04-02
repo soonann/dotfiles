@@ -19,13 +19,13 @@ in
 
   imports = [
     ./flatpak
-    ./steam
+    # ./steam
     ./thunar
     ./obs-studio
     ./virtual-box
-    ./wine
+    # ./wine
     ./onlyoffice
-    ./davinci-resolve
+    # ./davinci-resolve
   ];
 
   nixpkgs.overlays = [
@@ -57,6 +57,7 @@ in
     # notes/docs
     unstable.obsidian
     pandoc
+    tetex
 
     #onlyoffice-bin # docs
     libreoffice # docs

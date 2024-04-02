@@ -3,6 +3,7 @@
   environment.systemPackages = with pkgs; [
 
     git
+    git-lfs
     gh # github cli
     act # local github actions
 

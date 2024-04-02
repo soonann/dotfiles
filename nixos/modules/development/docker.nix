@@ -4,6 +4,10 @@
     # containers
     containerd.enable = true;
     docker.enable = true;
+    podman.enable = true;
+    podman.defaultNetwork.settings = {
+      dns_enabled = true;
+    };
 
     # rootless docker
     #docker.rootless = {
