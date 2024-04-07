@@ -52,11 +52,10 @@ in
     6789
   ];
 
-  # networking.extraHosts = ''
-  #   192.168.49.2 client.cob.quest
-  #   192.168.49.2 livekit.cob.quest
-  #   127.0.0.1 stunner.cob.quest
-  # '';
+  networking.extraHosts = ''
+    127.0.0.1 kibana.localhost
+    127.0.0.1 kafka-ui.localhost
+  '';
   boot.kernel.sysctl."net.ipv6.conf.all.disable_ipv6" = true;
   boot.kernel.sysctl."net.ipv6.conf.default.disable_ipv6" = true;
 

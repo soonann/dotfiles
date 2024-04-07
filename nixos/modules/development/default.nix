@@ -87,6 +87,7 @@
     acpi # battery
     socat # socket cat
     nmap # networking
+    dig
 
     # manage dotfiles
     stow

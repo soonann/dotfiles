@@ -15,4 +15,7 @@
     <property name="enabled" type="bool" value="true"/>
     <property name="command" type="string" value="source ~/.xprofile"/>
   </property>
+  <property name="autoburn" type="empty">
+    <property name="enabled" type="bool" value="false"/>
+  </property>
 </channel>

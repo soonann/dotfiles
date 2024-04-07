@@ -1,5 +1,8 @@
 return {
 
+  -- copilot
+  -- { 'github/copilot.vim' },
+
   -- Flutter
   {
     'akinsho/flutter-tools.nvim',
