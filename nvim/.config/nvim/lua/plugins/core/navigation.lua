@@ -33,7 +33,7 @@ return {
           vim.keymap.set("n", "<leader>e", "<cmd>close<cr>", { buffer = opts.buf })
         end,
       })
-      vim.keymap.set("n", "<leader>a", grapple.toggle)
+      vim.keymap.set("n", "<leader>m", grapple.toggle)
       vim.keymap.set("n", "<leader>1", function() grapple.select({ key = 1 }) end)
       vim.keymap.set("n", "<leader>2", function() grapple.select({ key = 2 }) end)
       vim.keymap.set("n", "<leader>3", function() grapple.select({ key = 3 }) end)
@@ -68,7 +68,9 @@ return {
       -- end)
       vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
       vim.keymap.set('n', '<leader>fg', builtin.git_files, {})
+      vim.keymap.set('n', '<leader>fp', builtin.resume, {})
       vim.keymap.set('n', '<leader>fs', builtin.live_grep, {})
+      vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
       vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
       vim.keymap.set('n', '<leader>gs', builtin.git_status, {})
       vim.keymap.set('n', '<leader>co', builtin.commands, {})

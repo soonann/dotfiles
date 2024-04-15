@@ -9,8 +9,8 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
 # XDG DATA DIR
-export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
-export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
+# export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+# export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
 # flatpak binaries
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
@@ -47,7 +47,7 @@ export PATH="$PATH:/opt/android-studio/bin"
 export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
 export PATH="$PATH:$HOME/Android/Sdk/emulator"
 
-# arduino nano
+# user lvl global installs
 export PATH="$PATH:~/.npm-global/bin"
 
 # deno
@@ -73,5 +73,5 @@ export EDITOR=nvim
 export DEV=/home/soonann/development
 
 # steam
-export XDG_DATA_HOME="$HOME/.local/share"
+# export XDG_DATA_HOME="$HOME/.local/share"
 export CGO_ENABLED=0

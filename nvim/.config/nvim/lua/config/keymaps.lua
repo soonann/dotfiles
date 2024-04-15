@@ -32,6 +32,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- remap leader q to exit file
 vim.keymap.set("n", "<leader>q", vim.cmd.Ex)
+vim.keymap.set("n", "<leader><Esc>", ":bdelete<CR>")
 
 -- keep whatever is copied in its buffer by deleting the highted text into the void register
 vim.keymap.set("x", "<leader>p", [["_dP]])

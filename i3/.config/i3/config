@@ -17,6 +17,8 @@ exec --no-startup-id telegram-desktop
 assign [class="Alacritty"] 1
 assign [class="Brave-browser"] 2
 for_window [class="obsidian"] move scratchpad
+for_window [title="^Emulator.*"] floating enable
+assign [title="^Emulator.*"] 6
 
 assign [class="Thunar"] 4
 assign [class="TelegramDesktop"] 5
@@ -25,7 +27,7 @@ assign [class="TelegramDesktop"] 5
 # variables
 set $mod Mod1
 set $mod4 Mod4
-set $menu "rofi -terminal alacritty -combi-modi drun,ssh,run,combi -show combi -show-icons" 
+set $menu "rofi -terminal alacritty -combi-modes drun,ssh,run,combi -show combi -show-icons" 
 set $term alacritty
 set $refresh_status killall -SIGUSR1 i3status
 

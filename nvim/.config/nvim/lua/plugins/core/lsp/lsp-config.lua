@@ -93,6 +93,10 @@ return {
       tsserver = {
       },
 
+      -- svelte
+      svelte = {
+      },
+
       -- tailwind
       tailwindcss = {
       },
@@ -176,6 +180,7 @@ return {
 
     -- IMPORTANT: setup the custom lspconfigs after mason_lspconfig
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+    lspconfig["jdtls"].setup({})
 
     -- python lsp
     lspconfig["pylsp"].setup({

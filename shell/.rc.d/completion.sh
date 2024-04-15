@@ -4,18 +4,20 @@
 # k8s completion
 . <(kubectl completion bash)
 
+. <(git lfs completion bash)
+
 # helm completion
-. <(helm completion bash)
+# . <(helm completion bash)
 
 # tilt completion
-. <(tilt completion bash)
+# . <(tilt completion bash)
 
 # telepresence completion
-. <(telepresence completion bash)
+# . <(telepresence completion bash)
 
 
 # k6s completion
-. <(k6 completion bash)
+# . <(k6 completion bash)
 
 # dagger completion
 #. <(dagger completion bash)
