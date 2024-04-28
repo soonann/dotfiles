@@ -6,6 +6,8 @@
 
 . <(git lfs completion bash)
 
+. <(cat /opt/livekit/autocomplete/bash_autocomplete)
+
 # helm completion
 # . <(helm completion bash)
 
