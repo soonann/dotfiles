@@ -1,5 +1,7 @@
 return {
 
+  { 'Issafalcon/lsp-overloads.nvim' },
+
   -- copilot
   -- { 'github/copilot.vim' },
 

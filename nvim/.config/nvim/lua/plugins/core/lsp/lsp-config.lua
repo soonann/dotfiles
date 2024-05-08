@@ -37,7 +37,7 @@ return {
       vim.keymap.set('n', '<leader>ac', vim.lsp.buf.code_action, bufopts)
       vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
 
-      -- formatting
+      -- client exists
       if client then
         -- Check if the server supports formatting
         if client.server_capabilities.documentFormattingProvider then
@@ -213,13 +213,9 @@ return {
       }
     })
 
-    -- c/cpp lsp
     lspconfig["clangd"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
-      --settings = {
-
-      --}
     })
 
     -- arduino lsp
@@ -242,11 +238,23 @@ return {
       }
     }
 
-
     -- tiltfile
     lspconfig['tilt_ls'].setup({
       on_attach = on_attach,
       capabilities = capabilities,
+    })
+
+    -- ========== Other formatting/lsp related functions ==================
+
+    -- tiltfile set filetype
+    vim.api.nvim_create_autocmd('BufRead', {
+      pattern = "*Tiltfile",
+      group = vim.api.nvim_create_augroup('Tiltfile', { clear = true }),
+      callback = function(args)
+        vim.api.nvim_command('setf tiltfile')
+        vim.api.nvim_command('setlocal commentstring=#\\ %s')
+        vim.treesitter.start(args.buf, 'starlark')
+      end
     })
 
     --  Use :FormatOnSaveToggle to toggle autoformatting on or off
@@ -270,19 +278,7 @@ return {
       return _augroups[client.id]
     end
 
-    -- tiltfile set filetype
-    vim.api.nvim_create_autocmd('BufRead', {
-      pattern = "*Tiltfile",
-      group = vim.api.nvim_create_augroup('Tiltfile', { clear = true }),
-      callback = function(args)
-        vim.api.nvim_command('setf tiltfile')
-        vim.api.nvim_command('setlocal commentstring=#\\ %s')
-        vim.treesitter.start(args.buf, 'starlark')
-      end
-    })
-
     -- Whenever an LSP attaches to a buffer, we will run this function.
-    --
     -- See `:help LspAttach` for more information about this autocmd event.
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('lsp-attach-format', { clear = true }),
@@ -298,9 +294,9 @@ return {
         end
 
         -- ignore tsserver and gopls for formatting
-        --if client.name == 'tsserver' then
-        --return
-        --end
+        if client.name == 'tsserver'  then
+          return
+        end
 
         -- Create an autocmd that will run *before* we save the buffer.
         --  Run the formatting command for the LSP that has just attached.

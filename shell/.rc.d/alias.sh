@@ -28,6 +28,7 @@ alias ll='ls --group-directories-first -ahlF'
 
 # nvim alias as vim 
 alias vim="nvim"
+alias info="info --vi-keys"
 
 # tmux
 alias t='tmux attach || tmux'
@@ -48,8 +49,14 @@ alias ansible='python3 -m ansible'
 alias xclip='xclip -selection clipboard'
 
 # shutdown in 120
-alias sleepy='shutdown "120"'
+alias sleepy='shutdown "30"'
 alias shit='shutdown now'
+
+# source espidf
+alias getidf='. /home/soonann/esp-idf/export.sh'
+
+# source zephyr
+alias getzephyr='. /home/soonann/zephyrproject/.venv/bin/activate'
 
 # sway
 #alias sway='sway --unsupported-gpu'

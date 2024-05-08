@@ -34,7 +34,13 @@ return {
       },
     },
     cmd = { "TSJToggle", "TSJSplit", "TSJJoin" },
-    opts = { use_default_keymaps = false }
+    config = function()
+      require('treesj').setup({
+        use_default_keymaps = false,
+        max_join_length = 999,
+      })
+    end
+
   },
 
 }

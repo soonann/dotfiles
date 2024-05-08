@@ -5,7 +5,7 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-spaces = 2
+spaces = 4
 vim.opt.expandtab = true     -- expand tabs new to spaces (retab if needed)
 vim.opt.tabstop = spaces     -- how many space = 1 tab
 vim.opt.softtabstop = spaces -- break tabstop down further
@@ -50,6 +50,7 @@ vim.g.netrw_rmf_cmd = "mv /tmp/"
 
 vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
+vim.opt.textwidth = 80
 
 -- disable mouse
 vim.opt.mouse = ""
