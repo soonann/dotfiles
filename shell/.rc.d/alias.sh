@@ -26,8 +26,6 @@ fi
 
 alias ll='ls --group-directories-first -ahlF'
 
-# nvim alias as vim 
-alias vim="nvim"
 alias info="info --vi-keys"
 
 # tmux

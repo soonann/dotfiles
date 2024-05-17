@@ -1,6 +1,20 @@
-# get the user id 
-ID=$(id -u)
+# generic
+export ID=$(id -u)
+export EDITOR="/usr/bin/nvim"
+export DEV=/home/soonann/development
 
+# .local
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/custom-bin"
+
+# nix binaries
+export PATH="$PATH:/home/soonann/.nix-profile/bin"
+
+# flatpak binaries
+export PATH="$PATH:/var/lib/flatpak/exports/bin"
+
+# user global installs for npm
+export PATH="$PATH:~/.npm-global/bin"
 
 # fzf theme option
 export FZF_DEFAULT_OPTS=" \
@@ -11,20 +25,6 @@ export FZF_DEFAULT_OPTS=" \
 # XDG DATA DIR
 # export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
 # export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
-
-# nix binaries
-export PATH="$PATH:/home/soonann/.nix-profile/bin"
-
-# flatpak binaries
-export PATH="$PATH:/var/lib/flatpak/exports/bin"
-
-# .local
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/.local/custom-bin"
-
-# flyctl
-export FLYCTL_INSTALL="$HOME/.fly" 
-export PATH="$PATH:$FLYCTL_INSTALL/bin"
 
 # add Pulumi to the PATH
 export PATH="$PATH:$HOME/.pulumi/bin"
@@ -43,16 +43,16 @@ export PATH="$PATH:/usr/local/go/bin"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
-# android/java
-export ANDROID_HOME="$HOME/Android/Sdk" 
+# java
 export JAVA_HOME=$(readlink -e $(type -p javac) | sed  -e 's/\/bin\/javac//g')
 export PATH="$PATH:$JAVA_HOME/bin"
-export PATH="$PATH:/opt/android-studio/bin"
+
+# android
+export ANDROID_HOME="$HOME/Android/Sdk" 
+export PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin" 
 export PATH="$PATH:$HOME/Android/Sdk/platform-tools"
 export PATH="$PATH:$HOME/Android/Sdk/emulator"
-
-# user lvl global installs
-export PATH="$PATH:~/.npm-global/bin"
+export PATH="$PATH:/opt/android-studio/bin"
 
 # deno
 export DENO_INSTALL="$HOME/.deno"
@@ -62,19 +62,15 @@ export PATH="$PATH:$DENO_INSTALL/bin"
 export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
 
 # chrome/brave
-export CHROME_EXECUTABLE="/var/run/current-system/sw/bin/brave" 
+export CHROME_EXECUTABLE="/usr/bin/brave" 
 
 # docker/compose/kube
 # export COMPOSE_PROFILES=web,kafka
 export KUBECONFIG="/home/soonann/.kube/config"
-export KUBE_EDITOR="/run/current-system/sw/bin/nvim"
+export KUBE_EDITOR="/usr/bin/nvim"
 
 # nix tmp 
 export NIXPKGS_ALLOW_UNFREE=1
-
-export EDITOR=nvim
-
-export DEV=/home/soonann/development
 
 # steam
 # export XDG_DATA_HOME="$HOME/.local/share"

@@ -33,7 +33,7 @@ return {
           vim.keymap.set("n", "<leader>e", "<cmd>close<cr>", { buffer = opts.buf })
         end,
       })
-      vim.keymap.set("n", "<leader>m", grapple.toggle)
+      vim.keymap.set("n", "<leader>a", grapple.toggle)
       vim.keymap.set("n", "<leader>1", function() grapple.select({ key = 1 }) end)
       vim.keymap.set("n", "<leader>2", function() grapple.select({ key = 2 }) end)
       vim.keymap.set("n", "<leader>3", function() grapple.select({ key = 3 }) end)

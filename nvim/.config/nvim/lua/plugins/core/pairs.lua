@@ -6,13 +6,13 @@ return {
   },
 
   -- auto create pairs [{()}]
-  {
-    "windwp/nvim-autopairs",
-    config = function()
-      local autopairs = require("nvim-autopairs")
-      autopairs.setup({})
-    end
-  },
+  -- {
+  --   "windwp/nvim-autopairs",
+  --   config = function()
+  --     local autopairs = require("nvim-autopairs")
+  --     autopairs.setup({})
+  --   end
+  -- },
 
   -- auto rename html tags when changing one
   {
