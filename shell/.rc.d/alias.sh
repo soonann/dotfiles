@@ -30,6 +30,7 @@ alias info="info --vi-keys"
 # nvim select
 alias nvim-select='select config in nvim nvim-v2; do echo "NVIM_APPNAME=$config" > ~/.nvim-active-conf; break; done; source ~/.nvim-active-conf'
 alias nvim='NVIM_APPNAME=$NVIM_APPNAME nvim'
+alias vim='NVIM_APPNAME=$NVIM_APPNAME nvim'
 
 # tmux
 alias t='tmux attach || tmux'

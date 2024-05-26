@@ -10,9 +10,6 @@ if [[ -z $selected_dir ]]; then
 	exit 0
 fi
 
-# parent folder prefix
-#session_name=$(rev <<< "$selected_dir" | cut -d '/' -f -2 | rev | tr '/' '_')
-
 # hash prefixes
 session_name="$(basename "$selected_dir" | tr . _)-$(sha1sum <<< "$selected_dir" | cut -c 1-5)"
 
