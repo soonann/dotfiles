@@ -3,6 +3,7 @@
     ./vaultwarden
     ./nextcloud
     ./linkding
+    #./gitea
   ];
 
   # networking for containers

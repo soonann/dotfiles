@@ -13,7 +13,6 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      # ../../modules/services/syncthing/potatovault.nix
       ../../modules/services/traefik
       #../../modules/services/authelia
       ../../modules/containers
@@ -36,7 +35,7 @@ in
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_SG.UTF-8";
-
+  #i18n.supportedLocales = [ "all" ];
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_SG.UTF-8";
     LC_IDENTIFICATION = "en_SG.UTF-8";
