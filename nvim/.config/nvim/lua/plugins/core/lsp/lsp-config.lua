@@ -216,6 +216,7 @@ return {
     lspconfig["clangd"].setup({
       on_attach = on_attach,
       capabilities = capabilities,
+      cmd = { "clangd", "--completion-style=detailed" },
     })
 
     -- arduino lsp
