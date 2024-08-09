@@ -1,6 +1,6 @@
 # generic
 export ID=$(id -u)
-export EDITOR="/usr/bin/nvim"
+export EDITOR="nvim"
 export DEV=/home/soonann/development
 
 # .local
@@ -67,11 +67,10 @@ export CHROME_EXECUTABLE="/usr/bin/brave"
 # docker/compose/kube
 # export COMPOSE_PROFILES=web,kafka
 export KUBECONFIG="/home/soonann/.kube/config"
-export KUBE_EDITOR="/usr/bin/nvim"
+export KUBE_EDITOR="nvim"
 
 # nix tmp 
 export NIXPKGS_ALLOW_UNFREE=1
 
 # steam
 # export XDG_DATA_HOME="$HOME/.local/share"
-export CGO_ENABLED=0
