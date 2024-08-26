@@ -5,8 +5,8 @@
 printf '%.f' $(light) > /tmp/brightness
 
 # bg
-pkill -9 -f 'feh --bg-scale ~/dotfiles/wallpapers/arch-black-4k.png'
-feh --bg-scale ~/dotfiles/wallpapers/arch-black-4k.png & disown
+pkill -9 -f 'feh --bg-scale ~/dotfiles/wallpapers/fedora-black-4k.png'
+feh --bg-scale ~/dotfiles/wallpapers/fedora-black-4k.png & disown
 
 # picom &
 pkill -9 -f 'picom'

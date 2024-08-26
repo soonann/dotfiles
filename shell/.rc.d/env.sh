@@ -32,7 +32,7 @@ export PATH="$PATH:$HOME/.pulumi/bin"
 # /opt
 # export PATH="$PATH:/opt/flutter/bin" # flutter
 # export PATH="$PATH:/opt/jdtls/bin" # jdtls
-# export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin"
 # export PATH="$PATH:/opt/livekit"
 
 # cargo
@@ -44,7 +44,7 @@ export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
 # java
-export JAVA_HOME=$(readlink -e $(type -p javac) | sed  -e 's/\/bin\/javac//g')
+#export JAVA_HOME=$(readlink -e $(type -p javac) | sed  -e 's/\/bin\/javac//g')
 export PATH="$PATH:$JAVA_HOME/bin"
 
 # android
