@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-res=$(xinput list-props 15 | grep 'Device Enabled' | sed 's/Device Enabled (202):.*\(1\|0\).*/\1/')
+res=$(xinput list-props 'keyboard:Razer Razer Blade Keyboard' | grep 'Device Enabled' | sed 's/Device Enabled (202):.*\(1\|0\).*/\1/')
 if [[ "$res" =~ "1" ]]; then
   xinput set-prop 15 'Device Enabled' 0
 else

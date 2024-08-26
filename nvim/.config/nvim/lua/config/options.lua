@@ -5,7 +5,7 @@
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
-spaces = 4
+local spaces = 4
 vim.opt.expandtab = true     -- expand tabs new to spaces (retab if needed)
 vim.opt.tabstop = spaces     -- how many space = 1 tab
 vim.opt.softtabstop = spaces -- break tabstop down further
@@ -56,6 +56,8 @@ vim.opt.textwidth = 80
 vim.opt.mouse = ""
 
 vim.g.omni_sql_no_default_maps = 1
+
+-- vim.g.netrw_keepdir = 0;
 
 --vim.opt.clipboard = "unnamedplus"
 

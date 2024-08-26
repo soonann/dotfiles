@@ -14,3 +14,6 @@ vimopt.shiftwidth = sp   -- no of spaces for auto indent next line
 
 -- color column
 vimopt.colorcolumn = "80";
+
+-- don't keep directories
+vimopt.netrw_keepdir = 0
