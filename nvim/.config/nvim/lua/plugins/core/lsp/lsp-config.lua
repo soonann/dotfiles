@@ -159,6 +159,11 @@ return {
 
             },
 
+            -- java lsp
+            jdtls = {
+
+            },
+
         }
 
         -- enable mason
