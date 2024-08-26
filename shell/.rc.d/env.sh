@@ -8,7 +8,7 @@ export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:$HOME/.local/custom-bin"
 
 # nix binaries
-export PATH="$PATH:/home/soonann/.nix-profile/bin"
+# export PATH="$PATH:/home/soonann/.nix-profile/bin"
 
 # flatpak binaries
 export PATH="$PATH:/var/lib/flatpak/exports/bin"
@@ -30,10 +30,10 @@ export FZF_DEFAULT_OPTS=" \
 export PATH="$PATH:$HOME/.pulumi/bin"
 
 # /opt
-export PATH="$PATH:/opt/flutter/bin" # flutter
-export PATH="$PATH:/opt/jdtls/bin" # jdtls
-export PATH="$PATH:/opt/nvim-linux64/bin"
-export PATH="$PATH:/opt/livekit"
+# export PATH="$PATH:/opt/flutter/bin" # flutter
+# export PATH="$PATH:/opt/jdtls/bin" # jdtls
+# export PATH="$PATH:/opt/nvim-linux64/bin"
+# export PATH="$PATH:/opt/livekit"
 
 # cargo
 export PATH="$PATH:$HOME/.cargo/bin" 

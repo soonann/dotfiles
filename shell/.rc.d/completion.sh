@@ -1,17 +1,17 @@
 # minikube completion
-. <(minikube completion bash)
+# . <(minikube completion bash) 2> /dev/null
 
 # k8s completion
-. <(kubectl completion bash)
+# . <(kubectl completion bash)
 
 # git lfs
 . <(git lfs completion bash)
 
 # livekit
-. <(cat /opt/livekit/autocomplete/bash_autocomplete)
+# . <(cat /opt/livekit/autocomplete/bash_autocomplete)
 
 # flutter
-. <(flutter bash-completion)
+# . <(flutter bash-completion)
 
 # helm completion
 # . <(helm completion bash)

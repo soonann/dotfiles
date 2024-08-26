@@ -10,7 +10,7 @@
   "friendly-snippets": { "branch": "main", "commit": "4aed1a0ca605cb1c87f59799a0cc4afe00a40272" },
   "grapple.nvim": { "branch": "main", "commit": "ab274a3bfb674442d57fca05df866b71895853bc" },
   "helm-ls": { "branch": "master", "commit": "7f32902938a3ab02da6e862c168632ce96462782" },
-  "lazy.nvim": { "branch": "main", "commit": "bef521ac89c8d423f9d092e37b58e8af0c099309" },
+  "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "leetcode.nvim": { "branch": "master", "commit": "458da8ea7e73e8ed221165aa56a595e33c4ec644" },
   "lsp-overloads.nvim": { "branch": "main", "commit": "be3486a501fdda84ea91a0949178b75e8476030d" },
   "lua-async-await": { "branch": "main", "commit": "652d94df34e97abe2d4a689edbc4270e7ead1a98" },
