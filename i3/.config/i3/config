@@ -9,10 +9,10 @@ exec --no-startup-id nm-applet
 
 # startup apps
 exec --no-startup-id alacritty -e 'tmux'
-exec --no-startup-id brave
-exec --no-startup-id obsidian
+exec --no-startup-id flatpak run com.brave.Browser
+exec --no-startup-id flatpak run md.obsidian.Obsidian
 exec --no-startup-id thunar
-exec --no-startup-id telegram-desktop
+exec --no-startup-id flatpak run org.telegram.desktop
 
 assign [class="Alacritty"] 1
 assign [class="Brave-browser"] 2
@@ -22,7 +22,6 @@ assign [title="^Emulator.*"] 6
 
 assign [class="Thunar"] 4
 assign [class="TelegramDesktop"] 5
-
 
 # variables
 set $mod Mod1
@@ -188,7 +187,19 @@ bindsym $mod+Shift+t [class="Alacritty"] move scratchpad
 
 # reload the configuration file
 bindsym $mod4+Shift+r restart
-bindsym $mod4+Shift+s exec systemctl suspend
+
+# Create Log out, Reboot, Poweroff bindings
+mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym r exec --no-startup-id systemctl reboot
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym l exit
+        bindsym p exec --no-startup-id systemctl poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod4+Shift+q mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff"
 
 # exit i3 (logs you out of your X session)
-bindsym $mod4+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod4+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
