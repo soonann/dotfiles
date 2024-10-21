@@ -1,10 +1,10 @@
 # razer touchpad
-if [[ -n "$(xinput list-props 'CUST0001:00 06CB:CDA3 Touchpad' | grep 'Device Enabled (202):.*1')" ]]; then
-  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
-  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
-  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
-  xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Tapping Enabled' 1
-fi
+# if [[ -n "$(xinput list-props 'CUST0001:00 06CB:CDA3 Touchpad' | grep 'Device Enabled (202):.*1')" ]]; then
+#   xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
+#   xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
+#   xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
+#   xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Tapping Enabled' 1
+# fi
 
 # glorious mouse
 MOUSE=$(xinput list | grep 'Glorious Model O Wireless')

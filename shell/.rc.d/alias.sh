@@ -42,10 +42,7 @@ alias k='kubectl'
 alias dc='docker compose'
 alias tf='terraform'
 alias r='ranger'
-
-# python
-#alias venv='python3 -m venv'
-alias ansible='python3 -m ansible'
+alias yz='yazi'
 
 # xclip
 alias xclip='xclip -selection clipboard'

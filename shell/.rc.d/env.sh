@@ -72,5 +72,9 @@ export KUBE_EDITOR="nvim"
 # nix tmp 
 export NIXPKGS_ALLOW_UNFREE=1
 
+# gcloud
+export PATH="$PATH:/opt/google-cloud-sdk/bin"
+
 # steam
 # export XDG_DATA_HOME="$HOME/.local/share"
+ eval "$(direnv hook bash)"

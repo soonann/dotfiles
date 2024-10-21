@@ -8,20 +8,23 @@ exec --no-startup-id nm-applet
 #exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # startup apps
-exec --no-startup-id alacritty -e 'tmux'
-exec --no-startup-id brave
+exec --no-startup-id i3-msg 'workspace 1; exec alacritty -e "tmux"; workspace 1'
+exec --no-startup-id i3-msg 'workspace 2; exec brave; workspace 1'
+exec --no-startup-id i3-msg 'workspace 4; exec thunar; workspace 1'
+exec --no-startup-id i3-msg 'workspace 5; exec telegram-desktop; workspace 1'
 exec --no-startup-id obsidian
-exec --no-startup-id thunar
-exec --no-startup-id telegram-desktop
 
-assign [class="Alacritty"] 1
-assign [class="Brave-browser"] 2
+for_window [class="Alacritty"] floating enable
+for_window [class="zoom"] floating enable
 for_window [class="obsidian"] move scratchpad
 for_window [title="^Emulator.*"] floating enable
-assign [title="^Emulator.*"] 6
 
-assign [class="Thunar"] 4
-assign [class="TelegramDesktop"] 5
+# Assigning Windows
+# assign [class="Alacritty"] 1
+# assign [class="Brave-browser"] 2
+# assign [class="Thunar"] 4
+# assign [class="TelegramDesktop"] 5
+assign [title="^Emulator.*"] 6
 
 
 # variables
@@ -55,7 +58,9 @@ tiling_drag modifier titlebar
 
 # i3 bar
 bar {
+  position top
   status_command i3status
+  # tray_output none
 }
 
 # i3 style
@@ -95,6 +100,7 @@ bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
 bindsym $mod4+shift+8 exec pamixer -t @DEFAULT_SINK@ && $refresh_status
 bindsym $mod4+shift+9 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
 bindsym $mod4+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod4+shift+minus exec pamixer --default-source -t && $refresh_status
 
 
 # brightness bindings
@@ -188,7 +194,17 @@ bindsym $mod+Shift+t [class="Alacritty"] move scratchpad
 
 # reload the configuration file
 bindsym $mod4+Shift+r restart
-bindsym $mod4+Shift+s exec systemctl suspend
+# bindsym $mod4+Shift+s exec systemctl suspend
 
-# exit i3 (logs you out of your X session)
-bindsym $mod4+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# Create Log out, Reboot, Poweroff bindings
+mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym r exec --no-startup-id systemctl reboot
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym l exit
+        bindsym p exec --no-startup-id systemctl poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod4+Shift+q mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff"

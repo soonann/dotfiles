@@ -11,7 +11,7 @@
 . <(cat /opt/livekit/autocomplete/bash_autocomplete)
 
 # flutter
-. <(flutter bash-completion)
+# . <(flutter bash-completion)
 
 # helm completion
 # . <(helm completion bash)
