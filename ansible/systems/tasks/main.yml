@@ -1,5 +1,0 @@
-- name: Install system dependencies
-  ansible.builtin.dnf:
-    state: latest
-    name:
-      - flatpak

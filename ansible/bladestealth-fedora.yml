@@ -1,0 +1,8 @@
+---
+- name: Install dotfiles
+  hosts: all
+  roles:
+    - core
+    - desktop
+    - apps
+    - development

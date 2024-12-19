@@ -11,5 +11,6 @@
     remote: "flathub"
     name:
       - com.brave.Browser
-      - com.discordapp.Discord
+      - md.obsidian.Obsidian
       - org.telegram.desktop
+      - com.discordapp.Discord

@@ -1,0 +1,31 @@
+- name: Install system dependencies
+  become: true
+  ansible.builtin.dnf:
+    state: latest
+    name:
+      - flatpak
+
+      - polybar
+      - rofi
+      - lxappearance
+
+      - xinput
+      - xset
+
+      - arandr
+      - xrandr 
+
+      - blueman
+
+      - pamixer
+      - light
+
+- name: Link system dotfiles
+  ansible.builtin.shell: stow fonts thunar -t $HOME
+  args:
+    chdir: "{{ role_path }}/files"
+
+- name: Link X11 dotfiles
+  ansible.builtin.shell: stow * -t $HOME
+  args:
+    chdir: "{{ role_path }}/files/x11"

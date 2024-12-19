@@ -1,5 +1,6 @@
 # https://www.reddit.com/r/Cisco/comments/1d2flio/solution_to_webex_on_linux_not_starting/
 - name: Install Webex dependencies 
+  become: true
   ansible.builtin.dnf:
     name:
       - libxcrypt-compat

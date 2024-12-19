@@ -1,0 +1,32 @@
+- name: Install dnf related packages
+  become: true
+  ansible.builtin.dnf:
+    state: latest
+    name:
+      - git-lfs
+      - alacritty
+      - tmux
+      - neovim
+
+      - fzf
+      - ripgrep
+      - fd-find
+      
+      - cargo
+      - go
+      - node
+
+      - atop
+      - htop
+      - btop
+      - nvtop
+      
+- name: Install Tmux Plugin Manager
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+
+- name: Link dotfiles
+  ansible.builtin.shell: stow * -t $HOME
+  args:
+    chdir: "{{ role_path }}/files"

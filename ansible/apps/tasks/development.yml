@@ -1,6 +1,0 @@
-- name: Install dnf related packages
-  ansible.builtin.dnf:
-    state: latest
-    name:
-      - tmux
-      - neovim

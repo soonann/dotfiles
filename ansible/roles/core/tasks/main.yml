@@ -1,0 +1,5 @@
+- name: Install DNF Packages
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - nmtui
