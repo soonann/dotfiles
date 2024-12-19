@@ -192,8 +192,9 @@ bindsym $mod4+Shift+r restart
 # Create Log out, Reboot, Poweroff bindings
 mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff" {
         bindsym r exec --no-startup-id systemctl reboot
-        bindsym s exec --no-startup-id i3lock; systemctl suspend; mode "default"
-        bindsym l exit
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym q exit
+        bindsym l exec --no-startup-id i3lock
         bindsym p exec --no-startup-id systemctl poweroff
 
         # back to normal: Enter or Escape
