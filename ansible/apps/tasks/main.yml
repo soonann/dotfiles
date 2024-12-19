@@ -1,0 +1,8 @@
+- name: Install development tools
+  ansible.builtin.import_tasks: development.yml
+
+- name: Install flatpaks
+  ansible.builtin.import_tasks: flatpaks.yml
+
+- name: Install Webex
+  ansible.builtin.import_tasks: webex.yml

@@ -1,0 +1,15 @@
+- name: Add flathub remote
+  community.general.flatpak_remote:
+    name: "flathub"
+    method: user
+    flatpakrepo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+- name: Install Flatpaks
+  community.general.flatpak:
+    state: latest
+    method: user
+    remote: "flathub"
+    name:
+      - com.brave.Browser
+      - com.discordapp.Discord
+      - org.telegram.desktop
