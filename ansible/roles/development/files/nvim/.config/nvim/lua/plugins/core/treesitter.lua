@@ -21,10 +21,8 @@ return {
                     "bash",
 
                     "c",
-                    "c_sharp",
                     "css",
 
-                    "dart",
                     "diff",
                     "dockerfile",
 
@@ -33,6 +31,7 @@ return {
                     "gitattributes",
                     "gitcommit",
                     "gitignore",
+
                     "go",
                     "gomod",
                     "gosum",
@@ -57,12 +56,9 @@ return {
                     "rust",
 
                     "sql",
-                    "svelte",
                     "starlark",
 
                     "terraform",
-                    "tsx",
-                    "typescript",
 
                     "yaml",
 

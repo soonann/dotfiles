@@ -89,18 +89,9 @@ return {
                 }
             },
 
-            -- typescript
-            tsserver = {
-            },
-
-            -- svelte
-            svelte = {
-            },
-
             -- tailwind
             tailwindcss = {
             },
-
 
             -- html
             html = {
@@ -111,15 +102,10 @@ return {
                 },
             },
 
-            -- nix
-            rnix = {},
-
             -- terraform
             terraformls = {
                 command = "terraform-ls serve",
             },
-
-            bufls = {},
 
             -- yaml
             -- https://www.reddit.com/r/neovim/comments/ze9gbe/kubernetes_auto_completion_support_in_neovim/
@@ -148,11 +134,6 @@ return {
             --},
             --}
             --},
-
-            -- kotlin lsp
-            kotlin_language_server = {
-
-            },
 
             -- bash lsp
             bashls = {
