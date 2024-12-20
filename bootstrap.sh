@@ -7,7 +7,7 @@ sudo dnf install -y git ansible stow
 # git clone git@github.com:soonann/dotfiles.git
 
 # Install ansible community collections and roles
-ansible-galaxy install -r requirements.yml
+# ansible-galaxy install -r requirements.yml
 
 echo 'You can now apply the playbook with:'
 echo 'ansible-playbook -K -c local -i localhost, main.yml'

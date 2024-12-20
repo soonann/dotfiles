@@ -4,7 +4,7 @@
     state: latest
     name:
       - git-lfs
-      - alacritty
+      # - alacritty fedora
       - tmux
       - neovim
 
@@ -14,7 +14,8 @@
       
       - cargo
       - go
-      - node
+      # - node
+      - nodejs
 
       - atop
       - htop
