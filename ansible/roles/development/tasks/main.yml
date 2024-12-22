@@ -6,7 +6,6 @@
       - git-lfs
       # - alacritty fedora
       - tmux
-      - neovim
 
       - fzf
       - ripgrep
@@ -31,3 +30,7 @@
   ansible.builtin.shell: stow * -t $HOME
   args:
     chdir: "{{ role_path }}/files"
+
+- name: Setup node prefix directory user level directory
+  ansible.builtin.shell: |
+    npm config set prefix ~/.npm

@@ -1,0 +1,4 @@
+- name: Install core packages for all systems
+  ansible.builtin.dnf:
+    name:
+      - flatpak

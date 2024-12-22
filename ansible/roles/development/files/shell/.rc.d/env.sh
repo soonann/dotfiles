@@ -16,6 +16,7 @@ export PATH="$PATH:/var/lib/flatpak/exports/bin"
 # user global installs for npm
 export PATH="$PATH:~/.npm-global/bin"
 
+
 # fzf theme option
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -39,7 +40,7 @@ export PATH="$PATH:/opt/nvim-linux64/bin"
 export PATH="$PATH:$HOME/.cargo/bin" 
 
 # golang 
-export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/opt/go/bin"
 export GOPATH="$HOME/go"
 export PATH="$PATH:$GOPATH/bin"
 
