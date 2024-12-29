@@ -1,31 +1,83 @@
 - name: Install dnf related packages
   become: true
   ansible.builtin.dnf:
-    state: latest
+    state: present
     name:
       - git-lfs
-      # - alacritty fedora
       - tmux
 
       - fzf
       - ripgrep
       - fd-find
       
-      - cargo
-      - go
-      # - node
+      - python3
+      - python3-pip
+
       - nodejs
 
       - atop
       - htop
       - btop
       - nvtop
-      
+
+      - sysstat # iostat, mpstat, sar
+
+      - pciutils # lspci
+
+# Remove rust from DNF (too old) - replace with rustup install script
+- name: Remove rust
+  become: true
+  ansible.builtin.dnf:
+    state: absent
+    name: 
+      - cargo
+      - rust
+
+# - name: Install Rustup
+#   ansible.builtin.shell: |
+#     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs
+
+# Install tree-sitter
+- name: Install tree-sitter
+  community.general.cargo:
+    name: tree-sitter-cli
+
+
+# Install Neovim
+- name: Check if Neovim is installed
+  ansible.builtin.stat:
+    path: /opt/nvim-linux64
+  register: nvim_stat
+
+- name: Download and Install Neovim
+  become: true
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    dest: /opt/nvim-linux64
+  when: not nvim_stat.stat.exists
+
+# Install Golang
+- name: Check if Golang is installed
+  ansible.builtin.stat:
+    path: /opt/go
+  register: go_stat
+
+- name: Download and Install Golang
+  become: true
+  ansible.builtin.unarchive:
+    remote_src: yes
+    src: https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
+    dest: /opt
+  when: not go_stat.stat.exists
+
 - name: Install Tmux Plugin Manager
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
 
+
+# Dotfiles symlinks
 - name: Link dotfiles
   ansible.builtin.shell: stow * -t $HOME
   args:
@@ -34,3 +86,71 @@
 - name: Setup node prefix directory user level directory
   ansible.builtin.shell: |
     npm config set prefix ~/.npm
+
+# Install tailscale
+- name: Add Tailscale DNF Repo
+  become: true
+  ansible.builtin.yum_repository:
+    name: tailscale-stable
+    description: Tailscale Stable
+    baseurl: https://pkgs.tailscale.com/stable/rhel/9/$basearch
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://pkgs.tailscale.com/stable/rhel/9/repo.gpg
+
+- name: Install Tailscale
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - tailscale
+
+# Install vagrant
+- name: Install vagrant libvirt dependencies
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - '@virtualization hypervisor'
+      - '@virtualization tools'
+
+- name: Enable libvrtd
+  become: true
+  ansible.builtin.systemd_service:
+    name: libvirtd
+    state: started
+    enabled: true
+
+- name: Enable Code Ready Builder Repo
+  become: true
+  community.general.dnf_config_manager:
+    name: crb
+    state: enabled
+
+# Install vagrant, vagrant-libvrit dependencies
+- name: Hashicorp Stable 
+  become: true
+  ansible.builtin.yum_repository:
+    name: hashicorp
+    description: Hashicorp Stable
+    baseurl: https://rpm.releases.hashicorp.com/RHEL/$releasever/$basearch/stable
+    enabled: true
+    gpgcheck: true
+    gpgkey: https://rpm.releases.hashicorp.com/gpg
+
+- name: Install vagrant
+  become: true
+  ansible.builtin.dnf:
+    name: vagrant
+
+- name: Install libvirtd-devel
+  become: true
+  ansible.builtin.dnf:
+    name:
+      - libvirt-devel
+
+- name: Add user to libvirt group
+  become: true
+  ansible.builtin.user:
+    name: soonann
+    uid: 1000
+    groups: libvirt
+    append: yes

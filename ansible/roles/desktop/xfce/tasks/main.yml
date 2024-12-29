@@ -1,0 +1,7 @@
+- name: Core Packages
+  become: true
+  ansible.builtin.dnf:
+    state: latest
+    name:
+      - gnome-themes-extra
+      - xclip

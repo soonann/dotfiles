@@ -33,11 +33,11 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-8 "['<Alt><Shif
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-9 "['<Alt><Shift>9']" 
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-10 "['<Alt><Shift>0']"
 gsettings set org.gnome.settings-daemon.plugins.media-keys search "['<Alt>D']"
-gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Alt><Shift>S']"
+#gsettings set org.gnome.shell.keybindings show-screenshot-ui "['<Alt><Shift>S']"
 gsettings set org.gnome.desktop.peripherals.keyboard delay 280
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 25
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
-# aesthetics
-gsettings set org.yorba.shotwell.preferences.ui use-dark-theme true
+# Aesthetics
 gsettings set org.gnome.desktop.interface enable-animations false
+gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"

@@ -1,4 +1,10 @@
 - name: Install core packages for all systems
+  become: true
   ansible.builtin.dnf:
     name:
+      - epel-release
       - flatpak
+      - container-tools
+      - podman-compose
+      - kernel-devel
+      - virt-manager

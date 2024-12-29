@@ -1,5 +1,0 @@
-- name: Install DNF Apps
-  become: true
-  ansible.builtin.dnf:
-    name:
-      - flameshot

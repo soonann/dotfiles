@@ -6,7 +6,6 @@
 
 - name: Install Flatpaks
   community.general.flatpak:
-    state: latest
     method: user
     remote: "flathub"
     name:
@@ -15,4 +14,8 @@
       - org.telegram.desktop
       - com.discordapp.Discord
 
+      - com.spotify.Client
       - org.videolan.VLC
+      - org.libreoffice.LibreOffice
+      - org.onlyoffice.desktopeditors
+      - com.bambulab.BambuStudio
