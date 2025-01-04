@@ -1,0 +1,4 @@
+- name: Install Webex dependencies
+  become: true
+  ansible.builtin.dnf:
+    name: libxcrypt-compat

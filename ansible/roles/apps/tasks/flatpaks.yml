@@ -14,8 +14,18 @@
       - org.telegram.desktop
       - com.discordapp.Discord
 
+      # Media
       - com.spotify.Client
       - org.videolan.VLC
+      - com.obsproject.Studio
+
+      # Office apps
       - org.libreoffice.LibreOffice
       - org.onlyoffice.desktopeditors
+
+      # 3D Prints
       - com.bambulab.BambuStudio
+      - org.freecad.FreeCAD
+
+- name: Set overrides for user
+  shell: flatpak override --user --filesystem=home org.telegram.desktop

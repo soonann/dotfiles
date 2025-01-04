@@ -2,9 +2,34 @@
   become: true
   ansible.builtin.dnf:
     name:
-      - epel-release
+      # Networking
+      - nmtui
+
+      # Flatpaks
       - flatpak
-      - container-tools
-      - podman-compose
-      - kernel-devel
-      - virt-manager
+      - stow
+
+      # AppImage
+      - fuse-libs
+
+      # Virtualization groupinstall
+      - "@virtualization"
+
+      # Container
+      - podman
+      - repoquery
+
+- name: Start libvirtd
+  become: true
+  systemd:
+    name: libvirtd
+    state: started
+    enabled: true
+
+- name: Add user to libvirt group
+  become: true
+  user:
+    name: soonann
+    append: true
+    groups: libvirt
+

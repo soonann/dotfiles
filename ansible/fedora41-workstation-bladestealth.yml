@@ -4,5 +4,6 @@
   roles:
     - core
     - desktop/xfce
+    - desktop/i3
     - apps
     - development

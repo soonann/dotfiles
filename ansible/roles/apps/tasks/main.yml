@@ -1,2 +1,8 @@
+- name: Install dnf apps
+  ansible.builtin.import_tasks: dnf.yml
+
 - name: Install flatpaks
   ansible.builtin.import_tasks: flatpaks.yml
+
+- name: Install stanalone apps dependencies
+  ansible.builtin.import_tasks: standalone-dependencies.yml
