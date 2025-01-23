@@ -10,7 +10,10 @@
       - ripgrep
       - fd-find
 
+      - direnv
       - clangd
+      - cmake
+      - ninja
       
       - python3
       - python3-pip
@@ -26,6 +29,9 @@
       - sysstat # iostat, mpstat, sar
 
       - pciutils # lspci
+
+      # Building dragon
+      - gtk3-devel
 
 
 - name: Install Tmux Plugin Manager

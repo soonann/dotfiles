@@ -1,7 +1,11 @@
+# direnv hook
+eval "$(direnv hook bash)"
+
 # generic
 export ID=$(id -u)
 export EDITOR="nvim"
 export DEV=/home/soonann/development
+#export TERM="xterm-256color"
 
 # .local
 export PATH="$PATH:$HOME/.local/bin"
@@ -33,8 +37,12 @@ export PATH="$PATH:$HOME/.pulumi/bin"
 # /opt
 # export PATH="$PATH:/opt/flutter/bin" # flutter
 # export PATH="$PATH:/opt/jdtls/bin" # jdtls
-export PATH="$PATH:/opt/nvim-linux64/bin"
+# export PATH="$PATH:/opt/nvim-linux64/bin"
 # export PATH="$PATH:/opt/livekit"
+export PATH="$PATH:~/.local/opt/dragon"
+export PATH="$PATH:~/.local/opt/zephyr-sdk-0.16.3"
+
+
 
 # cargo
 export PATH="$PATH:$HOME/.cargo/bin" 

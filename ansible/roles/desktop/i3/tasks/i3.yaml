@@ -4,22 +4,30 @@
   ansible.builtin.dnf:
     state: latest
     name:
+
+      # I/O
+      - xinput
+      - xset
+
+      # Display
+      - arandr
+      - xrandr 
+
+      # Light, sound, bluetooth
+      - pamixer
+      - light
+      - blueman
+
+      # Drag and drop
+      - dragon
+
+      # Compositor
+      - picom
+
+      # Aesthetics
       - polybar
       - rofi
       - lxappearance
 
-      - xinput
-      - xset
-
-      - arandr
-      - xrandr 
-
-      - blueman
-
-      - pamixer
-      - light
-
-      # Compositor
-      - picom
 
 # - name: Install greenclip

@@ -57,8 +57,8 @@ alias shit='shutdown now'
 # source espidf
 alias getidf='. /home/soonann/esp-idf/export.sh'
 
-# source zephyr
-alias getzephyr='. /home/soonann/zephyrproject/.venv/bin/activate'
+# dragon alias
+alias dragon='dragon --and-exit'
 
 # sway
 #alias sway='sway --unsupported-gpu'

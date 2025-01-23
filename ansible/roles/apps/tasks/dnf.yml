@@ -1,4 +1,8 @@
 - name: Install dnf apps
   become: true
   dnf:
-    name: flameshot
+    name:
+      - flameshot
+      - openscad
+      - evince
+

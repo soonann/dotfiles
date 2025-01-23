@@ -1,0 +1,4 @@
+theme = catppuccin-mocha
+gtk-titlebar = false
+window-padding-x = 4,4
+window-padding-y = 4,4

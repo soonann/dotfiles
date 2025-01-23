@@ -3,5 +3,6 @@
   ansible.builtin.dnf:
     state: latest
     name:
+      - "@xfce-desktop-environment"
       - gnome-themes-extra
       - xclip
