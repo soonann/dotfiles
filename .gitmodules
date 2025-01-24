@@ -1,6 +1,0 @@
-[submodule "alacritty/catppuccin"]
-	path = alacritty/catppuccin
-	url = git@github.com:catppuccin/alacritty.git
-[submodule "zmk-config"]
-	path = zmk-config
-	url = git@github.com:soonann/zmk-config.git

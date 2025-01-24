@@ -60,5 +60,5 @@ alias getidf='. /home/soonann/esp-idf/export.sh'
 # dragon alias
 alias dragon='dragon --and-exit'
 
-# sway
-#alias sway='sway --unsupported-gpu'
+# cd ..
+alias ..='cd ../'

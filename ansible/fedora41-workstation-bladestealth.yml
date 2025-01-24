@@ -1,9 +1,0 @@
----
-- name: Install dotfiles
-  hosts: all
-  roles:
-    - core
-    - desktop/xfce
-    - desktop/i3
-    - apps
-    - development

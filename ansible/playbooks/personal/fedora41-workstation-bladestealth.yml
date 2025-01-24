@@ -1,0 +1,9 @@
+---
+- name: Install dotfiles
+  hosts: all
+  roles:
+    - ../../roles/core
+    - ../../roles/desktop/xfce
+    - ../../roles/desktop/i3
+    - ../../roles/apps
+    - ../../roles/development

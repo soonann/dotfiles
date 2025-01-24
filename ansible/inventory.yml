@@ -1,0 +1,18 @@
+all:
+  children:
+    initial_controller:
+      hosts:
+        rdx4-01:
+    controller:
+      hosts:
+        rdx4-01:
+    worker:
+      hosts:
+        rdx4-02:
+  hosts:
+    rdx4-01:
+      ansible_host: rdx4-01
+    rdx4-02:
+      ansible_host: rdx4-02
+  vars:
+    ansible_user: soonann

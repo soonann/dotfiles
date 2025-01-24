@@ -1,8 +1,8 @@
-exec dbus-sway-environment
-exec configure-gtk
+#exec dbus-sway-environment
+#exec configure-gtk
 
 # Default config for sway Copy this to ~/.config/sway/config and edit it to your liking. Read `man 5 sway` for a complete reference.
-set $focus_color "#b5bd68"
+set $focus_color "#b6bd68"
 set $focus_text_color "#000000"
 
 client.focused "$focus_color" "$focus_color" "$focus_text_color" "$focus_color" "$focus_color"
@@ -20,7 +20,7 @@ set $up k
 set $right l
 
 # Your preferred terminal emulator
-set $term alacritty
+set $term ghostty
 
 # disable focus follows mouse
 focus_follows_mouse no
@@ -33,6 +33,8 @@ set $bar "waybar"
 
 # setup sway launcher desktop
 # for_window [app_id="^launcher$"] floating enable, sticky enable, resize set 30 ppt 60 ppt, border pixel 5
+#for_window [title="^.*"] title_format ""
+#default_border pixel 0
 
 #set $menu exec $term --class launcher -e /home/soonann/.local/bin/sway-launcher-desktop.sh
 
@@ -44,7 +46,7 @@ include /etc/sway/config-vars.d/*
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg ~/dotfiles/wallpapers/nix-black-4k.png fill
+output * bg ~/dotfiles/wallpapers/fedora-black-4k.png fill
 
 #
 # Example configuration:
@@ -88,12 +90,12 @@ input "1739:52643:CUST0001:00_06CB:CDA3_Touchpad" {
 }
 
 # logitech m720
-input "1133:45077:M720_Triathlon_Mouse" {
-  natural_scroll disabled
-  dwt enabled
-  accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
-  pointer_accel -0.15 # set mouse sensitivity (between -1 and 1)
-}
+# input "1133:45077:M720_Triathlon_Mouse" {
+#   natural_scroll disabled
+#   dwt enabled
+#   accel_profile "flat" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+#   pointer_accel -0.15 # set mouse sensitivity (between -1 and 1)
+# }
 
 # glorious 
 input "9610:8226:Glorious_Model_O_Wireless" {
@@ -120,7 +122,7 @@ input type:keyboard {
     bindsym $mod+Return exec $term
 
     # Start your launcher
-    bindsym $mod+d exec $menu
+    bindsym $mod+r exec $menu
 
     # Kill focused window
     bindsym $mod+Shift+q kill
@@ -186,9 +188,9 @@ input type:keyboard {
         bindsym Return mode "default"
         bindsym Escape mode "default"
         bindsym $mod+space mode "default"
-        bindsym $mod+Shift+r mode "default"
+        bindsym $mod+Shift+m mode "default"
     }
-    bindsym $mod+Shift+r mode "swap"
+    bindsym $mod+Shift+m mode "swap"
 
 #
 # Workspaces:
@@ -278,9 +280,9 @@ mode "resize" {
     # Return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
+    bindsym $mod+Shift+r mode "default"
 }
-bindsym $mod+r mode "resize"
+bindsym $mod+Shift+r mode "resize"
 
 #
 # Status Bar:
@@ -313,9 +315,9 @@ exec export SSH_AUTH_SOCK
 
 # kanshi
 exec_always {
-  pkill -9 kanshi
   sleep 2
-  kanshi &
+  #pkill -9 kanshi
+  #kanshi &
 }
 
 # Toggle control center
@@ -325,13 +327,12 @@ exec_always {
 bindsym $mod+Shift+s exec flameshot gui
 
 # default desktop apps
-assign [app_id="Alacritty"] workspace 1
+assign [app_id="ghostty"] workspace 1
 assign [app_id="org.telegram.desktop"] workspace 5
-assign [class="thunderbird-default"] workspace 10
 
 # zoom windows
-for_window [title="^zoom$"] border none, floating enable
-for_window [title="^feh$"] border none, floating enable
-for_window [title="^(Zoom|About|audio conference|as_toolbar)$"] border pixel, floating enable
+#for_window [title="^zoom$"] border none, floating enable
+#for_window [title="^feh$"] border none, floating enable
+#for_window [title="^(Zoom|About|audio conference|as_toolbar)$"] border pixel, floating enable
 
 include /etc/sway/config.d/*
