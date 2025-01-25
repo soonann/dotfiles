@@ -16,12 +16,11 @@ return {
                     "vimdoc",
                     "lua",
 
-                    "awk",
-
+                    -- "awk",
                     "bash",
 
                     "c",
-                    "css",
+                    -- "css",
 
                     "diff",
                     "dockerfile",
@@ -35,14 +34,14 @@ return {
                     "go",
                     "gomod",
                     "gosum",
-                    "graphql",
+                    -- "graphql",
 
                     "hcl",
-                    "html",
+                    -- "html",
 
-                    "java",
-                    "javascript",
-                    "jsdoc",
+                    -- "java",
+                    -- "javascript",
+                    -- "jsdoc",
                     "json",
 
                     "latex",
@@ -56,7 +55,7 @@ return {
                     "rust",
 
                     "sql",
-                    "starlark",
+                    -- "starlark",
 
                     "terraform",
 
