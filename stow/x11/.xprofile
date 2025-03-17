@@ -1,17 +1,38 @@
-# razer touchpad
-if [[ -n "$(xinput list-props 'CUST0001:00 06CB:CDA3 Touchpad' | grep 'Device Enabled (204):.*1')" ]]; then
-    xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Natural Scrolling Enabled' 1
-    xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Middle Emulation Enabled' 1
-    xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Disable While Typing Enabled' 1
-    xinput set-prop 'CUST0001:00 06CB:CDA3 Touchpad' 'libinput Tapping Enabled' 1
-fi
-
-# glorious mouse
-MOUSE=$(xinput list | grep 'Glorious Model O Wireless')
-if [[ -n "$MOUSE" ]]; then
-  xinput set-prop  'Glorious Model O Wireless' 'libinput Accel Profile Enabled' 0, 1
-fi
-
-# keyboard settings
+# general keyboard settings
 xset r rate 220 40
 setxkbmap -option caps:none # disable caps
+
+# Variables
+MINIBOOK_TRACKPAD_NAME="XXXX0000:05 0911:5288 Touchpad"
+MINIBOOK_TOUCHSCREEN_NAME="pointer:Goodix Capacitive TouchScreen"
+
+BLADESTEALTH_TRACKPAD_NAME="CUST0001:00 06CB:CDA3 Touchpad"
+
+GLORIOUS_MOUSE_NAME="Glorious Model O Wireless"
+
+# razer bladestealth trackpad
+if xinput list "$BLADESTEALTH_TRACKPAD_NAME" > /dev/null 2>&1; then
+    xinput set-prop "$BLADESTEALTH_TRACKPAD_NAME" 'libinput Natural Scrolling Enabled' 1
+    xinput set-prop "$BLADESTEALTH_TRACKPAD_NAME" 'libinput Middle Emulation Enabled' 1
+    xinput set-prop "$BLADESTEALTH_TRACKPAD_NAME" 'libinput Disable While Typing Enabled' 1
+    xinput set-prop "$BLADESTEALTH_TRACKPAD_NAME" 'libinput Tapping Enabled' 1
+fi
+
+# chuwi minibook trackpad
+if xinput list "$MINIBOOK_TRACKPAD_NAME" > /dev/null 2>&1; then
+    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Natural Scrolling Enabled' 1
+    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Middle Emulation Enabled' 1
+    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Disable While Typing Enabled' 1
+    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Tapping Enabled' 1
+fi
+
+# chuwi minibook touchscreen
+if xinput list "$MINIBOOK_TOUCHSCREEN_NAME" > /dev/null 2>&1; then
+    xrandr -o right
+    xinput set-prop "$MINIBOOK_TOUCHSCREEN_NAME" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
+fi
+
+# glorious o wireless mouse
+if xinput list $GLORIOUS_MOUSE_NAME > /dev/null 2>&1; then
+  xinput set-prop $GLORIOUS_MOUSE_NAME 'libinput Accel Profile Enabled' 0, 1
+fi
