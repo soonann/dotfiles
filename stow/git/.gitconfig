@@ -2,7 +2,7 @@
 	defaultBranch = main
 [user]
 	name = soonann
-	email = sudo@soonann.dev
+	email = git@soonann.dev
 [core]
 	editor = nvim
 [log]

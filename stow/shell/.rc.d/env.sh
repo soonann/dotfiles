@@ -27,9 +27,6 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
 
-# XDG DATA DIR
-# export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
-# export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"
 
 # add Pulumi to the PATH
 export PATH="$PATH:$HOME/.pulumi/bin"
@@ -83,3 +80,7 @@ export NIXPKGS_ALLOW_UNFREE=1
 
 # steam
 # export XDG_DATA_HOME="$HOME/.local/share"
+
+# XDG DATA DIR
+# export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:$XDG_DATA_DIRS"
+# export XDG_DATA_DIRS="$HOME/.local/share/flatpak/exports/share:$XDG_DATA_DIRS"

@@ -24,8 +24,8 @@ assign [class="Thunar"] 4
 assign [class="TelegramDesktop"] 5
 
 # variables
-set $mod Mod1
-set $mod4 Mod4
+set $mod_pri Mod1
+set $mod_sec Mod4
 set $menu "rofi -terminal alacritty -combi-modes drun,ssh,run,combi -show combi -show-icons" 
 set $term alacritty
 set $refresh_status killall -SIGUSR1 i3status
@@ -48,7 +48,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # i3 settings
-floating_modifier $mod
+floating_modifier $mod_pri
 focus_follows_mouse no
 tiling_drag modifier titlebar
 
@@ -70,124 +70,124 @@ gaps outer 2px
 # =========== bindings ============
 
 # start a terminal
-bindsym $mod+Return exec $term
+bindsym $mod_pri+Return exec $term
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec $menu
+bindsym $mod_pri+d exec $menu
 
 # greenclip
-bindsym $mod+Shift+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
+bindsym $mod_pri+Shift+v exec --no-startup-id rofi -modi "clipboard:greenclip print" -show clipboard
 
 # flameshot
-bindsym $mod+Shift+s exec flameshot gui
+bindsym $mod_pri+Shift+s exec flameshot gui
 
 # display
-bindsym $mod4+Shift+1 exec --no-startup-id /home/soonann/.screenlayout/laptop-only.sh
-bindsym $mod4+Shift+2 exec --no-startup-id /home/soonann/.screenlayout/monitor-only.sh
-bindsym $mod4+Shift+3 exec --no-startup-id /home/soonann/.screenlayout/monitor-only-other.sh
-bindsym $mod4+Shift+4 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-keyboard
-bindsym $mod4+Shift+5 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-trackpad
+bindsym $mod_sec+Shift+1 exec --no-startup-id /home/soonann/.screenlayout/laptop-only.sh
+bindsym $mod_sec+Shift+2 exec --no-startup-id /home/soonann/.screenlayout/monitor-only.sh
+bindsym $mod_sec+Shift+3 exec --no-startup-id /home/soonann/.screenlayout/monitor-only-other.sh
+bindsym $mod_sec+Shift+4 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-keyboard
+bindsym $mod_sec+Shift+5 exec --no-startup-id /home/soonann/.local/custom-bin/toggle-trackpad
 
 # audio bindings
 bindsym XF86AudioRaiseVolume exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
 bindsym XF86AudioLowerVolume exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 bindsym XF86AudioMute exec pamixer -t @DEFAULT_SINK@ && $refresh_status
-bindsym $mod4+shift+8 exec pamixer -t @DEFAULT_SINK@ && $refresh_status
-bindsym $mod4+shift+9 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
-bindsym $mod4+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod_sec+shift+8 exec pamixer -t @DEFAULT_SINK@ && $refresh_status
+bindsym $mod_sec+shift+9 exec pamixer -i 1 @DEFAULT_SINK@ && $refresh_status
+bindsym $mod_sec+shift+0 exec pamixer -d 1 @DEFAULT_SINK@ && $refresh_status
 
 
 # brightness bindings
 bindsym XF86MonBrightnessUp exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
 bindsym XF86MonBrightnessDown exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
-bindsym $mod4+shift+6 exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
-bindsym $mod4+shift+7 exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod_sec+shift+6 exec light -A 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
+bindsym $mod_sec+shift+7 exec light -U 5 && printf '%.f' $(light) > /tmp/brightness && $refresh_status
 
 
 # ========= i3 native bindings ===========
 
 # kill focused window
-bindsym $mod+w kill
+bindsym $mod_pri+w kill
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod_pri+h focus left
+bindsym $mod_pri+j focus down
+bindsym $mod_pri+k focus up
+bindsym $mod_pri+l focus right
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod_pri+Shift+h move left
+bindsym $mod_pri+Shift+j move down
+bindsym $mod_pri+Shift+k move up
+bindsym $mod_pri+Shift+l move right
 
 # resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
+bindsym $mod_pri+r mode "resize"
 mode "resize" {
   bindsym h resize shrink width 10 px or 10 ppt
   bindsym j resize grow height 10 px or 10 ppt
   bindsym k resize shrink height 10 px or 10 ppt
   bindsym l resize grow width 10 px or 10 ppt
 
-  # back to normal: Enter or Escape or $mod+r
+  # back to normal: Enter or Escape or $mod_pri+r
   bindsym Return mode "default"
   bindsym Escape mode "default"
-  bindsym $mod+r mode "default"
+  bindsym $mod_pri+r mode "default"
 }
 
 
 # split in horizontal/vertical orientation
-bindsym $mod+s split h
-bindsym $mod+v split v
+bindsym $mod_pri+s split h
+bindsym $mod_pri+v split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+z fullscreen toggle
-bindsym $mod+p floating toggle
+bindsym $mod_pri+z fullscreen toggle
+bindsym $mod_pri+p floating toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+b layout stacking
-bindsym $mod+e layout toggle split
-# bindsym $mod+t layout tabbed
+bindsym $mod_pri+b layout stacking
+bindsym $mod_pri+e layout toggle split
+# bindsym $mod_pri+t layout tabbed
 
 # change focus between tiling / floating windows
-bindsym $mod+Escape focus mode_toggle
+bindsym $mod_pri+Escape focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod_pri+a focus parent
 
 # switch to workspace
-bindsym $mod+1 workspace number $ws1
-bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace number $ws3
-bindsym $mod+4 workspace number $ws4
-bindsym $mod+5 workspace number $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
-bindsym $mod+0 workspace number $ws10
-bindsym $mod+minus scratchpad show
-bindsym $mod+o [class="obsidian"] scratchpad show
-bindsym $mod+t [class="Alacritty"] scratchpad show
-bindsym $mod+equal sticky toggle
+bindsym $mod_pri+1 workspace number $ws1
+bindsym $mod_pri+2 workspace number $ws2
+bindsym $mod_pri+3 workspace number $ws3
+bindsym $mod_pri+4 workspace number $ws4
+bindsym $mod_pri+5 workspace number $ws5
+bindsym $mod_pri+6 workspace number $ws6
+bindsym $mod_pri+7 workspace number $ws7
+bindsym $mod_pri+8 workspace number $ws8
+bindsym $mod_pri+9 workspace number $ws9
+bindsym $mod_pri+0 workspace number $ws10
+bindsym $mod_pri+minus scratchpad show
+bindsym $mod_pri+o [class="obsidian"] scratchpad show
+bindsym $mod_pri+t [class="Alacritty"] scratchpad show
+bindsym $mod_pri+equal sticky toggle
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
-bindsym $mod+Shift+minus move scratchpad
-bindsym $mod+Shift+o [class="obsidian"] move scratchpad
-bindsym $mod+Shift+t [class="Alacritty"] move scratchpad
+bindsym $mod_pri+Shift+1 move container to workspace number $ws1
+bindsym $mod_pri+Shift+2 move container to workspace number $ws2
+bindsym $mod_pri+Shift+3 move container to workspace number $ws3
+bindsym $mod_pri+Shift+4 move container to workspace number $ws4
+bindsym $mod_pri+Shift+5 move container to workspace number $ws5
+bindsym $mod_pri+Shift+6 move container to workspace number $ws6
+bindsym $mod_pri+Shift+7 move container to workspace number $ws7
+bindsym $mod_pri+Shift+8 move container to workspace number $ws8
+bindsym $mod_pri+Shift+9 move container to workspace number $ws9
+bindsym $mod_pri+Shift+0 move container to workspace number $ws10
+bindsym $mod_pri+Shift+minus move scratchpad
+bindsym $mod_pri+Shift+o [class="obsidian"] move scratchpad
+bindsym $mod_pri+Shift+t [class="Alacritty"] move scratchpad
 
 # reload the configuration file
-bindsym $mod4+Shift+r restart
+bindsym $mod_sec+Shift+r restart
 
 # Create Log out, Reboot, Poweroff bindings
 mode "(S)uspend, (L)ock, (E)xit, (R)eboot, (P)oweroff" {
@@ -203,7 +203,7 @@ mode "(S)uspend, (L)ock, (E)xit, (R)eboot, (P)oweroff" {
         bindsym Escape mode "default"
 }
 
-bindsym $mod4+Shift+q mode "(S)uspend, (L)ock, (E)xit, (R)eboot, (P)oweroff"
+bindsym $mod_sec+Shift+q mode "(S)uspend, (L)ock, (E)xit, (R)eboot, (P)oweroff"
 
 # exit i3 (logs you out of your X session)
-# bindsym $mod4+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod_sec+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"

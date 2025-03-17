@@ -1,0 +1,38 @@
+# md
+
+```sh
+[root@ody-01 hddpool]# hdparm -Tt /dev/md0
+
+/dev/md0:
+ Timing cached reads:   10308 MB in  2.00 seconds = 5164.68 MB/sec
+ Timing buffered disk reads: 702 MB in  3.01 seconds = 233.01 MB/sec
+[root@ody-01 hddpool]# hdparm -Tt /dev/md0
+
+/dev/md0:
+ Timing cached reads:   9852 MB in  2.00 seconds = 4935.85 MB/sec
+ Timing buffered disk reads: 702 MB in  3.00 seconds = 233.76 MB/sec
+[root@ody-01 hddpool]# hdparm -Tt /dev/md0
+
+/dev/md0:
+ Timing cached reads:   9110 MB in  2.00 seconds = 4563.05 MB/sec
+ Timing buffered disk reads: 702 MB in  3.01 seconds = 233.21 MB/sec
+```
+
+```
+[root@ody-01 pool]# hdparm -Tt /dev/mapper/vg_hybrid-pool
+
+/dev/mapper/vg_hybrid-pool:
+ Timing cached reads:   10166 MB in  2.00 seconds = 5093.20 MB/sec
+ Timing buffered disk reads: 722 MB in  3.01 seconds = 239.74 MB/sec
+[root@ody-01 pool]# hdparm -Tt /dev/mapper/vg_hybrid-pool
+
+/dev/mapper/vg_hybrid-pool:
+ Timing cached reads:   10564 MB in  2.00 seconds = 5293.06 MB/sec
+ Timing buffered disk reads: 710 MB in  3.01 seconds = 235.64 MB/sec
+[root@ody-01 pool]# hdparm -Tt /dev/mapper/vg_hybrid-pool
+
+/dev/mapper/vg_hybrid-pool:
+ Timing cached reads:   10078 MB in  2.00 seconds = 5049.03 MB/sec
+ Timing buffered disk reads: 930 MB in  3.01 seconds = 308.94 MB/sec
+```
+

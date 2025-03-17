@@ -1,3 +1,5 @@
+# TODO: add repo for docker and podman
+
 - name: Install core packages for all systems
   become: true
   ansible.builtin.dnf:
@@ -19,6 +21,14 @@
       - podman
       - repoquery
 
+      # Docker - keep for development of some open source projects
+      - dnf-plugins-core
+      - docker-ce 
+      - docker-ce-cli 
+      - containerd.io 
+      - docker-buildx-plugin 
+      - docker-compose-plugin
+
 - name: Start libvirtd
   become: true
   systemd:
@@ -32,4 +42,18 @@
     name: soonann
     append: true
     groups: libvirt
+
+- name: Start docker
+  become: true
+  systemd:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Add user to docker group
+  become: true
+  user:
+    name: soonann
+    append: true
+    groups: docker
 

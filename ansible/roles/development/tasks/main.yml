@@ -18,8 +18,13 @@
       - python3
       - python3-pip
 
+      - kubernetes-client
+
       - nodejs
       - go
+
+      - cargo
+      - rust
 
       - atop
       - htop
@@ -29,6 +34,7 @@
       - sysstat # iostat, mpstat, sar
 
       - pciutils # lspci
+      - strace
 
       # Building dragon
       - gtk3-devel
