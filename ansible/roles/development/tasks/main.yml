@@ -5,6 +5,7 @@
     name:
       - git-lfs
       - tmux
+      - neovim
 
       - fzf
       - ripgrep

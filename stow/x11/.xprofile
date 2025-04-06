@@ -28,6 +28,7 @@ fi
 
 # chuwi minibook touchscreen
 if xinput list "$MINIBOOK_TOUCHSCREEN_NAME" > /dev/null 2>&1; then
+    #xrandr --output 'DSI-1' -o right
     xrandr -o right
     xinput set-prop "$MINIBOOK_TOUCHSCREEN_NAME" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 fi
