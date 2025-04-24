@@ -5,7 +5,7 @@
   ansible.builtin.dnf:
     name:
       # Networking
-      - nmtui
+      - NetworkManager-tui
 
       # Flatpaks
       - flatpak
@@ -19,7 +19,7 @@
 
       # Container
       - podman
-      - repoquery
+      - dnf-utils
 
       # Docker - keep for development of some open source projects
       - dnf-plugins-core
