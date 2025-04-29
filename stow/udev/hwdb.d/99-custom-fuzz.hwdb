@@ -1,0 +1,3 @@
+evdev:name:XXXX0000:05 0911:5288 Touchpad:dmi:*:pnMiniBookX:*
+ EVDEV_ABS_00=:::8
+ EVDEV_ABS_01=:::8

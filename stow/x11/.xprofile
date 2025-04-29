@@ -3,7 +3,8 @@ xset r rate 220 40
 setxkbmap -option caps:none # disable caps
 
 # Variables
-MINIBOOK_TRACKPAD_NAME="XXXX0000:05 0911:5288 Touchpad"
+# MINIBOOK_TRACKPAD_NAME="XXXX0000:05 0911:5288 Touchpad"
+MINIBOOK_TRACKPAD_NAME="MiniBookSupport Virtual Mouse"
 MINIBOOK_TOUCHSCREEN_NAME="pointer:Goodix Capacitive TouchScreen"
 
 BLADESTEALTH_TRACKPAD_NAME="CUST0001:00 06CB:CDA3 Touchpad"
@@ -21,15 +22,15 @@ fi
 # chuwi minibook trackpad
 if xinput list "$MINIBOOK_TRACKPAD_NAME" > /dev/null 2>&1; then
     xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Natural Scrolling Enabled' 1
-    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Middle Emulation Enabled' 1
+    #xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Middle Emulation Enabled' 1
     xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Disable While Typing Enabled' 1
     xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Tapping Enabled' 1
+    xinput set-prop "$MINIBOOK_TRACKPAD_NAME" 'libinput Accel Speed' 0.1
 fi
 
 # chuwi minibook touchscreen
 if xinput list "$MINIBOOK_TOUCHSCREEN_NAME" > /dev/null 2>&1; then
-    #xrandr --output 'DSI-1' -o right
-    xrandr -o right
+    xrandr --output 'DSI-1' -o right
     xinput set-prop "$MINIBOOK_TOUCHSCREEN_NAME" --type=float "Coordinate Transformation Matrix" 0 1 0 -1 0 1 0 0 1
 fi
 

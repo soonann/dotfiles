@@ -23,8 +23,6 @@ eval $(gnome-keyring-daemon --daemonize)
 systemctl --user set-environment SSH_AUTH_SOCK=$SSH_AUTH_SOCK 
 
 # monitor
-if [[ $HOSTNAME == "minibook-fedora" ]]; then
+if [[ $HOSTNAME == "chuwi-mbx" ]]; then
     . $HOME/.screenlayout/chuwi-minibook-screen.sh
 fi
-
-
