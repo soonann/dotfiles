@@ -190,9 +190,8 @@ bindsym $mod_pri+Shift+t [class="Alacritty"] move scratchpad
 bindsym $mod_sec+Shift+r restart
 
 # Create Log out, Reboot, Poweroff bindings
-mode "(S)uspend, (L)ock, (E)xit, (R)eboot, (P)oweroff" {
+mode "(L)ock, (E)xit, (R)eboot, (P)oweroff" {
         # https://i3wm.org/docs/userguide.html#command_chaining
-        bindsym s mode "default", exec --no-startup-id systemctl suspend
         bindsym l mode "default", exec --no-startup-id exec i3lock; exec --no-startup-id systemctl suspend
         bindsym e exec --no-startup-id i3-msg exit
         bindsym r exec --no-startup-id systemctl reboot
